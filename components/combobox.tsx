@@ -17,7 +17,6 @@ export function Combobox({ options, onPick, trigger, placeholder, empty, trigger
   const id = useId();
 
   const shown = useMemo(() => { const n = norm(q); return options.filter((o) => !n || norm(o.label).includes(n) || norm(o.hint ?? "").includes(n)).slice(0, 80); }, [options, q]);
-  useEffect(() => setActive(0), [q, open]);
   useEffect(() => {
     if (!open) return;
     input.current?.focus();
@@ -35,17 +34,16 @@ export function Combobox({ options, onPick, trigger, placeholder, empty, trigger
     else if (e.key === "Escape") setOpen(false);
   };
 
-  let lastSection = "";
   return (
     <div ref={root} className="combo">
-      <button type="button" className={triggerClass} aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen((o) => !o)}>{trigger}</button>
+      <button type="button" className={triggerClass} aria-haspopup="listbox" aria-expanded={open} onClick={() => { setActive(0); setOpen((o) => !o); }}>{trigger}</button>
       {open && (
         <div className="combo-panel" role="dialog">
-          <input ref={input} value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={onKey} placeholder={placeholder} aria-label={placeholder}
+          <input ref={input} value={q} onChange={(e) => { setQ(e.target.value); setActive(0); }} onKeyDown={onKey} placeholder={placeholder} aria-label={placeholder}
             role="combobox" aria-expanded aria-controls={`${id}-list`} aria-activedescendant={shown.length ? `${id}-${active}` : undefined} className="combo-input" />
           <ul id={`${id}-list`} role="listbox" className="combo-list">
             {shown.map((o, i) => {
-              const head = o.section !== lastSection ? (lastSection = o.section) : null;
+              const head = o.section !== shown[i - 1]?.section ? o.section : null;
               return (
                 <li key={o.kind + o.id} role="presentation">
                   {head && <div className="combo-section">{head}</div>}
