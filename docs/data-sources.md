@@ -8,7 +8,7 @@
 | UN SDG Global Database API | Official titles, target text, reporting agencies, data-nature flags, uncertainty bounds, current values; independent check of 17 series | `Series/List`, `Goal/List`, `Series/Data` |
 | UN SDG metadata repository | Methodology PDF for each indicator | Links resolved from the target listing page, then requested |
 | UNDP Human Development Report Office | Life expectancy check and country link | Composite indices time series (CSV) |
-| Natural Earth 1:10m countries, India point of view | Country shapes for the globe and flat map | `scripts/build-map.mjs` simplifies it to `public/map/world.json` (about 400 KB) |
+| Natural Earth 1:10m countries, India point of view | Country shapes for the globe and flat map | `scripts/build-map.mjs` simplifies it to `public/map/world.json` (about 490 KB) |
 
 ## Is HDX in the graph?
 
@@ -33,7 +33,7 @@ Some official values are thresholds, not measurements. FAO reports undernourishm
 
 ## Map boundaries
 
-The globe draws India's boundary as India depicts it, using Natural Earth's India point of view: all of Jammu and Kashmir and Ladakh, and Arunachal Pradesh. Other countries draw parts of these areas differently, so the map carries a note that the boundaries shown do not imply endorsement or acceptance by the United Nations. The shapes keep every country, including small states; only specks under about 160 km² are dropped.
+The globe draws India's boundary as India depicts it, using Natural Earth's India point of view: all of Jammu and Kashmir and Ladakh, and Arunachal Pradesh. Other countries draw parts of these areas differently, so the map carries a note that the boundaries shown do not imply endorsement or acceptance by the United Nations. Every piece of land is kept. Pieces under about 160 km² (all 11 Lakshadweep islands, the Maldives, most small islands: 2,974 in all, 29 of them Indian) are too small to survive simplification, so each is stored as a point and drawn as a dot. India's border and coastline are kept at full source detail, including the Andaman and Nicobar islands.
 
 ## Things found while building
 
