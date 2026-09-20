@@ -5,7 +5,7 @@ import "./shell.css";
 import "./viz.css";
 
 const plex = IBM_Plex_Sans({ variable: "--font-plex", subsets: ["latin", "cyrillic"], weight: ["400", "500", "600"], display: "swap" });
-const plexCond = IBM_Plex_Sans_Condensed({ variable: "--font-plex-cond", subsets: ["latin", "cyrillic"], weight: ["500", "600", "700"], display: "swap" });
+const plexCond = IBM_Plex_Sans_Condensed({ variable: "--font-plex-cond", subsets: ["latin", "latin-ext", "cyrillic-ext"], weight: ["500", "600", "700"], display: "swap" });
 const plexAr = IBM_Plex_Sans_Arabic({ variable: "--font-plex-ar", subsets: ["arabic"], weight: ["400", "500", "600"], display: "swap" });
 
 export const metadata: Metadata = {

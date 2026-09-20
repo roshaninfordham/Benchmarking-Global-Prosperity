@@ -62,7 +62,7 @@
 
 @theme inline {
   --font-sans: var(--font-plex), var(--font-plex-ar), "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
-  --font-display: var(--font-plex-cond), var(--font-plex-ar), "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-display: var(--font-plex-cond), var(--font-plex), var(--font-plex-ar), "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
 }
 
 html { scroll-behavior: smooth; }
