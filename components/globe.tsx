@@ -138,7 +138,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     const x = e.clientX - rect.left, y = e.clientY - rect.top;
     const proj = P.current.flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - PAD).translate([W / 2, H / 2]).clipAngle(90);
     const ll = proj.invert?.([x, y]);
-    if (!ll || (!P.current.flat && Math.hypot(x - W / 2, y - H / 2) > Math.min(W, H) / 2 - 12)) return;
+    if (!ll || (!P.current.flat && Math.hypot(x - W / 2, y - H / 2) > Math.min(W, H) / 2 - PAD)) return;
     return feats.current.find((f) => geoContains(f, ll));
   };
 
