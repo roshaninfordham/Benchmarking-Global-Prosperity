@@ -51,5 +51,5 @@ export interface Dataset {
   groups: Group[];
 }
 
-/** A comparator is a country (ISO3) or a UN grouping (dcid). */
-export type Comparator = { kind: "country" | "group"; id: string };
+/** A comparator is a country (ISO3), a UN grouping (dcid) or a custom group (ISO3 codes joined by "+"). */
+export type Comparator = { kind: "country" | "group" | "custom"; id: string };
