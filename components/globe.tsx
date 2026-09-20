@@ -3,7 +3,7 @@ import { geoCentroid, geoContains, geoGraticule10, geoNaturalEarth1, geoOrthogra
 import { interpolateLab } from "d3-interpolate";
 import { scaleLinear } from "d3-scale";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { valueText } from "@/lib/format";
+import { membersOf, valueText } from "@/lib/format";
 import { countryName, type Lang } from "@/lib/i18n";
 import { loadCountries, type CountryFeature } from "@/lib/geo";
 import { allLatest, quantile } from "@/lib/stats";
@@ -86,8 +86,8 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
       ctx.restore();
     };
     comps.forEach((c, i) => {
-      const members = c.kind === "country" ? [c.id] : (ds.groups.find((g) => g.id === c.id)?.members ?? []);
-      mark(new Set(members), v(`--s${i + 2}`), c.kind === "group" ? 0.9 : 1.8, c.kind === "group" ? 0 : dark ? 10 : 4);
+      const members = membersOf(ds, c);
+      mark(new Set(members), v(`--s${i + 2}`), c.kind === "country" ? 1.8 : 0.9, c.kind === "country" ? (dark ? 10 : 4) : 0);
     });
     if (subject) { mark(new Set([subject]), v("--surface"), 5, 0); mark(new Set([subject]), v("--ink"), 2.2, dark ? 16 : 6); } // ink outline: the series blue is also the ramp hue
 
