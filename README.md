@@ -50,7 +50,7 @@ Measured on 2026-09-20. Full method in [docs/metrics.md](docs/metrics.md).
 | Attempted against the official publisher | 100% |
 | Identical to it | **94.0%** |
 | Within 1% of it | 94.3% |
-| Published at source as a threshold, such as <2.5 | 1,159 |
+| Published at source as a threshold, such as `<2.5` | 1,159 |
 | Tool calls for the same answer done by hand | 90 |
 | Tool calls in the app after first load | 0 |
 | Data payload, compressed | 250 KB |
