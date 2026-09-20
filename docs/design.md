@@ -25,7 +25,7 @@ A rail along the left edge joins the three areas. Selecting a finding sends a pu
 ## Colour
 
 - Series colours are the four leading slots of the reference data-visualisation palette, checked with its validator on this app's own surfaces.
-  - Light, surface `#fbfcfd`: worst adjacent colour-blind separation ΔE 9.1, normal-vision ΔE 22.9. Contrast against the surface is below 3:1 for aqua and yellow, so every series is also direct-labelled and every chart has a table view.
+  - Light, surface `#fbfcfd`: worst adjacent colour-blind separation ΔE 9.1, normal-vision ΔE 22.9. Contrast against the surface is below 3:1 for aqua and yellow, so every series is also direct-labelled and the Compare and Trend charts have a table view.
   - Dark, surface `#0f1b2a`: worst adjacent colour-blind separation ΔE 8.4, normal-vision ΔE 19.8, all colours at least 3:1.
 - Blue is both the subject colour and the map's magnitude ramp. The selected country on the map is therefore outlined in ink, not blue.
 - Green and red-orange mark favourable and unfavourable only, always with an icon and a word.
@@ -43,6 +43,6 @@ IBM Plex Sans for text, IBM Plex Sans Condensed for headlines and large figures,
 
 ## Accessibility
 
-- Every chart has a table twin. Tooltips never hold information that is unavailable elsewhere.
+- Compare and Trend have a table view. Tooltips never hold information that is unavailable elsewhere.
 - Status is never colour alone. Keyboard focus is always visible. The country picker is a labelled combobox.
 - Six languages including right-to-left Arabic. English names are isolated inside Arabic sentences so they do not reorder the text around them.
