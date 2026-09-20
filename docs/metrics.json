@@ -1,0 +1,115 @@
+{
+ "indicators": 18,
+ "countries": 228,
+ "observations": 48179,
+ "perIndicator": [
+  {
+   "id": "undernourishment",
+   "countries": 169,
+   "observations": 3831,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "food-insecurity",
+   "countries": 156,
+   "observations": 1132,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "stunting",
+   "countries": 162,
+   "observations": 4050,
+   "medianLatestYear": 2024
+  },
+  {
+   "id": "wasting",
+   "countries": 161,
+   "observations": 845,
+   "medianLatestYear": 2019
+  },
+  {
+   "id": "poverty",
+   "countries": 170,
+   "observations": 2146,
+   "medianLatestYear": 2021
+  },
+  {
+   "id": "working-poverty",
+   "countries": 86,
+   "observations": 801,
+   "medianLatestYear": 2021
+  },
+  {
+   "id": "youth-neet",
+   "countries": 185,
+   "observations": 2164,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "youth-unemployment",
+   "countries": 211,
+   "observations": 2776,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "social-protection",
+   "countries": 215,
+   "observations": 505,
+   "medianLatestYear": 2022
+  },
+  {
+   "id": "under-five-mortality",
+   "countries": 199,
+   "observations": 4975,
+   "medianLatestYear": 2024
+  },
+  {
+   "id": "maternal-mortality",
+   "countries": 195,
+   "observations": 4680,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "life-expectancy",
+   "countries": 195,
+   "observations": 6630,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "uhc-coverage",
+   "countries": 195,
+   "observations": 4680,
+   "medianLatestYear": 2023
+  },
+  {
+   "id": "skilled-birth-attendance",
+   "countries": 193,
+   "observations": 2597,
+   "medianLatestYear": 2022
+  },
+  {
+   "id": "completion-primary",
+   "countries": 159,
+   "observations": 1161,
+   "medianLatestYear": 2021
+  },
+  {
+   "id": "completion-lower-secondary",
+   "countries": 162,
+   "observations": 1237,
+   "medianLatestYear": 2021
+  },
+  {
+   "id": "completion-upper-secondary",
+   "countries": 167,
+   "observations": 1244,
+   "medianLatestYear": 2021
+  },
+  {
+   "id": "preprimary-participation",
+   "countries": 197,
+   "observations": 2725,
+   "medianLatestYear": 2024
+  }
+ ]
+}
