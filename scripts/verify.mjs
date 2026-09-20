@@ -54,20 +54,33 @@ for (const ind of sdgInds) {
   const byKey = new Map();
   for (const r of pick) { const k = `${String(r.geoAreaCode).padStart(3, "0")}:${Math.trunc(r.timePeriodStart)}`; (byKey.get(k) ?? byKey.set(k, []).get(k)).push(r); }
 
-  let checked = 0, matched = 0, missing = 0; const mismatches = [];
-  const nature = {}, sources = {};
+  let checked = 0, matched = 0, missing = 0, close = 0, newer = 0; const mismatches = []; const rel = [];
+  const nature = {}, sources = {}, latestInfo = {}, srcList = [];
   for (const c of isos) {
     const num = String(iso.alpha3ToNumeric(c)).padStart(3, "0");
     for (const [year, value] of snap.obs[c]) {
       checked++;
       const cands = byKey.get(`${num}:${year}`);
       if (!cands) { missing++; continue; }
-      const hit = cands.find((r) => Math.abs(Number(r.value) - value) <= 1e-6 * Math.max(1, Math.abs(value)));
-      if (hit) matched++; else if (mismatches.length < 5) mismatches.push({ c, year, graph: value, sdg: cands.map((r) => r.value) });
+      const num_ = cands.map((r) => Number(r.value)).filter(Number.isFinite);
+      if (!num_.length) { missing++; continue; }
+      const best = num_.reduce((a, b) => (Math.abs(b - value) < Math.abs(a - value) ? b : a));
+      const d = Math.abs(best - value) / Math.max(1e-9, Math.abs(value));
+      rel.push(d);
+      if (Math.abs(best - value) <= 1e-6 * Math.max(1, Math.abs(value))) matched++;
+      else { if (d <= 0.01) close++; if (mismatches.length < 5) mismatches.push({ c, year, graph: value, sdg: num_ }); }
     }
     const last = snap.obs[c].at(-1);
-    const hit = last && byKey.get(`${num}:${last[0]}`)?.[0];
-    if (hit) { nature[hit.attributes?.Nature ?? "NA"] = (nature[hit.attributes?.Nature ?? "NA"] ?? 0) + 1; sources[hit.source] = (sources[hit.source] ?? 0) + 1; }
+    const hit = last && byKey.get(`${num}:${last[0]}`)?.find((r) => Number.isFinite(Number(r.value)));
+    const apiRows = pick.filter((r) => String(r.geoAreaCode).padStart(3, "0") === num && Number.isFinite(Number(r.value))).sort((a, b) => a.timePeriodStart - b.timePeriodStart);
+    const apiLast = apiRows.at(-1);
+    if (apiLast && last && apiLast.timePeriodStart > last[0]) newer++;
+    if (hit) {
+      const nat = hit.attributes?.Nature ?? "NA";
+      nature[nat] = (nature[nat] ?? 0) + 1; sources[hit.source] = (sources[hit.source] ?? 0) + 1;
+      if (!srcList.includes(hit.source)) srcList.push(hit.source);
+      latestInfo[c] = [nat, srcList.indexOf(hit.source), hit.lowerBound ?? null, hit.upperBound ?? null, Math.trunc(apiLast.timePeriodStart), Number(apiLast.value)];
+    }
   }
   const natureDesc = {};
   const sample = await getJson(`${API}/Series/Data?seriesCode=${code}&areaCode=404&pageSize=1`);
@@ -81,10 +94,12 @@ for (const ind of sdgInds) {
     units: unitsDesc,
     sources: Object.entries(sources).sort((a, b) => b[1] - a[1]).map(([name, n]) => ({ name, n })),
     nature: Object.entries(nature).sort((a, b) => b[1] - a[1]).map(([code, n]) => ({ code, label: natureDesc[code] ?? code, n })),
+    sourceNames: srcList, latest: latestInfo,
     dataUrl: `${API}/Series/Data?seriesCode=${code}`, listUrl: `${API}/Series/List`,
   };
-  results[ind.id] = { source: "UN SDG Global Database API", checked, matched, missingInApi: missing, mismatched: checked - matched - missing, matchRate: +(matched / checked).toFixed(4), examples: mismatches };
-  console.log(`${ind.id.padEnd(28)} ${matched}/${checked} match  missing ${missing}  mismatched ${checked - matched - missing}`);
+  rel.sort((a, b) => a - b);
+  results[ind.id] = { source: "UN SDG Global Database API", checked, identical: matched, within1pct: matched + close, absentInApi: missing, medianRelativeDifference: +(rel[Math.floor(rel.length / 2)] ?? 0).toFixed(4), countriesWithNewerYearInApi: newer, identicalRate: +(matched / checked).toFixed(4), examples: mismatches };
+  console.error(`${ind.id.padEnd(28)} identical ${matched}/${checked}  within1% ${matched + close}  absent ${missing}  newerYear ${newer}`);
 }
 
 // Guard the numeric targets shown in charts against the official target text.
@@ -110,7 +125,7 @@ if (le) {
     if (Math.abs(Number(cell) - v) <= 1e-6 * Math.max(1, v)) matched++; else if (ex.length < 5) ex.push({ c, y, graph: v, undp: cell });
   }
   meta[le.id] = { series: "le", seriesDescription: "Life expectancy at birth (years)", sources: [{ name: "UNDP Human Development Report Office", n: Object.keys(snap.obs).length }], nature: [], units: "years", dataUrl: HDRO_CSV };
-  results[le.id] = { source: "UNDP HDRO composite indices time series (CSV)", checked, matched, missingInApi: missing, mismatched: checked - matched - missing, matchRate: +(matched / checked).toFixed(4), examples: ex };
+  results[le.id] = { source: "UNDP HDRO composite indices time series (CSV)", checked, identical: matched, within1pct: matched, absentInApi: missing, identicalRate: +(matched / checked).toFixed(4), examples: ex };
   console.log(`${le.id.padEnd(28)} ${matched}/${checked} match  missing ${missing}`);
 }
 
@@ -119,7 +134,7 @@ const links = {};
 for (const ind of registry.indicators) {
   try { const r = await fetch(ind.metaUrl, { method: "HEAD", redirect: "follow" }); links[ind.id] = r.status; } catch { links[ind.id] = "error"; }
 }
-const totals = Object.values(results).reduce((a, r) => ({ checked: a.checked + r.checked, matched: a.matched + r.matched }), { checked: 0, matched: 0 });
+const totals = Object.values(results).reduce((a, r) => ({ checked: a.checked + r.checked, identical: a.identical + r.identical, within1pct: a.within1pct + r.within1pct }), { checked: 0, identical: 0, within1pct: 0 });
 writeFileSync("data/sdg-meta.json", JSON.stringify({ apiRelease: Object.values(seriesList)[0]?.release, generatedAt: new Date().toISOString(), indicators: meta }, null, 1));
-writeFileSync("data/verification.json", JSON.stringify({ generatedAt: new Date().toISOString(), totals: { ...totals, matchRate: +(totals.matched / totals.checked).toFixed(4) }, results, metadataLinks: links }, null, 1));
-console.log("TOTAL", totals, (totals.matched / totals.checked).toFixed(4), "\nlinks", links);
+writeFileSync("data/verification.json", JSON.stringify({ generatedAt: new Date().toISOString(), totals: { ...totals, identicalRate: +(totals.identical / totals.checked).toFixed(4), within1pctRate: +(totals.within1pct / totals.checked).toFixed(4) }, results, metadataLinks: links }, null, 1));
+console.log("TOTAL", totals, "\nlinks", links);
