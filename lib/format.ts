@@ -2,8 +2,8 @@ import { countryName, fmt, t, type Lang } from "./i18n";
 import type { Comparator, Dataset, Indicator } from "./types";
 
 /** Short suffix used after a figure inside running text. */
-export const unitSuffix = (ind: Indicator) => (ind.unit.startsWith("%") ? "%" : ind.unit === "years" ? " yrs" : "");
-export const valueText = (ind: Indicator, v: number, lang: Lang) => `${fmt(v, lang)}${unitSuffix(ind)}`;
+export const unitSuffix = (ind: Indicator, lang: Lang) => (ind.unit.startsWith("%") ? "%" : ind.unit === "years" ? t(lang).yrs : "");
+export const valueText = (ind: Indicator, v: number, lang: Lang) => `${fmt(v, lang)}${unitSuffix(ind, lang)}`;
 
 export const membersOf = (ds: Dataset, c: Comparator): string[] =>
   c.kind === "country" ? [c.id] : c.kind === "custom" ? c.id.split("+").filter(Boolean) : (ds.groups.find((g) => g.id === c.id)?.members ?? []);
