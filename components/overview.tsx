@@ -29,7 +29,7 @@ function Card({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; l
   const shown = useCountUp(l?.v, `${state.country}-${ind.id}`);
   const stale = subject?.obs.length ? isStale(subject.obs.at(-1)) : false;
   return (
-    <button className="icard" data-empty={!l} onClick={() => onOpen(ind.id)} aria-label={`${ind.short}. ${l ? `${fmt(l.v, lang)} ${ind.unit}, ${l.year}` : L.noData}`}>
+    <button className="icard" data-empty={!l} onClick={() => onOpen(ind.id)}>
       <div className="icard-head">
         <span className="icard-name">{ind.short}</span>
         {ind.sdg && <span className="icard-sdg">{L.sdg} {ind.sdg.indicator}</span>}
