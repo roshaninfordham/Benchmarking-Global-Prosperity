@@ -91,6 +91,10 @@ export function Workspace() {
           </div>
         </div>
       </main>
+      <footer className="foot">
+        <p>{L.footSource}</p>
+        <p lang={s.lang}>{L.l10nNote}</p>
+      </footer>
     </>
   );
 }

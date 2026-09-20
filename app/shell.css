@@ -141,3 +141,6 @@
 @keyframes node-a { 0%, 100% { background: var(--surface); } 30% { background: var(--accent); box-shadow: 0 0 0 7px var(--accent-soft), 0 0 18px var(--glow); } }
 @keyframes node-b { 0%, 100% { background: var(--surface); } 30% { background: var(--accent); box-shadow: 0 0 0 7px var(--accent-soft), 0 0 18px var(--glow); } }
 @media (max-width: 900px) { .area::before, .area::after { display: none; } }
+
+.foot { max-width: 1360px; margin: 0 auto; padding: 0 32px 56px 100px; display: grid; gap: 4px; color: var(--ink-3); font-size: 13px; }
+@media (max-width: 900px) { .foot { padding: 0 16px 40px; } }
