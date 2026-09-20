@@ -5,7 +5,7 @@
 .fchip:hover { border-color: var(--accent); color: var(--ink); }
 .fchip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 600; }
 .tabs { --i: 0; position: relative; display: inline-grid; grid-template-columns: repeat(var(--n), auto); padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line-strong); }
-.tabs[data-i="1"] { --i: 1; } .tabs[data-i="2"] { --i: 2; } .tabs[data-i="3"] { --i: 3; }
+.tabs[data-i="1"] { --i: 1; } .tabs[data-i="2"] { --i: 2; } .tabs[data-i="3"] { --i: 3; } .tabs[data-i="4"] { --i: 4; }
 .tabs button { position: relative; z-index: 1; height: 36px; padding: 0 18px; border: 0; background: transparent; color: var(--ink-2); font: inherit; font-weight: 500; cursor: pointer; border-radius: 999px; transition: color .25s; }
 .tabs button[aria-selected="true"] { color: var(--bg); }
 .tabs-ind { position: absolute; z-index: 0; top: 4px; bottom: 4px; inset-inline-start: 4px; width: calc((100% - 8px) / var(--n)); border-radius: 999px; background: var(--ink); box-shadow: 0 0 18px -2px var(--glow); transform: translateX(calc(var(--i) * 100%)); transition: transform .4s cubic-bezier(.3, 1.15, .5, 1); }
@@ -72,6 +72,7 @@
 .bars-grid span em { position: absolute; bottom: 0; inset-inline-start: 6px; font-style: normal; font-size: 12px; color: var(--ink-3); }
 .bars-grid .bars-target { border-inline-start: 2px dashed var(--ink-2); }
 .bars-grid .bars-target em { top: -2px; bottom: auto; color: var(--ink-2); font-weight: 600; white-space: nowrap; }
+.bars-cap { display: flex; justify-content: flex-end; padding-bottom: 10px; color: var(--ink-3); font-size: 12.5px; }
 .crow { display: grid; grid-template-columns: var(--label-col) minmax(0, 1fr) var(--gap-col); align-items: center; min-height: 56px; position: relative; animation: rise .5s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 80ms); }
 .clabel { display: flex; align-items: center; gap: 10px; padding-inline-end: 14px; font-weight: 500; line-height: 1.25; }
 .clabel small { color: var(--ink-3); font-size: 12px; font-weight: 400; white-space: nowrap; }
@@ -135,3 +136,26 @@
   .cgap { display: none; }
   .overview { padding: 18px 16px 24px; }
 }
+
+/* Baseline: every indicator against its median country */
+.baseline { padding: 24px 28px 30px; display: grid; gap: 22px; }
+.bl-legend { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--ink-3); font-size: 13.5px; }
+.bl-scale { display: flex; align-items: center; gap: 10px; }
+.bl-dim { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+.bl-row { display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr) minmax(150px, 210px); gap: 20px; align-items: center; min-height: 58px; padding: 6px 0; border-top: 1px solid var(--line); }
+.bl-name { display: grid; gap: 1px; }
+.bl-name b { font-weight: 600; font-size: 14.5px; }
+.bl-name span { font-size: 12.5px; color: var(--ink-3); }
+.bl-track { position: relative; height: 34px; }
+.bl-band { position: absolute; top: 6px; bottom: 6px; border-radius: 8px; background: var(--accent-soft); }
+.bl-mid { position: absolute; top: 0; bottom: 0; width: 0; border-inline-start: 2px solid var(--ink-3); }
+.bl-line { position: absolute; top: 50%; height: 1px; background: var(--line-strong); inset-inline: 0; }
+.bl-bar { position: absolute; top: 50%; height: 6px; translate: 0 -50%; border-radius: 3px; opacity: .55; transition: inset-inline-start .8s cubic-bezier(.2,.8,.2,1), width .8s cubic-bezier(.2,.8,.2,1); }
+.bl-dot { position: absolute; top: 50%; width: 12px; height: 12px; translate: -50% -50%; border-radius: 50%; border: 2px solid var(--surface); box-sizing: content-box; transition: inset-inline-start .8s cubic-bezier(.2,.8,.2,1); }
+[dir="rtl"] .bl-dot { translate: 50% -50%; }
+.bl-dot.subject { width: 16px; height: 16px; box-shadow: 0 0 14px var(--glow); z-index: 2; }
+.bl-dot.group { border-radius: 4px; }
+.bl-none { display: grid; place-content: center; height: 100%; color: var(--ink-3); font-size: 13px; border-radius: 8px; background-image: repeating-linear-gradient(135deg, transparent 0 6px, var(--line) 6px 7px); }
+.bl-val { display: grid; gap: 2px; justify-items: end; text-align: end; font-size: 13px; color: var(--ink-3); }
+.bl-val b { font-size: 16px; color: var(--ink); font-weight: 600; }
+@media (max-width: 1000px) { .bl-row { grid-template-columns: 1fr; gap: 6px; } .bl-val { justify-items: start; text-align: start; } .baseline { padding: 18px 16px 24px; } }
