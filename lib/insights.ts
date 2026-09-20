@@ -66,9 +66,23 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   const stale = rows.filter(({ s }) => { const o: Obs | undefined = latest(s); return !o || REFERENCE_YEAR - o[0] > STALE_AFTER; });
   if (stale.length) out.push({ id: "limits", tone: "limit", text: tpl(F.noRecent, { n: stale.length, m: rows.length, y: REFERENCE_YEAR - STALE_AFTER, c }) });
 
-  // 4. One method note for the leading finding, in the source's own words.
-  const lead = out.find((f) => f.indicatorId);
+  // 4. Where the source database has moved on, or flags how the value was produced (both cited from the SDG database).
+  const newer = rows.flatMap(({ ind, s }) => {
+    const l = latest(s), m = ds.data[ind.id].meta?.latest?.[subject];
+    if (!l || !m) return [];
+    const [, , , , y, v] = m, rel = Math.abs(v - l[1]) / Math.max(1e-9, Math.abs(l[1]));
+    return y > l[0] || rel > 0.01 ? [{ ind, l, y, v, rel: rel + (y > l[0] ? 1 : 0) }] : [];
+  }).sort((a, b) => b.rel - a.rel)[0];
+  if (newer) out.push({ id: `newer-${newer.ind.id}`, tone: "limit", indicatorId: newer.ind.id, view: "trend", lang: lang === "en" ? "en" : undefined, text: tpl(F.newer, { ind: iso(newer.ind.short), c, a: valueText(newer.ind, newer.v, lang), y: newer.y, b: valueText(newer.ind, newer.l[1], lang), y0: newer.l[0] }) });
+
+  const lead = out.find((f) => f.indicatorId && f.tone !== "limit");
   const leadInd = lead && ds.indicators.find((i) => i.id === lead.indicatorId);
-  if (leadInd) out.push({ id: `note-${leadInd.id}`, tone: "note", indicatorId: leadInd.id, lang: "en", text: `${leadInd.short}: ${leadInd.notes}` });
+  const lm = leadInd && ds.data[leadInd.id].meta;
+  const info = lm?.latest?.[subject];
+  if (leadInd && lm && info) {
+    const label = lm.nature.find((n) => n.code === info[0])?.label;
+    const src = lm.sourceNames?.[info[1]];
+    if (label && src) out.push({ id: `note-${leadInd.id}`, tone: "note", indicatorId: leadInd.id, view: "compare", lang: "en", text: tpl(F.natureNote, { ind: iso(leadInd.short), c, label, src }) });
+  }
   return out;
 }
