@@ -76,7 +76,7 @@ export function Workspace() {
       <a className="skip" href="#main">{L.skip}</a>
       <Topbar lang={s.lang} country={s.country} options={options.filter((o) => o.kind === "country")} onCountry={(c) => pickCountry(c)} onLang={(lang) => patch({ lang })} />
       <main id="main" className="page">
-        <div className="stack" data-trace={traceKey} key={traceKey ? "t" : "n"} style={{ gridColumn: 2 }}>
+        <div className="stack" data-trace={traceKey ? (traceKey % 2 ? "a" : "b") : undefined} style={{ gridColumn: 2 }}>
           <div className="area area-insight">
             <InsightPanel ds={ds} lang={s.lang} ind={ind} country={s.country} comps={s.comps} findings={findings} options={options}
               onAdd={(c: Comparator) => patch({ comps: [...s.comps, c].slice(0, MAX_COMPARATORS) })} onRemove={(i) => patch({ comps: s.comps.filter((_, j) => j !== i) })}

@@ -125,3 +125,19 @@
 .ev-dcid code { font-family: ui-monospace, "SF Mono", Menlo, monospace; overflow-wrap: anywhere; }
 .ev-sources { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); }
 @media (max-width: 1000px) { .ev { padding: 22px 18px 18px; } .ev-grid { grid-template-columns: 1fr; gap: 28px; } .ev-dl { grid-template-columns: 1fr; } }
+
+/* Evidence rail: Insight -> Visualisation -> Evidence. Nodes mark the three areas; a pulse travels down when a finding is traced. */
+.area { position: relative; --d: 0; }
+.area-viz { --d: 1; } .area-evidence { --d: 2; }
+.area::before { content: ""; position: absolute; inset-inline-start: -40px; top: 26px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); z-index: 1; box-shadow: 0 0 0 4px var(--accent-soft); }
+.area:not(:last-child)::after { content: ""; position: absolute; inset-inline-start: -35px; top: 38px; width: 2px; height: calc(100% + 28px); border-radius: 1px;
+  background: linear-gradient(to bottom, transparent, var(--accent) 50%, transparent) 0 -120% / 100% 60% no-repeat, linear-gradient(var(--line-strong), var(--line-strong)); }
+.stack[data-trace] .area:not(:last-child)::after { animation: sweep-a .9s cubic-bezier(.4, 0, .2, 1) both; animation-delay: calc(var(--d) * .5s); }
+.stack[data-trace="b"] .area:not(:last-child)::after { animation-name: sweep-b; }
+.stack[data-trace] .area::before { animation: node-a 1s ease both; animation-delay: calc(var(--d) * .5s); }
+.stack[data-trace="b"] .area::before { animation-name: node-b; }
+@keyframes sweep-a { from { background-position: 0 -120%, 0 0; } to { background-position: 0 260%, 0 0; } }
+@keyframes sweep-b { from { background-position: 0 -120%, 0 0; } to { background-position: 0 260%, 0 0; } }
+@keyframes node-a { 0%, 100% { background: var(--surface); } 30% { background: var(--accent); box-shadow: 0 0 0 7px var(--accent-soft), 0 0 18px var(--glow); } }
+@keyframes node-b { 0%, 100% { background: var(--surface); } 30% { background: var(--accent); box-shadow: 0 0 0 7px var(--accent-soft), 0 0 18px var(--glow); } }
+@media (max-width: 900px) { .area::before, .area::after { display: none; } }
