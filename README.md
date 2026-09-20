@@ -136,7 +136,7 @@ docs/                 architecture, data sources, design, metrics, specification
 - Numeric target lines appear only where the official target text states a number (under-five mortality, maternal mortality).
 - The Data Commons graph lists no "source updated" date, so the app says so instead of inventing one.
 - Greece and Slovenia lack UN sub-region membership in the REST responses we could retrieve.
-- Custom peer groups are built from chosen countries and UN groupings. Filtering by thematic characteristics needs metadata the graph does not expose.
+- Custom peer groups are built by choosing three or more countries (or using UN groupings) and are compared by their median. Building groups by thematic characteristics needs metadata the graph does not expose.
 - Phase two of the specification (linking indicators to UN efforts) is not built.
 
 ## More
