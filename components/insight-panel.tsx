@@ -8,12 +8,14 @@ import { MAX_COMPARATORS } from "@/lib/state";
 import type { Comparator, Dataset, Indicator } from "@/lib/types";
 import { Combobox, type Option } from "./combobox";
 import { Globe } from "./globe";
+import { GroupBuilder } from "./group-builder";
 import { ToneTag } from "./tone";
 
 const TONE_LABEL = (L: ReturnType<typeof t>, f: Finding) =>
   ({ ahead: L.ahead, behind: L.behind, better: L.better, worse: L.worse, flat: L.flat, limit: L.limits, note: L.note })[f.tone];
 
-export function InsightPanel({ ds, lang, ind, country, comps, findings, options, onAdd, onRemove, onTrace, onPickCountry }: {
+export function InsightPanel({ ds, lang, ind, country, comps, findings, options, onAdd, onRemove, onTrace, onPickCountry, countries }: {
+  countries: string[];
   ds: Dataset; lang: Lang; ind: Indicator; country: string | null; comps: Comparator[]; findings: Finding[]; options: Option[];
   onAdd: (c: Comparator) => void; onRemove: (i: number) => void; onTrace: (f: Finding) => void; onPickCountry: (iso3: string, additive: boolean) => void;
 }) {
@@ -48,8 +50,9 @@ export function InsightPanel({ ds, lang, ind, country, comps, findings, options,
               </span>
             ))}
             {comps.length < MAX_COMPARATORS
-              ? <Combobox options={addable} placeholder={L.search} empty={L.noData} triggerClass="pick pick-ghost" onPick={(o) => onAdd({ kind: o.kind, id: o.id })}
+              ? <><Combobox options={addable} placeholder={L.search} empty={L.noData} triggerClass="pick pick-ghost" onPick={(o) => onAdd({ kind: o.kind, id: o.id })}
                   trigger={<><svg viewBox="0 0 16 16" width="14" height="14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><path d="M8 3v10M3 8h10" /></svg>{L.add}</>} />
+                <GroupBuilder lang={lang} countries={countries.filter((c) => c !== country)} onAdd={(m) => onAdd({ kind: "custom", id: m.join("+") })} /></>
               : <span className="vs-max">{L.maxComp}</span>}
           </div>
         </div>

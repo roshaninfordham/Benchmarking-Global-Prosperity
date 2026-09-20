@@ -81,7 +81,7 @@ export function Workspace() {
           <div className="area area-insight">
             <InsightPanel ds={ds} lang={s.lang} ind={ind} country={s.country} comps={s.comps} findings={findings} options={options}
               onAdd={(c: Comparator) => patch({ comps: [...s.comps, c].slice(0, MAX_COMPARATORS) })} onRemove={(i) => patch({ comps: s.comps.filter((_, j) => j !== i) })}
-              onTrace={trace} onPickCountry={pickCountry} />
+              onTrace={trace} onPickCountry={pickCountry} countries={withData} />
           </div>
           <div className="area area-viz" ref={vizRef}>
             <VizPanel ds={ds} lang={s.lang} state={s} patch={patch} onPickCountry={pickCountry} />
