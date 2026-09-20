@@ -1,8 +1,8 @@
 import { isLang, type Lang } from "./i18n";
 import type { Comparator } from "./types";
 
-export type View = "overview" | "compare" | "trend" | "map";
-export const VIEWS: View[] = ["overview", "compare", "trend", "map"];
+export type View = "overview" | "baseline" | "compare" | "trend" | "map";
+export const VIEWS: View[] = ["overview", "baseline", "compare", "trend", "map"];
 export const MAX_COMPARATORS = 3;
 
 export interface State { lang: Lang; country: string | null; comps: Comparator[]; indicator: string; view: View; dim: string }
