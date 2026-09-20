@@ -4,7 +4,7 @@
 .fchip { height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-2); font: inherit; font-size: 13.5px; cursor: pointer; transition: all .2s; }
 .fchip:hover { border-color: var(--accent); color: var(--ink); }
 .fchip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 600; }
-.tabs { --i: 0; position: relative; display: inline-grid; grid-template-columns: repeat(var(--n), auto); padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line-strong); }
+.tabs { --i: 0; position: relative; display: inline-grid; grid-template-columns: repeat(var(--n), minmax(92px, 1fr)); padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line-strong); }
 .tabs[data-i="1"] { --i: 1; } .tabs[data-i="2"] { --i: 2; } .tabs[data-i="3"] { --i: 3; } .tabs[data-i="4"] { --i: 4; }
 .tabs button { position: relative; z-index: 1; height: 36px; padding: 0 18px; border: 0; background: transparent; color: var(--ink-2); font: inherit; font-weight: 500; cursor: pointer; border-radius: 999px; transition: color .25s; }
 .tabs button[aria-selected="true"] { color: var(--bg); }
