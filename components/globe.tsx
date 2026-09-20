@@ -41,7 +41,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
 
   const latestVals = useMemo(() => allLatest(ds, ind), [ds, ind]);
   const P = useRef({ latestVals, subject, comps, flat, ind, ds });
-  P.current = { latestVals, subject, comps, flat, ind, ds };
+  useEffect(() => { P.current = { latestVals, subject, comps, flat, ind, ds }; }); // read by the draw loop; runs before the redraw effects below
 
   const draw = useCallback(() => {
     const c = cv.current;
@@ -170,7 +170,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
   const tipVal = tip ? latestVals[tip.iso] as Obs | undefined : undefined;
   return (
     <div ref={box} className={`globe ${className ?? ""}`} style={{ aspectRatio: String(ratio ?? (flat ? 2 : 1)) }}>
-      <canvas ref={cv} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerLeave={() => { setTip(null); }} style={{ cursor: !interactive ? "default" : flat ? "pointer" : drag.current ? "grabbing" : "grab", touchAction: "none" }} aria-hidden={!interactive} />
+      <canvas ref={cv} onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerLeave={() => { setTip(null); }} style={{ cursor: !interactive ? "default" : flat ? "pointer" : "grab", touchAction: "none" }} aria-hidden={!interactive} />
       {tip && (
         <div className="tip" style={{ left: tip.x, top: tip.y }} role="status">
           <b>{countryName(tip.iso, lang)}</b>
