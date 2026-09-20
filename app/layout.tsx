@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Sans_Condensed, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import "./shell.css";
+import "./viz.css";
 
 const plex = IBM_Plex_Sans({ variable: "--font-plex", subsets: ["latin", "cyrillic"], weight: ["400", "500", "600"], display: "swap" });
 const plexCond = IBM_Plex_Sans_Condensed({ variable: "--font-plex-cond", subsets: ["latin", "cyrillic"], weight: ["500", "600", "700"], display: "swap" });
