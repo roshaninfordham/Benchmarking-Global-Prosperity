@@ -1,6 +1,9 @@
 import countries from "i18n-iso-countries";
 import type { IndicatorMeta } from "./types";
 
+/** Some agency names in the SDG API carry a "SOURCE:" prefix and an extraction note. Keep just the name. */
+export const cleanSource = (s: string) => s.replace(/^SOURCE:\s*/i, "").split(/\s*Data extracted/i)[0].replace(/[.\s]+$/, "");
+
 export const SDG_PORTAL = "https://unstats.un.org/sdgs/dataportal/database";
 const m49 = (iso3: string) => { const n = countries.alpha3ToNumeric(iso3); return n ? String(Number(n)) : undefined; };
 

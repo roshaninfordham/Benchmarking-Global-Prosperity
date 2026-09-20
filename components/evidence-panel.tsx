@@ -1,8 +1,9 @@
 "use client";
 import { useMemo, useState } from "react";
+import { censoredText } from "@/lib/censor";
 import { countryName, fmt, t, type Lang } from "@/lib/i18n";
 import { buildSeries, type Series } from "@/lib/series";
-import { SDG_PORTAL, officialLink } from "@/lib/sources";
+import { SDG_PORTAL, cleanSource, officialLink } from "@/lib/sources";
 import type { State } from "@/lib/state";
 import { isStale, latest } from "@/lib/stats";
 import type { Dataset, Indicator, IndicatorMeta } from "@/lib/types";
@@ -21,14 +22,16 @@ function VerifyRow({ ds, ind, meta, iso, name, lang, obs }: { ds: Dataset; ind: 
   const o = obs ?? latest(ds.data[ind.id].obs[iso]);
   const info = meta?.latest?.[iso];
   const link = officialLink(meta, ind.dcid, iso);
+  const cText = o ? censoredText(ds, ind.id, iso, o[0]) : undefined;
+  const offCens = Object.entries(ds.data[ind.id].censored?.[iso] ?? {}).sort((a, b) => Number(a[0]) - Number(b[0])).at(-1);
   const label = info && meta?.nature.find((n) => n.code === info[0])?.label;
   const newer = o && info && (info[4] > o[0] || Math.abs(info[5] - o[1]) > 0.01 * Math.max(1e-9, Math.abs(o[1])));
   return (
     <tr>
       <th scope="row">{name}</th>
-      <td className="num">{o ? <>{fmt(o[1], lang, 2)} <span className="yr">{o[0]}</span></> : "—"}</td>
-      <td className="num">{info ? <span className={newer ? "diff-cell" : undefined}>{fmt(info[5], lang, 2)} <span className="yr">{info[4]}</span></span> : meta?.latest ? L.notInSource : "—"}</td>
-      <td className="ev-nature">{label ? <><span lang="en">{label}</span>{meta?.sourceNames?.[info![1]] && <small lang="en">{meta.sourceNames[info![1]]}</small>}{info![2] != null && info![3] != null && <small className="num">{L.uncertainty}: {fmt(Number(info![2]), lang, 1)}–{fmt(Number(info![3]), lang, 1)}</small>}</> : "—"}</td>
+      <td className="num">{o ? <><span title={cText ? L.censoredHint : undefined}>{cText ?? fmt(o[1], lang, 2)}</span> <span className="yr">{o[0]}</span></> : "—"}</td>
+      <td className="num">{info ? <span className={newer ? "diff-cell" : undefined}>{fmt(info[5], lang, 2)} <span className="yr">{info[4]}</span></span> : offCens ? <span title={L.censoredHint}>{offCens[1]} <span className="yr">{offCens[0]}</span></span> : meta?.latest ? L.notInSource : "—"}</td>
+      <td className="ev-nature">{label ? <><span lang="en">{label}</span>{meta?.sourceNames?.[info![1]] && <small lang="en">{cleanSource(meta.sourceNames[info![1]])}</small>}{info![2] != null && info![3] != null && <small className="num">{L.uncertainty}: {fmt(Number(info![2]), lang, 1)}–{fmt(Number(info![3]), lang, 1)}</small>}</> : "—"}</td>
       <td>{link ? <Ext small href={link.url}>{link.kind === "sdg" ? L.sdgApi : L.undpPage}</Ext> : null}</td>
     </tr>
   );
@@ -70,6 +73,8 @@ export function EvidencePanel({ ds, lang, state }: { ds: Dataset; lang: Lang; st
   const flags = [
     subject && !subject.latest && { tone: "limit" as const, text: `${L.noDataFor} ${subject.label}` },
     subject?.obs.length && isStale(subject.obs.at(-1)) && { tone: "limit" as const, text: `${subject.label}: ${L.stale}, ${subject.obs.at(-1)![0]}` },
+    subject?.censored ? { tone: "note" as const, text: `${subject.label}: ${L.censoredHint} (${subject.censored})` } : null,
+    ...series.filter((s) => s.group).flatMap((s) => { const n = s.group!.points.filter((p) => censoredText(ds, ind.id, p.c, p.o[0])).length; return n ? [{ tone: "note" as const, text: `${s.label}: ${L.censoredNote.replace("{n}", String(n))}` }] : []; }),
     ...series.filter((s) => s.group).map((s) => ({ tone: "note" as const, text: `${s.label}: ${L.members} ${s.group!.n}/${s.group!.total} · ${L.groupNote}` })),
     ...series.filter((s) => s.kind === "group" && !s.group).map((s) => ({ tone: "limit" as const, text: `${s.label}: ${L.noData}` })),
   ].filter(Boolean) as { tone: "limit" | "note"; text: string }[];
@@ -96,7 +101,7 @@ export function EvidencePanel({ ds, lang, state }: { ds: Dataset; lang: Lang; st
             <dl className="ev-dl">
               <div><dt>{L.unit}</dt><dd lang="en">{ind.unit}</dd></div>
               <div><dt>{L.source}</dt><dd lang="en">{ev.provenance}{meta?.release ? ` · ${L.release} ${meta.release}` : ""}</dd></div>
-              <div><dt>{L.agencies}</dt><dd lang="en">{meta?.sources.slice(0, 3).map((s) => `${s.name} (${s.n})`).join("; ") ?? L.notPublished}</dd></div>
+              <div><dt>{L.agencies}</dt><dd lang="en">{meta?.sources.slice(0, 3).map((s) => `${cleanSource(s.name)} (${s.n})`).join("; ") ?? L.notPublished}</dd></div>
               <div><dt>{L.natureCol}</dt><dd lang="en">{meta?.nature.length ? meta.nature.map((n) => `${n.label} ${pct(n.n / natureTotal)}`).join(" · ") : L.basisUnknown}</dd></div>
               <div><dt>{L.snapshotCheck}</dt><dd className="num">{ver ? <><b>{pct(ver.identicalRate)}</b> {L.identicalWord}, {pct(ver.within1pct / ver.checked)} ≤1%, n = {ver.checked.toLocaleString()}</> : "—"}</dd></div>
               <div><dt>{L.updated}</dt><dd>{L.notPublished}</dd></div>
