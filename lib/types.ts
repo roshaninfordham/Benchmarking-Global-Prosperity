@@ -26,7 +26,7 @@ export interface IndicatorMeta {
   latest?: Record<string, [string, number, string | null, string | null, number, number]>;
   dataUrl: string;
 }
-export interface Verification { checked: number; identical: number; within1pct: number; absentInApi: number; identicalRate: number; medianRelativeDifference?: number; countriesWithNewerYearInApi?: number; source: string }
+export interface Verification { censoredAtSource?: number; identicalOfComparable?: number; checked: number; identical: number; within1pct: number; absentInApi: number; identicalRate: number; medianRelativeDifference?: number; countriesWithNewerYearInApi?: number; source: string }
 
 export interface Evidence {
   graphName: string;
@@ -42,10 +42,9 @@ export interface Group { id: string; name: string; short?: string; type: string;
 export interface Dimension { id: string; name: string }
 
 export interface Dataset {
-  generatedAt: string;
   dimensions: Dimension[];
   indicators: Indicator[];
-  data: Record<string, { obs: Record<string, Obs[]>; evidence: Evidence; meta?: IndicatorMeta; verification?: Verification }>;
+  data: Record<string, { obs: Record<string, Obs[]>; evidence: Evidence; meta?: IndicatorMeta; verification?: Verification; censored?: Record<string, Record<string, string>> }>;
   apiRelease?: string;
   countries: string[];
   groups: Group[];
