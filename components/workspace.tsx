@@ -23,12 +23,12 @@ export function Workspace() {
 
   // Read the shared link once the data is here (it decides which ids are valid).
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from the URL, which needs the loaded dataset
     if (!ds) return;
     const q = location.search;
     const st = fromQuery(q, { indicators: ds.indicators.map((i) => i.id), countries: ds.countries, groups: ds.groups.map((g) => g.id), dims: ds.dimensions.map((d) => d.id) });
     const stored = document.documentElement.lang as Lang;
     setS(new URLSearchParams(q).has("lang") || !q ? { ...st, lang: new URLSearchParams(q).has("lang") ? st.lang : stored in { en: 1, fr: 1, es: 1, ru: 1, zh: 1, ar: 1 } ? stored : "en" } : st);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from the URL, which needs the loaded dataset
     setReady(true);
   }, [ds]);
 
