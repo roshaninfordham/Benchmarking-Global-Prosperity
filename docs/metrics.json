@@ -7,8 +7,8 @@
  "observations": 48089,
  "groups": 35,
  "latestObservationsWithinFiveYears": 0.8,
- "payloadBytes": 995702,
- "payloadGzipBytes": 248412,
+ "payloadBytes": 1012759,
+ "payloadGzipBytes": 250093,
  "verification": {
   "observationsChecked": 48089,
   "identicalRate": 0.9395,

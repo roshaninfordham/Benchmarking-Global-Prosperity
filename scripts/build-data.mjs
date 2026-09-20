@@ -9,6 +9,7 @@ const iso = require("i18n-iso-countries");
 const registry = JSON.parse(readFileSync("data/registry.json", "utf8"));
 const geo = JSON.parse(readFileSync("data/geo.json", "utf8"));
 const sdgMeta = existsSync("data/sdg-meta.json") ? JSON.parse(readFileSync("data/sdg-meta.json", "utf8")) : { indicators: {} };
+const censored = existsSync("data/censored.json") ? JSON.parse(readFileSync("data/censored.json", "utf8")) : {};
 const verification = existsSync("data/verification.json") ? JSON.parse(readFileSync("data/verification.json", "utf8")) : { results: {} };
 const valid = new Set(Object.keys(iso.getAlpha3Codes()));
 const round = (v) => Number(Number(v).toPrecision(5));
@@ -29,7 +30,7 @@ for (const ind of registry.indicators) {
   const prov = Object.values(snap.provenances)[0] ?? {};
   indicators[ind.id] = {
     obs,
-    meta: sdgMeta.indicators[ind.id], verification: verification.results[ind.id],
+    meta: sdgMeta.indicators[ind.id], verification: verification.results[ind.id], censored: censored[ind.id],
     evidence: {
       graphName: snap.graphName, facetId: snap.facetId, period: snap.observationPeriod,
       datasetUrl: snap.provenanceUrl ?? prov.url, provenance: prov.isPartOf ?? prov.source,
@@ -48,7 +49,7 @@ const continents = Object.entries(geo.groups).filter(([, g]) => g.type === "Cont
 mkdirSync("public/data", { recursive: true });
 mkdirSync("docs", { recursive: true });
 const payload = JSON.stringify({
-  generatedAt: new Date().toISOString(), apiRelease: sdgMeta.apiRelease, dimensions: registry.dimensions,
+  apiRelease: sdgMeta.apiRelease, dimensions: registry.dimensions,
   indicators: registry.indicators.map((i) => ({ ...i, metaUrl: sdgMeta.indicators[i.id]?.metaUrl ?? i.metaUrl })),
   data: indicators, countries, groups: [...groups, ...continents],
 });
