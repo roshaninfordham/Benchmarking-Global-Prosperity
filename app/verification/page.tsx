@@ -28,7 +28,7 @@ export default function Page() {
         <h2>Checks by indicator</h2>
         <div className="tscroll">
           <table className="dtable">
-            <thead><tr><th>Indicator</th><th>Compared with</th><th>Checked</th><th>Identical</th><th>Within 1%</th><th>Not in source</th><th>Countries with a newer year at source</th></tr></thead>
+            <thead><tr><th>Indicator</th><th>Compared with</th><th>Checked</th><th>Identical</th><th>Within 1%</th><th>No numeric value at source</th><th>Countries with a newer year at source</th></tr></thead>
             <tbody>
               {registry.indicators.map((i) => { const r = results[i.id]; return r ? (
                 <tr key={i.id}><td>{i.short}</td><td>{r.source}</td><td className="num">{r.checked.toLocaleString()}</td><td className="num">{pct(r.identicalRate)}</td><td className="num">{pct(r.within1pct / r.checked)}</td><td className="num">{r.absentInApi.toLocaleString()}</td><td className="num">{r.countriesWithNewerYearInApi ?? "n/a"}</td></tr>
