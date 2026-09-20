@@ -89,7 +89,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
       const members = c.kind === "country" ? [c.id] : (ds.groups.find((g) => g.id === c.id)?.members ?? []);
       mark(new Set(members), v(`--s${i + 2}`), c.kind === "group" ? 0.9 : 1.8, c.kind === "group" ? 0 : dark ? 10 : 4);
     });
-    if (subject) mark(new Set([subject]), v("--s1"), 2.4, dark ? 18 : 8);
+    if (subject) { mark(new Set([subject]), v("--surface"), 5, 0); mark(new Set([subject]), v("--ink"), 2.2, dark ? 16 : 6); } // ink outline: the series blue is also the ramp hue
 
     ctx.beginPath(); path({ type: "Sphere" }); ctx.strokeStyle = v("--line-strong"); ctx.lineWidth = 1; ctx.stroke();
   }, []);
