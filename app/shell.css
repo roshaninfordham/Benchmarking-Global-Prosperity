@@ -101,7 +101,7 @@
 
 /* Sources & evidence */
 .ev { padding: 30px 32px 22px; animation: swap .45s cubic-bezier(.2,.8,.2,1) both; }
-.ev-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; }
+.ev-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 40px; }
 .ev-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
 .ev-title h3 { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.2; }
 .sdg-chip { font-size: 12.5px; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
@@ -175,3 +175,7 @@
 .vpage code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; background: var(--surface-2); padding: 1px 6px; border-radius: 6px; }
 .vcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 800px) { .vstats, .vcols { grid-template-columns: 1fr; } .vpage { padding: 24px 16px 64px; } }
+
+.ev-table { min-width: 600px; }
+.ev-table td:first-child { min-width: 120px; }
+.ev-table td:nth-child(4) { min-width: 150px; }
