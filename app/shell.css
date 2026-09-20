@@ -156,3 +156,22 @@
 .ev-table .yr { margin-inline-start: 4px; }
 .ev-side .tscroll { max-height: 380px; }
 .ev-def b { font-weight: 600; color: var(--ink); }
+
+/* Verification page */
+.vpage { max-width: 1080px; margin: 0 auto; padding: 36px 32px 96px; display: grid; gap: 28px; }
+.vback { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.vpage h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+.vlead { max-width: 64ch; color: var(--ink-2); font-size: 17px; }
+.vstats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.vstats div { display: grid; gap: 4px; padding: 22px 24px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); }
+.vstats b { font-size: 46px; line-height: 1; font-weight: 700; }
+.vstats span { color: var(--ink-3); }
+.vcard { padding: 26px 28px; }
+.vcard h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; margin-bottom: 14px; }
+.vcard ol { padding-inline-start: 20px; display: grid; gap: 8px; color: var(--ink-2); }
+.vcard p { color: var(--ink-2); margin-bottom: 10px; }
+.vcard a { color: var(--accent-ink); }
+.vnote { font-size: 13.5px; color: var(--ink-3) !important; }
+.vpage code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; background: var(--surface-2); padding: 1px 6px; border-radius: 6px; }
+.vcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 800px) { .vstats, .vcols { grid-template-columns: 1fr; } .vpage { padding: 24px 16px 64px; } }
