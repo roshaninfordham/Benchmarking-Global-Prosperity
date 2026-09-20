@@ -33,6 +33,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
   const box = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const feats = useRef<CountryFeature[]>([]);
+  const islands = useRef<CountryFeature[]>([]);
   const rot = useRef<[number, number, number]>([80, -12, 0]);
   const raf = useRef(0);
   const drag = useRef<{ x: number; y: number; r: [number, number, number]; moved: boolean } | null>(null);
@@ -73,16 +74,27 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     const hx = hatch.getContext("2d")!; hx.fillStyle = v("--land-empty"); hx.fillRect(0, 0, 6, 6); hx.strokeStyle = v("--line-strong"); hx.globalAlpha = 0.7; hx.lineWidth = 1; hx.beginPath(); hx.moveTo(0, 6); hx.lineTo(6, 0); hx.stroke();
     const hatchFill = ctx.createPattern(hatch, "repeat")!;
 
+    const fillFor = (f: CountryFeature) => { const o = f.iso3 ? latestVals[f.iso3] : undefined; return o && ramp ? ramp.scale(o[1]) : hatchFill; };
     for (const f of feats.current) {
       ctx.beginPath(); path(f);
-      const o = f.iso3 ? latestVals[f.iso3] : undefined;
-      ctx.fillStyle = o && ramp ? ramp.scale(o[1]) : hatchFill;
+      ctx.fillStyle = fillFor(f);
       ctx.fill(); ctx.strokeStyle = v("--surface"); ctx.lineWidth = 0.5; ctx.stroke();
+    }
+    // Small islands are real places but far under a pixel at this scale, so each is drawn as a dot.
+    const dot = flat ? 1.3 : 1.7;
+    path.pointRadius(dot);
+    for (const f of islands.current) {
+      ctx.beginPath(); path(f);
+      ctx.fillStyle = fillFor(f);
+      ctx.fill(); ctx.strokeStyle = v("--surface"); ctx.lineWidth = 0.4; ctx.stroke();
     }
 
     const mark = (isos: Set<string>, color: string, w: number, glow: number) => {
       ctx.save(); ctx.lineJoin = "round"; ctx.strokeStyle = color; ctx.lineWidth = w; ctx.shadowColor = color; ctx.shadowBlur = glow;
       for (const f of feats.current) if (f.iso3 && isos.has(f.iso3)) { ctx.beginPath(); path(f); ctx.stroke(); }
+      ctx.lineWidth = Math.min(w, 1.1); // thin ring: islands are dots, a heavy outline would swallow them
+      path.pointRadius(dot + 0.6);
+      for (const f of islands.current) if (f.iso3 && isos.has(f.iso3)) { ctx.beginPath(); path(f); ctx.stroke(); }
       ctx.restore();
     };
     comps.forEach((c, i) => {
@@ -95,7 +107,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
   }, []);
 
   // Load shapes once.
-  useEffect(() => { let live = true; loadCountries().then((f) => { if (live) { feats.current = f; setReady(true); } }); return () => { live = false; }; }, []);
+  useEffect(() => { let live = true; loadCountries().then((w) => { if (live) { feats.current = w.countries; islands.current = w.islands; setReady(true); } }); return () => { live = false; }; }, []);
 
   // Size the canvas to its box.
   useEffect(() => {
@@ -140,7 +152,15 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     const proj = P.current.flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - PAD).translate([W / 2, H / 2]).clipAngle(90);
     const ll = proj.invert?.([x, y]);
     if (!ll || (!P.current.flat && Math.hypot(x - W / 2, y - H / 2) > Math.min(W, H) / 2 - PAD)) return;
-    return feats.current.find((f) => geoContains(f, ll));
+    const area = feats.current.find((f) => geoContains(f, ll));
+    if (area) return area;
+    // Not inside any shape: is the pointer on a small-island dot (Lakshadweep, the Maldives...)?
+    let best: CountryFeature | undefined, bd = 7;
+    for (const f of islands.current) for (const c of (f.geometry as unknown as { coordinates: [number, number][] }).coordinates) {
+      const q = proj(c); if (!q) continue;
+      const d = Math.hypot(q[0] - x, q[1] - y); if (d < bd) { bd = d; best = f; }
+    }
+    return best;
   };
 
   const onDown = (e: React.PointerEvent) => {
