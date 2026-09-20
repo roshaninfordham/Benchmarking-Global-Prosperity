@@ -27,7 +27,7 @@ flowchart LR
   GEO --> BUILD
   VER --> BUILD
   REG --> BUILD
-  BUILD --> JSON[("bgp.json<br/>243 KB compressed")]
+  BUILD --> JSON[("bgp.json<br/>250 KB compressed")]
 
   subgraph App["Next.js on Vercel (static)"]
     INS["Insight<br/>findings"]
@@ -48,7 +48,7 @@ flowchart LR
 | Choice | Reason |
 | --- | --- |
 | Build-time snapshot | The MCP endpoint speaks JSON-RPC over server-sent events and rate-limits the REST arcs, so a browser cannot call it directly. A snapshot removes the proxy, rate-limit handling and outage states, and keeps the deployment independent of a staging service. |
-| One static file | All 18 indicators for 228 areas are 243 KB compressed. Every interaction after load is an in-memory computation with no network request. |
+| One static file | All 18 indicators for 228 areas are 250 KB compressed. Every interaction after load is an in-memory computation with no network request. |
 | Registry in JSON | Directionality, display unit, baseline year and numeric targets are decided once, in one reviewable file. Everything else (titles, target text, agencies, data-nature flags) is read from the SDG API, not written by hand. |
 | Verification in the pipeline | Each refresh compares every observation with the official publisher and stores the result, so a stale or revised value is visible instead of silent. |
 

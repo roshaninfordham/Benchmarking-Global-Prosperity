@@ -19,7 +19,9 @@ Everything here was measured or counted. Where a figure is derived, the derivati
 
 | Measure | Value |
 | --- | ---: |
-| Observations compared with the official publisher | 48,089 (100%) |
+| Observations attempted against the official publisher | 48,089 (100%) |
+| Published at source as a threshold (for example `<2.5`), not a number | 1,159 |
+| Missing at source | 86 |
 | Identical | 45,178 (94.0%) |
 | Within 1% | 45,359 (94.3%) |
 | Series that match exactly | 14 of 18 |
@@ -32,7 +34,7 @@ Everything here was measured or counted. Where a figure is derived, the derivati
 | Time to first byte | 22 ms | Chrome DevTools trace, no throttling |
 | Largest contentful paint | 376 ms | same trace |
 | Cumulative layout shift | 0.00 | same trace |
-| All data, compressed | 243 KB | `payloadGzipBytes` in `docs/metrics.json` |
+| All data, compressed | 250 KB | `payloadGzipBytes` in `docs/metrics.json` |
 | Data requests after first load | 0 | browser network log across country, comparator and view changes |
 | Lighthouse, desktop and mobile | 100 / 100 / 100 | accessibility, best practices, SEO |
 

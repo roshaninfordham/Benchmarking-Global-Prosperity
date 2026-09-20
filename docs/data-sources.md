@@ -26,6 +26,10 @@ Where the graph and the official database disagree, the app shows both. Four of 
 
 All other series match exactly. See `data/verification.json` for every count.
 
+## Values published as thresholds
+
+Some official values are thresholds, not measurements. FAO reports undernourishment for many high-income countries as `<2.5`. The graph stores the bare number `2.5`, which reads as a measurement. The app reads the threshold from the SDG database, shows it as `<2.5`, and never builds a gap, ratio or change from it. 1,159 observations across undernourishment and severe food insecurity are thresholds; 86 more are missing at source.
+
 ## Things found while building
 
 - `search_indicators` with a `places` argument returned HTTP 500 during the build (`failed to resolve place names ... REQUEST_DENIED`, a Google Maps legacy API error on the server). Searching without `places` works, so indicators were found that way and country availability was checked with observations.

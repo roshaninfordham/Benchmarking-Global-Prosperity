@@ -34,6 +34,7 @@ One page, three connected areas, following the specification's rule: **Insight, 
 Design choices that follow from the specification:
 
 - No overall score and no league table. The Baseline view centres each row on the median country and never adds rows together.
+- Values the source publishes as thresholds (for example undernourishment below 2.5%) are shown as `<2.5` and never used to compute a gap, ratio or change.
 - Directionality is stored per indicator, so "better" always points the same way.
 - Observation year is always shown. Older-than-five-years values, gaps between observations and missing data are drawn as marks.
 - Six languages including right-to-left Arabic, light and dark themes, and a table view for the Compare and Trend charts.
@@ -46,12 +47,13 @@ Measured on 2026-09-20. Full method in [docs/metrics.md](docs/metrics.md).
 | --- | ---: |
 | Curated indicators across 4 dimensions | 18 |
 | Observations, from 228 areas | 48,089 |
-| Compared with the official publisher | 100% |
+| Attempted against the official publisher | 100% |
 | Identical to it | **94.0%** |
 | Within 1% of it | 94.3% |
+| Published at source as a threshold, such as <2.5 | 1,159 |
 | Tool calls for the same answer done by hand | 90 |
 | Tool calls in the app after first load | 0 |
-| Data payload, compressed | 243 KB |
+| Data payload, compressed | 250 KB |
 | Largest contentful paint, production | 376 ms |
 | Layout shift | 0.00 |
 | Lighthouse accessibility, best practices, SEO | 100 / 100 / 100 |
@@ -80,7 +82,7 @@ flowchart LR
   REG["registry.json"] --> BUILD["Build: compile"]
   SNAP --> BUILD
   VER --> BUILD
-  BUILD --> JSON[("bgp.json 243 KB")]
+  BUILD --> JSON[("bgp.json 250 KB")]
   JSON --> APP["Static Next.js app on Vercel<br/>Insight → Visualisation → Evidence"]
   APP -- "links" --> SDG
 ```
