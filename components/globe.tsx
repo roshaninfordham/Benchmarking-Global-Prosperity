@@ -26,6 +26,7 @@ export function makeRamp(values: number[], lo: string, hi: string): Ramp {
   return { scale: (v) => s(v), lo: q[0], mid: q[2], hi: q[4] };
 }
 
+const PAD = 30; // room for the atmosphere glow inside the canvas
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive = true, onPick, className, ratio }: Props) {
@@ -53,9 +54,9 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
 
-    const proj = flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - 12).translate([W / 2, H / 2]).clipAngle(90);
+    const proj = flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - PAD).translate([W / 2, H / 2]).clipAngle(90);
     const path = geoPath(proj, ctx);
-    const r = Math.min(W, H) / 2 - 12;
+    const r = Math.min(W, H) / 2 - PAD;
 
     if (!flat) { // atmosphere
       const g = ctx.createRadialGradient(W / 2, H / 2, r * 0.96, W / 2, H / 2, r * 1.18);
@@ -135,7 +136,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
   const hit = (e: React.PointerEvent): CountryFeature | undefined => {
     const c = cv.current!, rect = c.getBoundingClientRect(), W = rect.width, H = rect.height;
     const x = e.clientX - rect.left, y = e.clientY - rect.top;
-    const proj = P.current.flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - 12).translate([W / 2, H / 2]).clipAngle(90);
+    const proj = P.current.flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - PAD).translate([W / 2, H / 2]).clipAngle(90);
     const ll = proj.invert?.([x, y]);
     if (!ll || (!P.current.flat && Math.hypot(x - W / 2, y - H / 2) > Math.min(W, H) / 2 - 12)) return;
     return feats.current.find((f) => geoContains(f, ll));
