@@ -1,0 +1,436 @@
+{
+ "generatedAt": "2026-09-20T20:23:17.718Z",
+ "totals": {
+  "checked": 48089,
+  "identical": 45178,
+  "within1pct": 45359,
+  "identicalRate": 0.9395,
+  "within1pctRate": 0.9432
+ },
+ "results": {
+  "undernourishment": {
+   "source": "UN SDG Global Database API",
+   "checked": 3831,
+   "identical": 1341,
+   "within1pct": 1500,
+   "absentInApi": 1171,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 100,
+   "identicalRate": 0.35,
+   "examples": [
+    {
+     "c": "AFG",
+     "year": 2016,
+     "graph": 20.4,
+     "sdg": [
+      20.5
+     ]
+    },
+    {
+     "c": "AFG",
+     "year": 2017,
+     "graph": 21.3,
+     "sdg": [
+      21.5
+     ]
+    },
+    {
+     "c": "AFG",
+     "year": 2018,
+     "graph": 22.6,
+     "sdg": [
+      23
+     ]
+    },
+    {
+     "c": "AFG",
+     "year": 2019,
+     "graph": 25.1,
+     "sdg": [
+      24.9
+     ]
+    },
+    {
+     "c": "AFG",
+     "year": 2020,
+     "graph": 27.5,
+     "sdg": [
+      28.9
+     ]
+    }
+   ]
+  },
+  "food-insecurity": {
+   "source": "UN SDG Global Database API",
+   "checked": 1132,
+   "identical": 1033,
+   "within1pct": 1033,
+   "absentInApi": 69,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 124,
+   "identicalRate": 0.9125,
+   "examples": [
+    {
+     "c": "AGO",
+     "year": 2019,
+     "graph": 26.9,
+     "sdg": [
+      25.5
+     ]
+    },
+    {
+     "c": "AGO",
+     "year": 2020,
+     "graph": 30.4,
+     "sdg": [
+      28.1
+     ]
+    },
+    {
+     "c": "AGO",
+     "year": 2021,
+     "graph": 31.2,
+     "sdg": [
+      25.3
+     ]
+    },
+    {
+     "c": "BLZ",
+     "year": 2019,
+     "graph": 6,
+     "sdg": [
+      4.4
+     ]
+    },
+    {
+     "c": "BLZ",
+     "year": 2020,
+     "graph": 6,
+     "sdg": [
+      4.4
+     ]
+    }
+   ]
+  },
+  "stunting": {
+   "source": "UN SDG Global Database API",
+   "checked": 4050,
+   "identical": 4050,
+   "within1pct": 4050,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "wasting": {
+   "source": "UN SDG Global Database API",
+   "checked": 845,
+   "identical": 845,
+   "within1pct": 845,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "poverty": {
+   "source": "UN SDG Global Database API",
+   "checked": 2146,
+   "identical": 1892,
+   "within1pct": 1914,
+   "absentInApi": 5,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 70,
+   "identicalRate": 0.8816,
+   "examples": [
+    {
+     "c": "AUS",
+     "year": 2001,
+     "graph": 1,
+     "sdg": [
+      0.9
+     ]
+    },
+    {
+     "c": "AUS",
+     "year": 2003,
+     "graph": 1,
+     "sdg": [
+      1.1
+     ]
+    },
+    {
+     "c": "AUS",
+     "year": 2008,
+     "graph": 0.7,
+     "sdg": [
+      0.5
+     ]
+    },
+    {
+     "c": "AUS",
+     "year": 2010,
+     "graph": 0.3,
+     "sdg": [
+      0.5
+     ]
+    },
+    {
+     "c": "AUS",
+     "year": 2014,
+     "graph": 0.5,
+     "sdg": [
+      0.6
+     ]
+    }
+   ]
+  },
+  "working-poverty": {
+   "source": "UN SDG Global Database API",
+   "checked": 801,
+   "identical": 801,
+   "within1pct": 801,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "youth-neet": {
+   "source": "UN SDG Global Database API",
+   "checked": 2164,
+   "identical": 2164,
+   "within1pct": 2164,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "youth-unemployment": {
+   "source": "UN SDG Global Database API",
+   "checked": 2686,
+   "identical": 2686,
+   "within1pct": 2686,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "social-protection": {
+   "source": "UN SDG Global Database API",
+   "checked": 505,
+   "identical": 505,
+   "within1pct": 505,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "under-five-mortality": {
+   "source": "UN SDG Global Database API",
+   "checked": 4975,
+   "identical": 4975,
+   "within1pct": 4975,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "maternal-mortality": {
+   "source": "UN SDG Global Database API",
+   "checked": 4680,
+   "identical": 4680,
+   "within1pct": 4680,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "uhc-coverage": {
+   "source": "UN SDG Global Database API",
+   "checked": 4680,
+   "identical": 4680,
+   "within1pct": 4680,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "skilled-birth-attendance": {
+   "source": "UN SDG Global Database API",
+   "checked": 2597,
+   "identical": 2597,
+   "within1pct": 2597,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "completion-primary": {
+   "source": "UN SDG Global Database API",
+   "checked": 1161,
+   "identical": 1161,
+   "within1pct": 1161,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "completion-lower-secondary": {
+   "source": "UN SDG Global Database API",
+   "checked": 1237,
+   "identical": 1237,
+   "within1pct": 1237,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "completion-upper-secondary": {
+   "source": "UN SDG Global Database API",
+   "checked": 1244,
+   "identical": 1244,
+   "within1pct": 1244,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "preprimary-participation": {
+   "source": "UN SDG Global Database API",
+   "checked": 2725,
+   "identical": 2725,
+   "within1pct": 2725,
+   "absentInApi": 0,
+   "medianRelativeDifference": 0,
+   "countriesWithNewerYearInApi": 0,
+   "identicalRate": 1,
+   "examples": []
+  },
+  "life-expectancy": {
+   "source": "UNDP HDRO composite indices time series (CSV)",
+   "checked": 6630,
+   "identical": 6562,
+   "within1pct": 6562,
+   "absentInApi": 0,
+   "identicalRate": 0.9897,
+   "examples": [
+    {
+     "c": "HKG",
+     "y": 1990,
+     "graph": 77.448,
+     "undp": "0.955"
+    },
+    {
+     "c": "HKG",
+     "y": 1991,
+     "graph": 77.693,
+     "undp": "77.448"
+    },
+    {
+     "c": "HKG",
+     "y": 1992,
+     "graph": 77.988,
+     "undp": "77.693"
+    },
+    {
+     "c": "HKG",
+     "y": 1993,
+     "graph": 78.327,
+     "undp": "77.988"
+    },
+    {
+     "c": "HKG",
+     "y": 1994,
+     "graph": 78.718,
+     "undp": "78.327"
+    }
+   ]
+  }
+ },
+ "metadataLinks": {
+  "undernourishment": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf",
+   "status": 200
+  },
+  "food-insecurity": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-02.pdf",
+   "status": 200
+  },
+  "stunting": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-01.pdf",
+   "status": 200
+  },
+  "wasting": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-02a.pdf",
+   "status": 200
+  },
+  "poverty": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-01-01a.pdf",
+   "status": 200
+  },
+  "working-poverty": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-01-01a.pdf",
+   "status": 200
+  },
+  "youth-neet": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-08-06-01.pdf",
+   "status": 200
+  },
+  "youth-unemployment": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-08-05-02.pdf",
+   "status": 200
+  },
+  "social-protection": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-03-01a.pdf",
+   "status": 200
+  },
+  "under-five-mortality": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-02-01.pdf",
+   "status": 200
+  },
+  "maternal-mortality": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-01-01.pdf",
+   "status": 200
+  },
+  "life-expectancy": {
+   "url": "https://hdr.undp.org/data-center/documentation-and-downloads",
+   "status": 200
+  },
+  "uhc-coverage": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-01.pdf",
+   "status": 200
+  },
+  "skilled-birth-attendance": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-01-02.pdf",
+   "status": 200
+  },
+  "completion-primary": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf",
+   "status": 200
+  },
+  "completion-lower-secondary": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf",
+   "status": 200
+  },
+  "completion-upper-secondary": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf",
+   "status": 200
+  },
+  "preprimary-participation": {
+   "url": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-02-02.pdf",
+   "status": 200
+  }
+ }
+}
