@@ -25,7 +25,7 @@ function Card({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; l
   const series = useMemo(() => buildSeries(ds, ind, state.country, state.comps, lang), [ds, ind, state.country, state.comps, lang]);
   const subject = series.find((s) => s.isSubject);
   const l = subject?.latest;
-  const ch = useMemo(() => change(subject?.obs, ind), [subject, ind]);
+  const ch = change(subject?.obs, ind);
   const shown = useCountUp(l?.v, `${state.country}-${ind.id}`);
   const stale = subject?.obs.length ? isStale(subject.obs.at(-1)) : false;
   return (

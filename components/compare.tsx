@@ -30,7 +30,7 @@ function Distribution({ ds, ind, lang, series }: { ds: Dataset; ind: Indicator; 
   // Stagger labels so neighbouring marks do not collide.
   const marks = series.filter((s) => s.latest).map((s) => ({ s, px: x(s.latest!.v) })).sort((a, b) => a.px - b.px);
   const rows: number[] = [];
-  const placed = marks.map((m) => { let r = 0; while (rows[r] !== undefined && m.px - rows[r] < 96) r++; rows[r] = m.px; return { ...m, row: r }; });
+  const placed = marks.map((m) => { let r = 0; while (rows[r] !== undefined && m.px - rows[r] < 96) r++; rows[r] = m.px; return m; });
   const near = (e: React.PointerEvent) => {
     const b = e.currentTarget.getBoundingClientRect(), mx = e.clientX - b.left, my = e.clientY - b.top;
     let best: (typeof pts)[number] | undefined, bd = 12;
@@ -45,7 +45,7 @@ function Distribution({ ds, ind, lang, series }: { ds: Dataset; ind: Indicator; 
         <rect x={x(q1)} y={band.y0 - 8} width={Math.max(2, x(q3) - x(q1))} height={band.y1 - band.y0 + 16} rx="8" fill="var(--accent-soft)" />
         <text x={x(q1)} y={band.y1 + 26} fontSize="12" fill="var(--ink-3)">{L.spread}</text>
         {pts.map((p) => <circle key={p.iso} cx={x(p.o[1])} cy={p.cy} r="3.2" fill="var(--ink-3)" opacity={tip?.iso === p.iso ? 1 : 0.38} />)}
-        {placed.map(({ s, px, row }) => (
+        {placed.map(({ s, px }) => (
           <g key={s.key} style={{ transition: "transform .6s cubic-bezier(.2,.8,.2,1)", transform: `translateX(${px}px)` }}>
             <line y1={26} y2={band.y1 + 10} stroke={s.color} strokeWidth="2" style={{ filter: "drop-shadow(0 0 4px var(--glow))" }} />
             <circle cy={band.y0 - 16} r="5" fill={s.color} stroke="var(--surface)" strokeWidth="2" />
