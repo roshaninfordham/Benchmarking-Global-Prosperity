@@ -2,6 +2,7 @@
 // and writes coverage metrics used by the README.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { createRequire } from "node:module";
+import { gzipSync } from "node:zlib";
 const require = createRequire(import.meta.url);
 const iso = require("i18n-iso-countries");
 
@@ -45,10 +46,30 @@ const groups = Object.entries(geo.groups)
 const continents = Object.entries(geo.groups).filter(([, g]) => g.type === "Continent").map(([id, g]) => ({ id, name: g.name, type: g.type, members: g.members.filter((c) => valid.has(c)) }));
 
 mkdirSync("public/data", { recursive: true });
-writeFileSync("public/data/bgp.json", JSON.stringify({
-  generatedAt: new Date().toISOString(), apiRelease: sdgMeta.apiRelease, dimensions: registry.dimensions, indicators: registry.indicators.map((i) => ({ ...i, metaUrl: sdgMeta.indicators[i.id]?.metaUrl ?? i.metaUrl })),
-  data: indicators, countries, groups: [...groups, ...continents],
-}));
 mkdirSync("docs", { recursive: true });
-writeFileSync("docs/metrics.json", JSON.stringify({ indicators: registry.indicators.length, countries: countries.length, observations: totalObs, perIndicator }, null, 1));
-console.log({ indicators: registry.indicators.length, countries: countries.length, groups: groups.length + continents.length, totalObs });
+const payload = JSON.stringify({
+  generatedAt: new Date().toISOString(), apiRelease: sdgMeta.apiRelease, dimensions: registry.dimensions,
+  indicators: registry.indicators.map((i) => ({ ...i, metaUrl: sdgMeta.indicators[i.id]?.metaUrl ?? i.metaUrl })),
+  data: indicators, countries, groups: [...groups, ...continents],
+});
+writeFileSync("public/data/bgp.json", payload);
+
+// Coverage and freshness, measured from the compiled data.
+const REF = 2026;
+const perCountry = {};
+let latestTotal = 0, latestFresh = 0;
+for (const ind of registry.indicators) for (const [c, rows] of Object.entries(indicators[ind.id].obs)) {
+  perCountry[c] = (perCountry[c] ?? 0) + 1; latestTotal++; if (REF - rows.at(-1)[0] <= 5) latestFresh++;
+}
+const counts = Object.values(perCountry).sort((a, b) => a - b);
+const verTotals = verification.totals ?? {};
+writeFileSync("docs/metrics.json", JSON.stringify({
+  indicators: registry.indicators.length, dimensions: registry.dimensions.length, countriesWithAnyData: counts.length,
+  countriesWithAllIndicators: counts.filter((n) => n === registry.indicators.length).length,
+  medianIndicatorsPerCountry: counts[Math.floor(counts.length / 2)], observations: totalObs, groups: groups.length + continents.length,
+  latestObservationsWithinFiveYears: +(latestFresh / latestTotal).toFixed(3),
+  payloadBytes: payload.length, payloadGzipBytes: gzipSync(payload).length,
+  verification: { observationsChecked: verTotals.checked, identicalRate: verTotals.identicalRate, within1pctRate: verTotals.within1pctRate },
+  perIndicator,
+}, null, 1));
+console.log({ indicators: registry.indicators.length, countries: countries.length, groups: groups.length + continents.length, totalObs, gz: gzipSync(payload).length });

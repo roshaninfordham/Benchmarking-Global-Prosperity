@@ -1,7 +1,19 @@
 {
  "indicators": 18,
- "countries": 228,
- "observations": 48179,
+ "dimensions": 4,
+ "countriesWithAnyData": 228,
+ "countriesWithAllIndicators": 60,
+ "medianIndicatorsPerCountry": 16,
+ "observations": 48089,
+ "groups": 35,
+ "latestObservationsWithinFiveYears": 0.8,
+ "payloadBytes": 995702,
+ "payloadGzipBytes": 248412,
+ "verification": {
+  "observationsChecked": 48089,
+  "identicalRate": 0.9395,
+  "within1pctRate": 0.9432
+ },
  "perIndicator": [
   {
    "id": "undernourishment",
@@ -47,8 +59,8 @@
   },
   {
    "id": "youth-unemployment",
-   "countries": 211,
-   "observations": 2776,
+   "countries": 208,
+   "observations": 2686,
    "medianLatestYear": 2023
   },
   {
