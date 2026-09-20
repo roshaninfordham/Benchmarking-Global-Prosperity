@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run data && next dev",
+    "build": "npm run data && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "data": "node scripts/build-data.mjs",
+    "data:snapshot": "node scripts/snapshot.mjs --force && node scripts/geo.mjs && npm run data"
   },
   "dependencies": {
     "d3-array": "^3.2.4",
