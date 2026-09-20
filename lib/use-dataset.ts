@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Dataset } from "./types";
 
 let cache: Promise<Dataset> | undefined;
@@ -8,7 +8,11 @@ const load = () => (cache ??= fetch("/data/bgp.json").then((r) => { if (!r.ok) t
 export function useDataset() {
   const [ds, setDs] = useState<Dataset>();
   const [failed, setFailed] = useState(false);
-  const run = useCallback(() => { setFailed(false); load().then(setDs, () => setFailed(true)); }, []);
-  useEffect(run, [run]);
-  return { ds, failed, retry: run };
+  const [attempt, setAttempt] = useState(0);
+  useEffect(() => {
+    let live = true;
+    load().then((d) => live && setDs(d), () => live && setFailed(true));
+    return () => { live = false; };
+  }, [attempt]);
+  return { ds, failed, retry: () => { setFailed(false); setAttempt((a) => a + 1); } };
 }
