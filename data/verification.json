@@ -58,7 +58,9 @@
       28.9
      ]
     }
-   ]
+   ],
+   "censoredAtSource": 1102,
+   "identicalOfComparable": 0.5041
   },
   "food-insecurity": {
    "source": "UN SDG Global Database API",
@@ -110,7 +112,9 @@
       4.4
      ]
     }
-   ]
+   ],
+   "censoredAtSource": 57,
+   "identicalOfComparable": 0.9718
   },
   "stunting": {
    "source": "UN SDG Global Database API",
@@ -184,7 +188,9 @@
       0.6
      ]
     }
-   ]
+   ],
+   "censoredAtSource": 0,
+   "identicalOfComparable": 0.8837
   },
   "working-poverty": {
    "source": "UN SDG Global Database API",
