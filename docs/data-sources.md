@@ -15,7 +15,7 @@ No. Every observation returned by the graph carries a UN provenance: SDG, ILO, W
 
 ## The graph is behind the SDG database for some series
 
-Where the graph and the official database disagree, the app shows both. The main cases in the 2026-09-20 pull:
+Where the graph and the official database disagree, the app shows both. Four of the 18 series differ in the 2026-09-20 pull:
 
 | Series | Identical | Why it differs |
 | --- | ---: | --- |

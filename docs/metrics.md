@@ -22,7 +22,7 @@ Everything here was measured or counted. Where a figure is derived, the derivati
 | Observations compared with the official publisher | 48,089 (100%) |
 | Identical | 45,178 (94.0%) |
 | Within 1% | 45,359 (94.3%) |
-| Series that match exactly | 15 of 18 |
+| Series that match exactly | 14 of 18 |
 | Methodology links checked and opening | 17 of 17 SDG links, plus UNDP |
 
 ## Speed, production deployment

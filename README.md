@@ -58,7 +58,7 @@ Measured on 2026-09-20. Full method in [docs/metrics.md](docs/metrics.md).
 
 ### Where the graph and the official database differ
 
-15 of the 18 series match the official publisher exactly. Three do not, because the graph is a snapshot of an older release:
+14 of the 18 series match the official publisher exactly. Four do not, mostly because the graph is a snapshot of an older release:
 
 | Series | Identical | Cause |
 | --- | ---: | --- |
