@@ -144,3 +144,15 @@
 
 .foot { max-width: 1360px; margin: 0 auto; padding: 0 32px 56px 100px; display: grid; gap: 4px; color: var(--ink-3); font-size: 13px; }
 @media (max-width: 900px) { .foot { padding: 0 16px 40px; } }
+
+/* Verification table */
+.ext-s { min-height: 28px; padding: 0 10px; font-size: 12.5px; white-space: nowrap; }
+.ev-nature { display: grid; gap: 1px; font-size: 13px; }
+.ev-nature small { color: var(--ink-3); font-size: 12px; }
+.diff-cell { color: var(--warn); font-weight: 600; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; overflow-wrap: anywhere; }
+.member { padding-inline-start: 22px; color: var(--ink-2); }
+.linkbtn { border: 0; background: transparent; color: var(--accent-ink); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+.ev-table .yr { margin-inline-start: 4px; }
+.ev-side .tscroll { max-height: 380px; }
+.ev-def b { font-weight: 600; color: var(--ink); }
