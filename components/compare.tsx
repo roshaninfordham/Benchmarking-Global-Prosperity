@@ -77,8 +77,8 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
         <div className="empty">{subject ? `${L.noDataFor} ${subject.label}` : L.pickCountry}</div>
       ) : table ? (
         <table className="dtable"><thead><tr><th>{L.country}</th><th>{L.latest}</th><th>{L.year}</th><th>{L.gapCol}</th></tr></thead>
-          <tbody>{series.map((s) => { const g = s.latest && subject.latest && !s.isSubject ? gap(subject.latest.v, s.latest.v, ind) : null;
-            return <tr key={s.key}><th scope="row">{s.label}</th><td className="num">{s.latest ? fmt(s.latest.v, lang, 2) : L.noData}</td><td className="num">{s.latest ? (s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year) : "—"}</td><td className="num">{g ? `${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 2)}` : "—"}</td></tr>; })}</tbody></table>
+          <tbody>{series.map((s) => { const g = s.latest && subject.latest && !s.isSubject && !s.censored && !subject.censored ? gap(subject.latest.v, s.latest.v, ind) : null;
+            return <tr key={s.key}><th scope="row">{s.label}</th><td className="num">{s.latest ? (s.censored ?? fmt(s.latest.v, lang, 2)) : L.noData}</td><td className="num">{s.latest ? (s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year) : "—"}</td><td className="num">{g ? `${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 2)}` : "—"}</td></tr>; })}</tbody></table>
       ) : (
         <div className="bars">
           <div className="bars-cap"><span>{L.gapFor.replace("{c}", subject.label)}</span></div>
@@ -87,7 +87,8 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
             {ind.targetValue !== undefined && <span className="bars-target" style={{ insetInlineStart: pct(ind.targetValue) }}><em>{L.target} {ind.targetValue}</em></span>}
           </div>
           {series.map((s, i) => {
-            const g = s.latest && subject.latest && !s.isSubject ? gap(subject.latest.v, s.latest.v, ind) : null;
+            const noGap = !!s.censored || !!subject.censored; // a threshold is not a measurement, so no gap is computed from it
+            const g = s.latest && subject.latest && !s.isSubject && !noGap ? gap(subject.latest.v, s.latest.v, ind) : null;
             const yrDiff = s.latest && subject.latest && Math.abs(s.latest.year - subject.latest.year) > 2;
             return (
               <div className="crow" key={s.key} style={{ ["--i" as string]: i }}>
@@ -95,17 +96,18 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
                 <div className="cplot">
                   {s.latest ? (
                     <>
-                      <div className="cbar" style={{ width: pct(s.latest.v), background: s.color, ["--glowc" as string]: s.color }} />
+                      <div className={s.censored ? "cbar cens" : "cbar"} title={s.censored ? L.censoredHint : undefined} style={{ width: pct(s.latest.v), background: s.color, ["--glowc" as string]: s.color }} />
                       {s.group && <div className="cwhisk" style={{ insetInlineStart: pct(s.group.q1), width: `calc(${pct(s.group.q3)} - ${pct(s.group.q1)})`, borderColor: s.color }} title={L.spread} />}
                       <span className={inside(s) ? "cval num in" : "cval num"} style={inside(s)
                         ? { insetInlineStart: `calc(${pct(s.latest.v)} - 10px)`, color: s.color === SERIES[3] ? "#0c1a2b" : "#fff" }
                         : { insetInlineStart: `calc(${pct(Math.max(s.latest.v, s.group?.q3 ?? 0))} + 10px)` }}>
-                        <b>{fmt(s.latest.v, lang, 2)}</b><em className={yrDiff ? "yr diff" : "yr"}>{s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year}</em>
+                        <b>{s.censored ?? fmt(s.latest.v, lang, 2)}</b><em className={yrDiff ? "yr diff" : "yr"}>{s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year}</em>
                       </span>
                     </>
                   ) : <span className="cnone">{L.noData}</span>}
                 </div>
                 <div className="cgap num">
+                  {!g && !s.isSubject && noGap && <span className="cens-dash" title={L.censoredHint}>—</span>}
                   {g && <><ToneTag tone={g.favourable ? "ahead" : "behind"} label={`${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 1)}${g.ratio && g.ratio >= 1.5 && Math.min(subject.latest!.v, s.latest!.v) >= 1 ? ` · ${fmt(g.ratio, lang)}×` : ""}`} />{yrDiff && <span className="yr-warn" role="img" aria-label={L.stale} title={L.findings.years.replace("{c}", subject.label).replace("{y1}", String(subject.latest!.year)).replace("{cmp}", s.label).replace("{y2}", String(s.latest!.year))}><ToneTag tone="limit" label="" /></span>}</>}
                 </div>
               </div>

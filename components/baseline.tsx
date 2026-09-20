@@ -20,7 +20,7 @@ function Row({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; la
   const z = (v: number) => (orient * (v - w!.median)) / spread;
   const pos = (v: number) => ((Math.max(-D, Math.min(D, z(v))) + D) / (2 * D)) * 100;
   const sl = subject?.latest;
-  const g = w && sl ? gap(sl.v, w.median, ind) : null;
+  const g = w && sl && !subject?.censored ? gap(sl.v, w.median, ind) : null;
   const band = w ? [pos(w.q1), pos(w.q3)].sort((a, b) => a - b) : [0, 0];
   return (
     <button className="bl-row" onClick={() => onOpen(ind.id)} style={{ background: "none", width: "100%", textAlign: "start", font: "inherit", color: "inherit", cursor: "pointer", borderInline: 0, borderBottom: 0 }}>
@@ -40,7 +40,7 @@ function Row({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; la
         ) : <div className="bl-none">{L.noData}</div>}
       </div>
       <div className="bl-val num">
-        {sl ? <><b>{valueText(ind, sl.v, lang)} <span className="yr">{sl.year}</span></b>
+        {sl ? <><b title={subject?.censored ? L.censoredHint : undefined}>{subject?.censored ?? valueText(ind, sl.v, lang)} <span className="yr">{sl.year}</span></b>
           {g && w && <><ToneTag tone={g.favourable ? "ahead" : "behind"} label={`${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 1)} ${L.vs} ${fmt(w.median, lang, 1)}`} />
             <span>{L.medianCountry}: {countryName(w.medianCountry.c, lang)}, {w.medianCountry.o[0]}</span></>}</>
           : <span>{state.country ? L.noData : L.pickCountry}</span>}

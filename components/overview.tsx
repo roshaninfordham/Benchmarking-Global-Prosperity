@@ -25,7 +25,7 @@ function Card({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; l
   const series = useMemo(() => buildSeries(ds, ind, state.country, state.comps, lang), [ds, ind, state.country, state.comps, lang]);
   const subject = series.find((s) => s.isSubject);
   const l = subject?.latest;
-  const ch = change(subject?.obs, ind);
+  const ch = subject?.censored ? undefined : change(subject?.obs, ind);
   const shown = useCountUp(l?.v, `${state.country}-${ind.id}`);
   const stale = subject?.obs.length ? isStale(subject.obs.at(-1)) : false;
   return (
@@ -36,7 +36,7 @@ function Card({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; l
       </div>
       {l ? (
         <>
-          <div className="icard-val"><span className="display num">{fmt(shown ?? l.v, lang)}</span><span className="icard-unit">{ind.unit}</span></div>
+          <div className="icard-val"><span className="display num" title={subject?.censored ? L.censoredHint : undefined}>{subject?.censored ?? fmt(shown ?? l.v, lang)}</span><span className="icard-unit">{ind.unit}</span></div>
           <div className="icard-meta">
             <span className={`year num ${stale ? "stale" : ""}`} title={stale ? L.stale : undefined}>{l.year}{stale && <em>{L.staleShort}</em>}</span>
             {ch && <span className="icard-change num"><ToneTag tone={ch.verdict} dir={ch.abs >= 0 ? "up" : "down"} label={ch.pct !== null ? fmtPct(ch.pct, lang) : fmt(ch.abs, lang)} /><span className="since">{L.since} {ch.from[0]}</span></span>}

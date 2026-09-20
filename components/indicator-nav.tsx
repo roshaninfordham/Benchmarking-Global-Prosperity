@@ -1,4 +1,5 @@
 "use client";
+import { censoredText } from "@/lib/censor";
 import { fmt, t, type Lang } from "@/lib/i18n";
 import { isStale, latest } from "@/lib/stats";
 import type { State } from "@/lib/state";
@@ -17,7 +18,7 @@ export function IndicatorNav({ ds, lang, state, onSelect }: { ds: Dataset; lang:
             return (
               <button key={i.id} className="inav-item" aria-current={i.id === state.indicator} onClick={() => onSelect(i.id)}>
                 <span className="inav-name" lang="en">{i.short}</span>
-                <span className={`inav-val num ${!o ? "none" : isStale(o) ? "stale" : ""}`}>{o ? fmt(o[1], lang) : "—"}{o && <em>{o[0]}</em>}</span>
+                <span className={`inav-val num ${!o ? "none" : isStale(o) ? "stale" : ""}`}>{o ? (state.country && censoredText(ds, i.id, state.country, o[0])) || fmt(o[1], lang) : "—"}{o && <em>{o[0]}</em>}</span>
               </button>
             );
           })}
