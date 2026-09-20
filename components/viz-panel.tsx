@@ -2,6 +2,7 @@
 import { t, type Lang } from "@/lib/i18n";
 import { VIEWS, type State, type View } from "@/lib/state";
 import type { Dataset } from "@/lib/types";
+import { Baseline } from "./baseline";
 import { Compare } from "./compare";
 import { IndicatorNav } from "./indicator-nav";
 import { MapView } from "./map-view";
@@ -11,7 +12,7 @@ import { Trend } from "./trend";
 export function VizPanel({ ds, lang, state, patch, onPickCountry }: { ds: Dataset; lang: Lang; state: State; patch: (p: Partial<State>) => void; onPickCountry: (iso: string, additive: boolean) => void }) {
   const L = t(lang);
   const ind = ds.indicators.find((i) => i.id === state.indicator)!;
-  const label: Record<View, string> = { overview: L.overview, compare: L.compare, trend: L.trend, map: L.map };
+  const label: Record<View, string> = { overview: L.overview, baseline: L.viewBaseline, compare: L.compare, trend: L.trend, map: L.map };
   const i = VIEWS.indexOf(state.view);
   return (
     <section aria-labelledby="h-viz">
@@ -32,6 +33,8 @@ export function VizPanel({ ds, lang, state, patch, onPickCountry }: { ds: Datase
       <div className="card viz-card" data-view={state.view}>
         {state.view === "overview" ? (
           <Overview ds={ds} lang={lang} state={state} onOpen={(id) => patch({ indicator: id, view: "compare" })} />
+        ) : state.view === "baseline" ? (
+          <Baseline ds={ds} lang={lang} state={state} onOpen={(id) => patch({ indicator: id, view: "compare" })} />
         ) : (
           <div className="viz-split">
             <IndicatorNav ds={ds} lang={lang} state={state} onSelect={(id) => patch({ indicator: id })} />
