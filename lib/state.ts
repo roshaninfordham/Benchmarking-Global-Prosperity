@@ -12,8 +12,8 @@ export const DEFAULT_STATE: State = {
   comps: [{ kind: "country", id: "USA" }, { kind: "group", id: "EasternAfrica" }],
 };
 
-const enc = (c: Comparator) => (c.kind === "group" ? `g:${c.id}` : c.id);
-const dec = (s: string): Comparator => (s.startsWith("g:") ? { kind: "group", id: s.slice(2) } : { kind: "country", id: s });
+const enc = (c: Comparator) => (c.kind === "group" ? `g:${c.id}` : c.kind === "custom" ? `x:${c.id}` : c.id);
+const dec = (s: string): Comparator => (s.startsWith("g:") ? { kind: "group", id: s.slice(2) } : s.startsWith("x:") ? { kind: "custom", id: s.slice(2) } : { kind: "country", id: s });
 
 export function toQuery(s: State): string {
   const p = new URLSearchParams();
@@ -36,7 +36,7 @@ export function fromQuery(q: string, valid: { indicators: string[]; countries: s
   return {
     lang: isLang(lang) ? lang : "en",
     country: country && valid.countries.includes(country) ? country : null,
-    comps: (p.get("vs")?.split(",").filter(Boolean).map(dec) ?? []).filter((c) => (c.kind === "country" ? valid.countries.includes(c.id) : valid.groups.includes(c.id))).slice(0, MAX_COMPARATORS),
+    comps: (p.get("vs")?.split(",").filter(Boolean).map(dec) ?? []).filter((c) => (c.kind === "country" ? valid.countries.includes(c.id) : c.kind === "custom" ? c.id.split("+").length >= 3 && c.id.split("+").every((m) => valid.countries.includes(m)) : valid.groups.includes(c.id))).slice(0, MAX_COMPARATORS),
     indicator: ind && valid.indicators.includes(ind) ? ind : DEFAULT_STATE.indicator,
     view: VIEWS.includes(view) ? view : "overview",
     dim: p.get("d") && valid.dims.includes(p.get("d")!) ? p.get("d")! : "all",
