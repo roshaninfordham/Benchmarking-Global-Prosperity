@@ -46,7 +46,7 @@ const continents = Object.entries(geo.groups).filter(([, g]) => g.type === "Cont
 
 mkdirSync("public/data", { recursive: true });
 writeFileSync("public/data/bgp.json", JSON.stringify({
-  generatedAt: new Date().toISOString(), apiRelease: sdgMeta.apiRelease, dimensions: registry.dimensions, indicators: registry.indicators,
+  generatedAt: new Date().toISOString(), apiRelease: sdgMeta.apiRelease, dimensions: registry.dimensions, indicators: registry.indicators.map((i) => ({ ...i, metaUrl: sdgMeta.indicators[i.id]?.metaUrl ?? i.metaUrl })),
   data: indicators, countries, groups: [...groups, ...continents],
 }));
 mkdirSync("docs", { recursive: true });
