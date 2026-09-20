@@ -114,6 +114,7 @@
 /* Tables (accessible twin of every chart) */
 .dtable { width: 100%; border-collapse: collapse; font-size: 14px; }
 .dtable th { text-align: start; font-weight: 600; color: var(--ink-2); padding: 10px 12px; border-bottom: 1px solid var(--line-strong); position: sticky; top: 0; background: var(--surface); }
+.dtable tbody th { position: static; font-weight: 500; color: var(--ink); background: transparent; padding: 10px 12px; border-bottom: 1px solid var(--line); }
 .dtable td { padding: 10px 12px; border-bottom: 1px solid var(--line); }
 
 /* Map */
