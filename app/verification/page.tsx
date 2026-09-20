@@ -6,7 +6,7 @@ import { BrandMark } from "@/components/topbar";
 
 export const metadata: Metadata = { title: "How values are verified | Benchmarking Global Prosperity" };
 
-type Row = { source: string; checked: number; identical: number; within1pct: number; absentInApi: number; identicalRate: number; medianRelativeDifference?: number; countriesWithNewerYearInApi?: number };
+type Row = { source: string; checked: number; identical: number; within1pct: number; absentInApi: number; censoredAtSource?: number; identicalRate: number; medianRelativeDifference?: number; countriesWithNewerYearInApi?: number };
 const results = verification.results as Record<string, Row>;
 const pct = (x: number) => `${(x * 100).toFixed(x === 1 ? 0 : 1)}%`;
 
@@ -28,10 +28,10 @@ export default function Page() {
         <h2>Checks by indicator</h2>
         <div className="tscroll">
           <table className="dtable">
-            <thead><tr><th>Indicator</th><th>Compared with</th><th>Checked</th><th>Identical</th><th>Within 1%</th><th>No numeric value at source</th><th>Countries with a newer year at source</th></tr></thead>
+            <thead><tr><th>Indicator</th><th>Compared with</th><th>Checked</th><th>Identical</th><th>Within 1%</th><th>Threshold at source</th><th>Missing at source</th><th>Countries with a newer year at source</th></tr></thead>
             <tbody>
               {registry.indicators.map((i) => { const r = results[i.id]; return r ? (
-                <tr key={i.id}><td>{i.short}</td><td>{r.source}</td><td className="num">{r.checked.toLocaleString()}</td><td className="num">{pct(r.identicalRate)}</td><td className="num">{pct(r.within1pct / r.checked)}</td><td className="num">{r.absentInApi.toLocaleString()}</td><td className="num">{r.countriesWithNewerYearInApi ?? "n/a"}</td></tr>
+                <tr key={i.id}><td>{i.short}</td><td>{r.source}</td><td className="num">{r.checked.toLocaleString()}</td><td className="num">{pct(r.identicalRate)}</td><td className="num">{pct(r.within1pct / r.checked)}</td><td className="num">{(r.censoredAtSource ?? 0).toLocaleString()}</td><td className="num">{(r.absentInApi - (r.censoredAtSource ?? 0)).toLocaleString()}</td><td className="num">{r.countriesWithNewerYearInApi ?? "n/a"}</td></tr>
               ) : null; })}
             </tbody>
           </table>
@@ -53,6 +53,7 @@ export default function Page() {
         <div className="card vcard">
           <h2>What differences mean</h2>
           <p>The graph is a snapshot. Where values differ, the official database has usually been revised or has added a newer year since the graph was loaded. The Sources area shows both values side by side and links to the current official value for each country.</p>
+          <p>Some official values are thresholds, not measurements, for example undernourishment below 2.5% in high-income countries. The graph stores the bare number, so the app reads the threshold from the SDG database, shows it as <code>&lt;2.5</code> and never uses it to compute a gap or ratio.</p>
           <p>Humanitarian Data Exchange data is not part of this graph: no observation carries an HDX provenance, so HDX is out of scope for this version.</p>
         </div>
       </section>
