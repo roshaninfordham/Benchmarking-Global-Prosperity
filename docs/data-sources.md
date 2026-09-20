@@ -8,6 +8,7 @@
 | UN SDG Global Database API | Official titles, target text, reporting agencies, data-nature flags, uncertainty bounds, current values; independent check of 17 series | `Series/List`, `Goal/List`, `Series/Data` |
 | UN SDG metadata repository | Methodology PDF for each indicator | Links resolved from the target listing page, then requested |
 | UNDP Human Development Report Office | Life expectancy check and country link | Composite indices time series (CSV) |
+| Natural Earth 1:10m countries, India point of view | Country shapes for the globe and flat map | `scripts/build-map.mjs` simplifies it to `public/map/world.json` (about 400 KB) |
 
 ## Is HDX in the graph?
 
@@ -29,6 +30,10 @@ All other series match exactly. See `data/verification.json` for every count.
 ## Values published as thresholds
 
 Some official values are thresholds, not measurements. FAO reports undernourishment for many high-income countries as `<2.5`. The graph stores the bare number `2.5`, which reads as a measurement. The app reads the threshold from the SDG database, shows it as `<2.5`, and never builds a gap, ratio or change from it. 1,159 observations across undernourishment and severe food insecurity are thresholds; 86 more are missing at source.
+
+## Map boundaries
+
+The globe draws India's boundary as India depicts it, using Natural Earth's India point of view: all of Jammu and Kashmir and Ladakh, and Arunachal Pradesh. Other countries draw parts of these areas differently, so the map carries a note that the boundaries shown do not imply endorsement or acceptance by the United Nations. The shapes keep every country, including small states; only specks under about 160 km² are dropped.
 
 ## Things found while building
 
