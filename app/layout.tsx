@@ -19,7 +19,7 @@ const boot = `try{var t=localStorage.getItem("bgp-theme")||(matchMedia("(prefers
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${plex.variable} ${plexCond.variable} ${plexAr.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning className={`${plex.variable} ${plexCond.variable} ${plexAr.variable}`}>
       <head><script dangerouslySetInnerHTML={{ __html: boot }} /></head>
       <body>{children}</body>
     </html>
