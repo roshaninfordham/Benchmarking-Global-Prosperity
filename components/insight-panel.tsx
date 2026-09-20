@@ -59,7 +59,7 @@ export function InsightPanel({ ds, lang, ind, country, comps, findings, options,
         {findings.map((f, i) => (
           <li key={f.id} style={{ animationDelay: `${i * 70}ms` }}>
             <button className="finding" data-tone={f.tone} disabled={!f.indicatorId} onClick={() => onTrace(f)} title={f.indicatorId ? L.jump : undefined}>
-              <ToneTag tone={f.tone} label={TONE_LABEL(L, f)} />
+              <ToneTag tone={f.tone} dir={f.dir} label={TONE_LABEL(L, f)} />
               <span className="finding-text" lang={f.lang}>{f.text}</span>
             </button>
           </li>

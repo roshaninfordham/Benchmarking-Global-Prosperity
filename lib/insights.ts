@@ -4,7 +4,7 @@ import { REFERENCE_YEAR, STALE_AFTER, allLatest, change, gap, groupSummary, late
 import type { Comparator, Dataset, Indicator, Obs } from "./types";
 
 export type Tone = "ahead" | "behind" | Verdict | "limit" | "note";
-export interface Finding { id: string; tone: Tone; indicatorId?: string; view?: "compare" | "trend"; text: string; lang?: "en" }
+export interface Finding { id: string; tone: Tone; dir?: "up" | "down"; indicatorId?: string; view?: "compare" | "trend"; text: string; lang?: "en" }
 
 /** Value of a comparator for one indicator: a country's latest observation or a group's median. */
 export function comparatorValue(ds: Dataset, ind: Indicator, c: Comparator): { v: number; year: number; yearMax?: number } | undefined {
@@ -58,7 +58,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   const moves = rows.flatMap(({ ind, s }) => { const ch = change(s, ind); return ch && ch.pct !== null && ch.verdict !== "flat" ? [{ ind, ch }] : []; });
   const bestMove = moves.filter((m) => m.ch.verdict === "better").sort((a, b) => Math.abs(b.ch.pct!) - Math.abs(a.ch.pct!))[0];
   const worstMove = moves.filter((m) => m.ch.verdict === "worse").sort((a, b) => Math.abs(b.ch.pct!) - Math.abs(a.ch.pct!))[0];
-  for (const m of [bestMove, worstMove]) if (m) out.push({ id: `chg-${m.ind.id}`, tone: m.ch.verdict, indicatorId: m.ind.id, view: "trend", lang: "en", text: tpl(F.change, { ind: m.ind.short, verb: F.verbs[m.ch.verdict], a: valueText(m.ind, m.ch.from[1], lang), y0: m.ch.from[0], b: valueText(m.ind, m.ch.to[1], lang), y1: m.ch.to[0], pct: fmtPct(m.ch.pct!, lang) }) });
+  for (const m of [bestMove, worstMove]) if (m) out.push({ id: `chg-${m.ind.id}`, tone: m.ch.verdict, dir: m.ch.abs >= 0 ? "up" : "down", indicatorId: m.ind.id, view: "trend", lang: "en", text: tpl(F.change, { ind: m.ind.short, verb: F.verbs[m.ch.verdict], a: valueText(m.ind, m.ch.from[1], lang), y0: m.ch.from[0], b: valueText(m.ind, m.ch.to[1], lang), y1: m.ch.to[0], pct: fmtPct(m.ch.pct!, lang) }) });
 
   // 3. Data limits: indicators with nothing recent.
   const stale = rows.filter(({ s }) => { const o: Obs | undefined = latest(s); return !o || REFERENCE_YEAR - o[0] > STALE_AFTER; });
