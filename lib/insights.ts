@@ -1,3 +1,5 @@
+import { censoredText } from "./censor";
+import { cleanSource } from "./sources";
 import { membersOf, nameOf, valueText } from "./format";
 import { countryName, fmt, fmtPct, t, tpl, type Lang } from "./i18n";
 import { REFERENCE_YEAR, STALE_AFTER, allLatest, change, gap, groupSummary, latest, quantile, type Verdict } from "./stats";
@@ -40,6 +42,8 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
     const cands = rows.flatMap(({ ind, s }) => {
       const a = latest(s), b = comparatorValue(ds, ind, primary);
       if (!a || !b || Math.abs(a[0] - b.year) > MAX_YEAR_GAP || a[0] < REFERENCE_YEAR - 10) return [];
+      // A threshold such as "<2.5" is not a measurement, so it never anchors a gap or a ratio.
+      if (censoredText(ds, ind.id, subject, a[0]) || (primary.kind === "country" && censoredText(ds, ind.id, primary.id, b.year))) return [];
       const g = gap(a[1], b.v, ind);
       return [{ ind, a, b, g, size: Math.abs(g.abs) / spread(ds, ind) }];
     }).sort((x, y) => y.size - x.size);
@@ -56,7 +60,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   }
 
   // 2. Largest movement since the SDG baseline: the biggest improvement and the biggest setback.
-  const moves = rows.flatMap(({ ind, s }) => { const ch = change(s, ind); return ch && ch.pct !== null && ch.verdict !== "flat" ? [{ ind, ch }] : []; });
+  const moves = rows.flatMap(({ ind, s }) => { const ch = change(s, ind); const cens = ch && (censoredText(ds, ind.id, subject, ch.to[0]) || censoredText(ds, ind.id, subject, ch.from[0])); return ch && !cens && ch.pct !== null && ch.verdict !== "flat" ? [{ ind, ch }] : []; });
   const bestMove = moves.filter((m) => m.ch.verdict === "better").sort((a, b) => Math.abs(b.ch.pct!) - Math.abs(a.ch.pct!))[0];
   const worstMove = moves.filter((m) => m.ch.verdict === "worse").sort((a, b) => Math.abs(b.ch.pct!) - Math.abs(a.ch.pct!))[0];
   for (const m of [bestMove, worstMove]) if (m) out.push({ id: `chg-${m.ind.id}`, tone: m.ch.verdict, dir: m.ch.abs >= 0 ? "up" : "down", indicatorId: m.ind.id, view: "trend", lang: lang === "en" ? "en" : undefined, text: tpl(F.change, { ind: iso(m.ind.short), verb: F.verbs[m.ch.verdict], a: valueText(m.ind, m.ch.from[1], lang), y0: m.ch.from[0], b: valueText(m.ind, m.ch.to[1], lang), y1: m.ch.to[0], pct: fmtPct(m.ch.pct!, lang) }) });
@@ -81,7 +85,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   if (leadInd && lm && info) {
     const label = lm.nature.find((n) => n.code === info[0])?.label;
     const src = lm.sourceNames?.[info[1]];
-    if (label && src) out.push({ id: `note-${leadInd.id}`, tone: "note", indicatorId: leadInd.id, view: "compare", lang: "en", text: tpl(F.natureNote, { ind: iso(leadInd.short), c, label, src }) });
+    if (label && src) out.push({ id: `note-${leadInd.id}`, tone: "note", indicatorId: leadInd.id, view: "compare", lang: "en", text: tpl(F.natureNote, { ind: iso(leadInd.short), c, label, src: cleanSource(src) }) });
   }
   return out;
 }
