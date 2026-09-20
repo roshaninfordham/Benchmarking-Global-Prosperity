@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "data": "node scripts/build-data.mjs",
-    "data:snapshot": "node scripts/snapshot.mjs --force && node scripts/geo.mjs && npm run data"
+    "data:snapshot": "node scripts/snapshot.mjs --force && node scripts/geo.mjs && npm run data",
+    "check": "node lib/stats.check.ts"
   },
   "dependencies": {
     "d3-array": "^3.2.4",
