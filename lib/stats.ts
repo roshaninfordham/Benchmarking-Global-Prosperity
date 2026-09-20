@@ -4,6 +4,8 @@ import type { Dataset, Group, Indicator, Obs } from "./types";
 export const REFERENCE_YEAR = 2026;
 /** Observations older than this are flagged as stale. */
 export const STALE_AFTER = 5;
+/** A multiple ("6x") is only quoted when the smaller value is at least this, so a tiny base cannot inflate it. */
+export const MIN_BASE_FOR_MULTIPLE = 5;
 /** Group aggregates only use member observations from this year on. */
 export const GROUP_WINDOW = 2015;
 

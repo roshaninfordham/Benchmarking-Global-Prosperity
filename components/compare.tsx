@@ -3,7 +3,7 @@ import { scaleLinear } from "d3-scale";
 import { useMemo, useState } from "react";
 import { fmt, countryName, t, type Lang } from "@/lib/i18n";
 import { buildSeries } from "@/lib/series";
-import { allLatest, gap, quantile, worldExtent } from "@/lib/stats";
+import { MIN_BASE_FOR_MULTIPLE, allLatest, gap, quantile, worldExtent } from "@/lib/stats";
 import type { State } from "@/lib/state";
 import { useWidth } from "@/lib/use-size";
 import type { Dataset, Indicator } from "@/lib/types";
@@ -108,7 +108,7 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
                 </div>
                 <div className="cgap num">
                   {!g && !s.isSubject && noGap && <span className="cens-dash" title={L.censoredHint}>—</span>}
-                  {g && <><ToneTag tone={g.favourable ? "ahead" : "behind"} label={`${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 1)}${g.ratio && g.ratio >= 1.5 && Math.min(subject.latest!.v, s.latest!.v) >= 1 ? ` · ${fmt(g.ratio, lang)}×` : ""}`} />{yrDiff && <span className="yr-warn" role="img" aria-label={L.stale} title={L.findings.years.replace("{c}", subject.label).replace("{y1}", String(subject.latest!.year)).replace("{cmp}", s.label).replace("{y2}", String(s.latest!.year))}><ToneTag tone="limit" label="" /></span>}</>}
+                  {g && <><ToneTag tone={g.favourable ? "ahead" : "behind"} label={`${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 1)}${g.ratio && g.ratio >= 1.5 && Math.min(subject.latest!.v, s.latest!.v) >= MIN_BASE_FOR_MULTIPLE ? ` · ${fmt(g.ratio, lang)}×` : ""}`} />{yrDiff && <span className="yr-warn" role="img" aria-label={L.stale} title={L.findings.years.replace("{c}", subject.label).replace("{y1}", String(subject.latest!.year)).replace("{cmp}", s.label).replace("{y2}", String(s.latest!.year))}><ToneTag tone="limit" label="" /></span>}</>}
                 </div>
               </div>
             );

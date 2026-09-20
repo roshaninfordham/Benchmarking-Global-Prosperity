@@ -2,7 +2,7 @@ import { censoredText } from "./censor";
 import { cleanSource } from "./sources";
 import { membersOf, nameOf, valueText } from "./format";
 import { countryName, fmt, fmtPct, t, tpl, type Lang } from "./i18n";
-import { REFERENCE_YEAR, STALE_AFTER, allLatest, change, gap, groupSummary, latest, quantile, type Verdict } from "./stats";
+import { MIN_BASE_FOR_MULTIPLE, REFERENCE_YEAR, STALE_AFTER, allLatest, change, gap, groupSummary, latest, quantile, type Verdict } from "./stats";
 import type { Comparator, Dataset, Indicator, Obs } from "./types";
 
 export type Tone = "ahead" | "behind" | Verdict | "limit" | "note";
@@ -48,7 +48,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
       return [{ ind, a, b, g, size: Math.abs(g.abs) / spread(ds, ind) }];
     }).sort((x, y) => y.size - x.size);
     const make = (k: (typeof cands)[number], tone: "ahead" | "behind"): Finding => {
-      const times = k.g.ratio !== null && Math.min(k.a[1], k.b.v) >= 1 && k.g.ratio >= 1.5;
+      const times = k.g.ratio !== null && Math.min(k.a[1], k.b.v) >= MIN_BASE_FOR_MULTIPLE && k.g.ratio >= 1.5;
       const rel = times
         ? tpl(F.rel.times, { x: fmt(k.g.ratio!, lang), cmp })
         : tpl(F.rel.diff, { d: `${fmt(Math.abs(k.g.abs), lang)}${k.ind.unit.startsWith("%") ? ` ${L.pts}` : ""}`, dir: k.g.abs > 0 ? L.above : L.below, cmp });
