@@ -40,7 +40,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
       const x = k.g.ratio! >= 1 ? k.g.ratio! : 1 / k.g.ratio!;
       const rel = times && k.g.ratio! >= 1
         ? tpl(F.rel.times, { x: fmt(x, lang), cmp })
-        : tpl(F.rel.diff, { d: `${fmt(Math.abs(k.g.abs), lang)}${k.ind.unit.startsWith("%") ? "" : ""}`, dir: k.g.abs > 0 ? L.above : L.below, cmp });
+        : tpl(F.rel.diff, { d: `${fmt(Math.abs(k.g.abs), lang)}${k.ind.unit.startsWith("%") ? ` ${L.pts}` : ""}`, dir: k.g.abs > 0 ? L.above : L.below, cmp });
       return { id: `gap-${k.ind.id}`, tone, indicatorId: k.ind.id, view: "compare", text: tpl(F.gap, { ind: k.ind.short, a: valueText(k.ind, k.a[1], lang), c, rel, b: valueText(k.ind, k.b.v, lang) }), lang: "en" };
     };
     const behind = cands.find((k) => !k.g.favourable), ahead = cands.find((k) => k.g.favourable);
