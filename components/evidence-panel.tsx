@@ -39,13 +39,12 @@ function SeriesRows({ ds, ind, meta, s, lang }: { ds: Dataset; ind: Indicator; m
   const [open, setOpen] = useState(false);
   const key = <><i className="ckey" style={{ background: s.color }} /> {s.label}</>;
   if (s.kind === "country") return <VerifyRow ds={ds} ind={ind} meta={meta} iso={s.key.slice(8)} name={key} lang={lang} />;
-  const g = ds.groups.find((x) => `group:${x.id}` === s.key)!;
   const rows = s.group?.points ?? [];
   return (
     <>
       <tr>
         <th scope="row">{key}</th>
-        <td className="num">{s.latest ? <>{fmt(s.latest.v, lang, 2)} <span className="yr">{L.groupMedian}, {rows.length}/{g.members.length}</span></> : "—"}</td>
+        <td className="num">{s.latest ? <>{fmt(s.latest.v, lang, 2)} <span className="yr">{L.groupMedian}, {rows.length}/{s.members?.length ?? 0}</span></> : "—"}</td>
         <td colSpan={2}><button className="linkbtn" onClick={() => setOpen(!open)} aria-expanded={open}>{L.showMembers} ({rows.length})</button></td>
         <td />
       </tr>
