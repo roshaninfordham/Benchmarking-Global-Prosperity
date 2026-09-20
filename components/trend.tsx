@@ -9,7 +9,7 @@ import { useWidth } from "@/lib/use-size";
 import type { Dataset, Indicator, Obs } from "@/lib/types";
 import { ChartHead } from "./chart-head";
 
-const M = { t: 18, r: 150, b: 34, l: 44 };
+const M = { t: 18, r: 178, b: 34, l: 44 };
 const H = 400;
 const GAP_YEARS = 3;
 
@@ -85,7 +85,7 @@ export function Trend({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator; l
             {hover !== null && <g><line x1={tipX} x2={tipX} y1={M.t} y2={H - M.b} stroke="var(--ink-3)" />
               {withObs.map((s) => { const o = at(s, hover); return o && <circle key={s.key} cx={x(hover)} cy={y(o[1])} r="6" fill={s.color} stroke="var(--surface)" strokeWidth="2.5" />; })}</g>}
             {!narrow && ends.map(({ s, y: ly }) => (
-              <g key={s.key}><text x={w - mr + 12} y={ly + 4} fontSize="13" fill="var(--ink)"><tspan fontWeight="600" className="num">{fmt(s.obs.at(-1)![1], lang)}</tspan><tspan dx="6" fill="var(--ink-2)">{s.label.length > 13 ? s.label.slice(0, 12) + "…" : s.label}</tspan></text></g>
+              <g key={s.key}><text x={w - mr + 12} y={ly + 4} fontSize="13" fill="var(--ink)"><tspan fontWeight="600" className="num">{fmt(s.obs.at(-1)![1], lang)}</tspan><tspan dx="6" fill="var(--ink-2)">{s.label.length > 17 ? s.label.slice(0, 16) + "…" : s.label}</tspan></text></g>
             ))}
           </svg>
           {hover !== null && (
