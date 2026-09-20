@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { countryName, dirOf, t, type Lang } from "@/lib/i18n";
+import { countryName, dirOf, isLang, t } from "@/lib/i18n";
 import { buildFindings, type Finding } from "@/lib/insights";
 import { DEFAULT_STATE, MAX_COMPARATORS, fromQuery, toQuery, type State, type View } from "@/lib/state";
 import { latest } from "@/lib/stats";
@@ -26,9 +26,9 @@ export function Workspace() {
     if (!ds) return;
     const q = location.search;
     const st = fromQuery(q, { indicators: ds.indicators.map((i) => i.id), countries: ds.countries, groups: ds.groups.map((g) => g.id), dims: ds.dimensions.map((d) => d.id) });
-    const stored = document.documentElement.lang as Lang;
-    setS(new URLSearchParams(q).has("lang") || !q ? { ...st, lang: new URLSearchParams(q).has("lang") ? st.lang : stored in { en: 1, fr: 1, es: 1, ru: 1, zh: 1, ar: 1 } ? stored : "en" } : st);
+    const stored = document.documentElement.lang; // set before paint from ?lang= or the saved choice
     // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from the URL, which needs the loaded dataset
+    setS({ ...st, lang: new URLSearchParams(q).has("lang") ? st.lang : isLang(stored) ? stored : "en" });
     setReady(true);
   }, [ds]);
 
