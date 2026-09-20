@@ -1,0 +1,146 @@
+Benchmarking Global Prosperity
+Web Application Specification
+From data to insight, evidence and progress
+1. Purpose and Vision
+Benchmarking Global Prosperity (BGP) is a multilingual, evidence-based web application designed to help UN personnel, researchers and other authorized users understand, compare and monitor selected dimensions of Member State prosperity using authoritative development data.
+The application will initially focus on a curated set of indicators relating to food security and nutrition, poverty and livelihoods, health, and education and children. It will draw primarily from the UN System Data Commons and may incorporate complementary authoritative sources such as the Humanitarian Data Exchange (HDX).
+The application is intended to provide a research and evidence layer over existing data infrastructure rather than simply reproduce a conventional SDG dashboard.
+2. Core Objective
+Enable users to answer, through a single web interface:
+Where does a country stand on selected prosperity indicators, how does it compare with relevant countries or peer groups, how has it changed over time, and what evidence supports the findings?
+How is Country A doing?How does it compare with the USA?How does it compare with its region?How has it changed over time?Where are the largest gaps?What happens after UN-supported efforts?
+A future phase may extend the platform to connect development indicators with UN efforts and monitor progress and contribution over time.
+3. Target Users
+UN personnel researching Member State development conditions.
+UN country teams and programme/planning personnel.
+Researchers and analysts.
+Policy and programme researchers requiring comparable country evidence.
+Other authorized users interested in evidence-based development analysis.
+4. Initial Analytical Scope
+Prosperity dimension
+Initial focus
+Food Security &amp; Nutrition
+Food insecurity, undernourishment, child stunting, child wasting and related measures
+Poverty &amp; Livelihoods
+Poverty, employment, youth employment, working poverty and social protection
+Health
+Child mortality, maternal health, life expectancy and selected health-service coverage
+Education &amp; Children
+School participation, completion, learning and early childhood development
+The MVP should use a deliberately curated indicator set rather than attempting to cover the entire SDG framework. Indicator selection should be transparent and documented.
+5. Core User Journeys
+5.1 Country Profile
+The user selects a Member State and receives a structured prosperity profile organized by the selected dimensions.
+Latest available observation.
+Observation year.
+Historical trend.
+Relevant comparison or benchmark.
+Source and methodology.
+Data availability and limitations.
+5.2 Country Benchmarking
+The user selects a country and one or more comparators. Comparators may include the United States, another Member State, a geographic region or a custom group.
+The interface should present comparable observations while preserving differences in observation year, unit, methodology and indicator directionality.
+5.3 Geographic Benchmarking
+The user may compare a country with a defined geographic grouping, such as a region or subregion, and explore the countries contributing to the comparison.
+5.4 Custom Peer Groups
+Users should be able to construct comparison groups by selecting countries individually and, where reliable metadata permit, by geographic or thematic characteristics.
+5.5 Historical Progress
+Users should be able to examine indicator trajectories over time and, where appropriate, compare current observations with a baseline or relevant SDG target.
+5.6 Indicator Research
+Users should be able to select an individual indicator and explore its definition, observations, country comparisons, trends, geographic distribution and source documentation.
+6. Three-Area User Interface
+The principal interface should consist of three interconnected areas. The design is intended to make the relationship between interpretation, visual evidence and source provenance immediately visible.
+
+Area 1 — Insight / Summary
+The upper portion of the interface provides a concise textual summary of the selected country, indicators or comparison. This is a structured application summary rather than an AI agent in the initial version.
+Headline findings based on displayed data.
+Key changes over time.
+Key differences between selected comparators.
+Important data limitations or gaps.
+Contextual notes where methodology affects interpretation.
+Area 2 — Data Visualization
+The central and largest area provides interactive charts and visualizations corresponding to the selected research question.
+Country comparison charts.
+Time-series trend charts.
+Indicator comparison views.
+Geographic or regional visualizations where appropriate.
+Indicator cards showing current observations and changes.
+Ability to switch between selected indicators and comparison groups.
+The visualizations should be directly connected to the data and selection controls rather than functioning as static dashboard graphics.
+Area 3 — Sources &amp; Evidence
+The bottom portion of the interface provides the provenance for the information and visualizations displayed above.
+Source organization.
+Dataset name.
+Indicator identifier and official name.
+Observation year.
+Unit.
+Source update date where available.
+Direct link to the underlying dataset.
+Direct link to indicator metadata or methodology.
+Links to underpinning documents or websites.
+Relevant data-quality or comparability notes.
+The source area should be context-sensitive: when the user changes the country, indicator or comparison, the displayed evidence and source links should update accordingly.
+7. Evidence Traceability
+A central design principle is: Insight → Visualization → Evidence.
+Every substantive data statement and visualization should be traceable to the underlying observation or observations. The user should be able to move from a finding to the relevant chart and then directly to the source supporting that evidence.
+Where multiple sources contribute to a visualization, the source panel should identify each source and clarify which observations it supports.
+8. Data Sources
+8.1 Primary
+UN System Data Commons should serve as the principal data source for the MVP where required indicators are available.
+8.2 SDG Framework and Metadata
+The official UN SDG indicator framework and associated metadata should be used as the authoritative reference for indicator definitions, units, methodologies, custodians, targets and related metadata.
+8.3 Complementary Sources
+Humanitarian Data Exchange (HDX) and, where appropriate, HDX HAPI.
+UN agencies and entities.
+World Bank.
+WHO.
+UNICEF.
+FAO.
+ILO.
+UNESCO.
+UNHCR and IOM where relevant.
+Other authoritative international datasets subject to source governance and comparability review.
+9. Data Model and Indicator Registry
+The application should use a controlled indicator registry so that definitions, directionality, units and provenance are consistently represented across the interface.
+Indicator ID.
+SDG Goal and Target where applicable.
+Official indicator name.
+Short display name.
+Definition.
+Unit.
+Directionality (for example, whether higher or lower values represent the more favourable direction).
+Source and custodian.
+Observation frequency.
+Baseline and target years where applicable.
+Disaggregation.
+Data URL.
+Metadata URL.
+Comparability or quality notes.
+10. Data Quality and Comparability
+The application should make data limitations visible rather than hiding them behind a single comparison score.
+Observation year should always be visible.
+Units and definitions must be clear.
+Observed, estimated, modeled and projected values should be distinguishable.
+Missing observations should be explicitly indicated.
+Known methodological differences should be surfaced.
+SDG Tier classifications should not be treated as a universal measure of national data quality or availability.
+Comparisons should be made only where observations are sufficiently comparable.
+11. Benchmarking Approach
+The application should support benchmarking without producing a simplistic league table of Member States.
+Compare selected countries on individual indicators.
+Compare countries with a regional or thematic reference group.
+Show absolute differences and percentage-point differences where appropriate.
+Show historical change.
+Preserve the directionality of each indicator.
+Allow users to inspect the underlying observations.
+Avoid an overall country prosperity score in the initial MVP unless a rigorously governed methodology is subsequently developed.
+12. Multilingual Requirements
+The application should ultimately support the six official UN languages:
+Arabic
+Chinese
+English
+French
+Russian
+Spanish
+Multilingual support should cover navigation, indicator labels and definitions where authoritative translations exist, filters, chart labels, downloadable outputs and other user-facing content.
+Country names should use authoritative UN terminology/entity data.
