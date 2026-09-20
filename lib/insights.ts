@@ -1,6 +1,6 @@
 import { valueText, nameOf } from "./format";
 import { countryName, fmt, fmtPct, t, tpl, type Lang } from "./i18n";
-import { REFERENCE_YEAR, STALE_AFTER, change, gap, groupSummary, latest, type Verdict } from "./stats";
+import { REFERENCE_YEAR, STALE_AFTER, allLatest, change, gap, groupSummary, latest, quantile, type Verdict } from "./stats";
 import type { Comparator, Dataset, Indicator, Obs } from "./types";
 
 export type Tone = "ahead" | "behind" | Verdict | "limit" | "note";
@@ -15,6 +15,14 @@ export function comparatorValue(ds: Dataset, ind: Indicator, c: Comparator): { v
 }
 
 const MAX_YEAR_GAP = 5;
+
+/** Interquartile range of every country's latest value: the yardstick for "how far apart" across different units. */
+const spreads = new WeakMap<Indicator, number>();
+function spread(ds: Dataset, ind: Indicator): number {
+  let s = spreads.get(ind);
+  if (s === undefined) { const v = Object.values(allLatest(ds, ind)).map((o) => o[1]); s = quantile(v, 0.75) - quantile(v, 0.25) || 1; spreads.set(ind, s); }
+  return s;
+}
 
 /** Builds the headline findings shown in the insight area. Every finding names the indicator it comes from. */
 export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, comps: Comparator[]): Finding[] {
@@ -32,14 +40,12 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
       const a = latest(s), b = comparatorValue(ds, ind, primary);
       if (!a || !b || Math.abs(a[0] - b.year) > MAX_YEAR_GAP || a[0] < REFERENCE_YEAR - 10) return [];
       const g = gap(a[1], b.v, ind);
-      const size = g.ratio ? Math.abs(Math.log(g.ratio)) : g.pct !== null ? Math.abs(g.pct) / 100 : 0;
-      return [{ ind, a, b, g, size }];
+      return [{ ind, a, b, g, size: Math.abs(g.abs) / spread(ds, ind) }];
     }).sort((x, y) => y.size - x.size);
     const make = (k: (typeof cands)[number], tone: "ahead" | "behind"): Finding => {
-      const times = k.g.ratio !== null && (k.g.ratio >= 1.5 || k.g.ratio <= 1 / 1.5);
-      const x = k.g.ratio! >= 1 ? k.g.ratio! : 1 / k.g.ratio!;
-      const rel = times && k.g.ratio! >= 1
-        ? tpl(F.rel.times, { x: fmt(x, lang), cmp })
+      const times = k.g.ratio !== null && Math.min(k.a[1], k.b.v) >= 1 && k.g.ratio >= 1.5;
+      const rel = times
+        ? tpl(F.rel.times, { x: fmt(k.g.ratio!, lang), cmp })
         : tpl(F.rel.diff, { d: `${fmt(Math.abs(k.g.abs), lang)}${k.ind.unit.startsWith("%") ? ` ${L.pts}` : ""}`, dir: k.g.abs > 0 ? L.above : L.below, cmp });
       return { id: `gap-${k.ind.id}`, tone, indicatorId: k.ind.id, view: "compare", text: tpl(F.gap, { ind: k.ind.short, a: valueText(k.ind, k.a[1], lang), c, rel, b: valueText(k.ind, k.b.v, lang) }), lang: "en" };
     };
