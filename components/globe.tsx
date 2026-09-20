@@ -50,6 +50,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     const W = c.width / dpr, H = c.height / dpr;
     const { latestVals, subject, comps, flat, ds } = P.current;
     const cs = getComputedStyle(c), v = (n: string) => cs.getPropertyValue(n).trim();
+    if (!v("--glow")) return; // stylesheet not applied yet
     const dark = document.documentElement.dataset.theme === "dark";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
