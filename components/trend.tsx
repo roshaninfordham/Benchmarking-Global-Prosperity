@@ -65,7 +65,7 @@ export function Trend({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator; l
       )}
       {table ? (
         <div className="tscroll"><table className="dtable"><thead><tr><th>{L.year}</th>{series.map((s) => <th key={s.key}>{s.label}</th>)}</tr></thead>
-          <tbody>{[...years].reverse().map((yr) => <tr key={yr}><td className="num">{yr}</td>{series.map((s) => <td key={s.key} className="num">{at(s, yr) ? fmt(at(s, yr)![1], lang, 2) : "—"}</td>)}</tr>)}</tbody></table></div>
+          <tbody>{[...years].reverse().map((yr) => <tr key={yr}><th scope="row" className="num">{yr}</th>{series.map((s) => <td key={s.key} className="num">{at(s, yr) ? fmt(at(s, yr)![1], lang, 2) : "—"}</td>)}</tr>)}</tbody></table></div>
       ) : (
         <div className="tplot">
           <svg width={w} height={H} onPointerMove={onMove} onPointerLeave={() => setHover(null)} role="img" aria-label={`${ind.short}: ${series.map((s) => s.label).join(", ")}`}>

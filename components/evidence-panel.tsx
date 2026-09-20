@@ -25,7 +25,7 @@ function VerifyRow({ ds, ind, meta, iso, name, lang, obs }: { ds: Dataset; ind: 
   const newer = o && info && (info[4] > o[0] || Math.abs(info[5] - o[1]) > 0.01 * Math.max(1e-9, Math.abs(o[1])));
   return (
     <tr>
-      <td>{name}</td>
+      <th scope="row">{name}</th>
       <td className="num">{o ? <>{fmt(o[1], lang, 2)} <span className="yr">{o[0]}</span></> : "—"}</td>
       <td className="num">{info ? <span className={newer ? "diff-cell" : undefined}>{fmt(info[5], lang, 2)} <span className="yr">{info[4]}</span></span> : meta?.latest ? L.notInSource : "—"}</td>
       <td className="ev-nature">{label ? <><span lang="en">{label}</span>{meta?.sourceNames?.[info![1]] && <small lang="en">{meta.sourceNames[info![1]]}</small>}{info![2] != null && info![3] != null && <small className="num">{L.uncertainty}: {fmt(Number(info![2]), lang, 1)}–{fmt(Number(info![3]), lang, 1)}</small>}</> : "—"}</td>
@@ -44,7 +44,7 @@ function SeriesRows({ ds, ind, meta, s, lang }: { ds: Dataset; ind: Indicator; m
   return (
     <>
       <tr>
-        <td>{key}</td>
+        <th scope="row">{key}</th>
         <td className="num">{s.latest ? <>{fmt(s.latest.v, lang, 2)} <span className="yr">{L.groupMedian}, {rows.length}/{g.members.length}</span></> : "—"}</td>
         <td colSpan={2}><button className="linkbtn" onClick={() => setOpen(!open)} aria-expanded={open}>{L.showMembers} ({rows.length})</button></td>
         <td />

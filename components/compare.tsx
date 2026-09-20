@@ -78,7 +78,7 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
       ) : table ? (
         <table className="dtable"><thead><tr><th>{L.country}</th><th>{L.latest}</th><th>{L.year}</th><th>{L.gapCol}</th></tr></thead>
           <tbody>{series.map((s) => { const g = s.latest && subject.latest && !s.isSubject ? gap(subject.latest.v, s.latest.v, ind) : null;
-            return <tr key={s.key}><td>{s.label}</td><td className="num">{s.latest ? fmt(s.latest.v, lang, 2) : L.noData}</td><td className="num">{s.latest ? (s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year) : "—"}</td><td className="num">{g ? `${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 2)}` : "—"}</td></tr>; })}</tbody></table>
+            return <tr key={s.key}><th scope="row">{s.label}</th><td className="num">{s.latest ? fmt(s.latest.v, lang, 2) : L.noData}</td><td className="num">{s.latest ? (s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year) : "—"}</td><td className="num">{g ? `${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 2)}` : "—"}</td></tr>; })}</tbody></table>
       ) : (
         <div className="bars">
           <div className="bars-cap"><span>{L.gapFor.replace("{c}", subject.label)}</span></div>
