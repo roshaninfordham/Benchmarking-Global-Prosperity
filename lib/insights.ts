@@ -1,4 +1,4 @@
-import { valueText, nameOf } from "./format";
+import { membersOf, nameOf, valueText } from "./format";
 import { countryName, fmt, fmtPct, t, tpl, type Lang } from "./i18n";
 import { REFERENCE_YEAR, STALE_AFTER, allLatest, change, gap, groupSummary, latest, quantile, type Verdict } from "./stats";
 import type { Comparator, Dataset, Indicator, Obs } from "./types";
@@ -9,8 +9,7 @@ export interface Finding { id: string; tone: Tone; dir?: "up" | "down"; indicato
 /** Value of a comparator for one indicator: a country's latest observation or a group's median. */
 export function comparatorValue(ds: Dataset, ind: Indicator, c: Comparator): { v: number; year: number; yearMax?: number } | undefined {
   if (c.kind === "country") { const o = latest(ds.data[ind.id].obs[c.id]); return o && { v: o[1], year: o[0] }; }
-  const g = ds.groups.find((x) => x.id === c.id);
-  const s = g && groupSummary(ds, ind, g);
+  const s = groupSummary(ds, ind, { members: membersOf(ds, c) });
   return s && { v: s.median, year: s.yearMin, yearMax: s.yearMax };
 }
 
