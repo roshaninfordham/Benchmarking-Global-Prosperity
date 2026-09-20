@@ -23,7 +23,7 @@ function Row({ ds, ind, lang, state, onOpen }: { ds: Dataset; ind: Indicator; la
   const g = w && sl ? gap(sl.v, w.median, ind) : null;
   const band = w ? [pos(w.q1), pos(w.q3)].sort((a, b) => a - b) : [0, 0];
   return (
-    <button className="bl-row" onClick={() => onOpen(ind.id)} style={{ background: "none", width: "100%", textAlign: "start", font: "inherit", color: "inherit", cursor: "pointer", borderInline: 0, borderBottom: 0 }} aria-label={`${ind.short}`}>
+    <button className="bl-row" onClick={() => onOpen(ind.id)} style={{ background: "none", width: "100%", textAlign: "start", font: "inherit", color: "inherit", cursor: "pointer", borderInline: 0, borderBottom: 0 }}>
       <div className="bl-name"><b lang="en">{ind.short}</b><span lang="en">{ind.unit}</span></div>
       <div className="bl-track">
         {w ? (
