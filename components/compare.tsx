@@ -78,8 +78,10 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
             return <tr key={s.key}><td>{s.label}</td><td className="num">{s.latest ? fmt(s.latest.v, lang, 2) : L.noData}</td><td className="num">{s.latest ? (s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year) : "—"}</td><td className="num">{g ? `${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 2)}` : "—"}</td></tr>; })}</tbody></table>
       ) : (
         <div className="bars">
-          <div className="bars-grid" aria-hidden>{ticks.map((tk) => <span key={tk} style={{ insetInlineStart: pct(tk) }}><em className="num">{fmt(tk, lang, 0)}</em></span>)}</div>
-          {ind.targetValue !== undefined && <div className="bars-target" style={{ insetInlineStart: `calc(var(--label-col) + (100% - var(--label-col) - var(--gap-col)) * ${x(ind.targetValue) / x(x.domain()[1])})` }}><span>{L.target} {ind.targetValue}</span></div>}
+          <div className="bars-grid" aria-hidden>
+            {ticks.map((tk) => <span key={tk} style={{ insetInlineStart: pct(tk) }}><em className="num">{fmt(tk, lang, 0)}</em></span>)}
+            {ind.targetValue !== undefined && <span className="bars-target" style={{ insetInlineStart: pct(ind.targetValue) }}><em>{L.target} {ind.targetValue}</em></span>}
+          </div>
           {series.map((s, i) => {
             const g = s.latest && subject.latest && !s.isSubject ? gap(subject.latest.v, s.latest.v, ind) : null;
             const yrDiff = s.latest && subject.latest && Math.abs(s.latest.year - subject.latest.year) > 2;
