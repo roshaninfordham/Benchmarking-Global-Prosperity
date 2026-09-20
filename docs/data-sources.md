@@ -5,7 +5,7 @@
 | Source | Used for | How |
 | --- | --- | --- |
 | UN System Data Commons (MCP server, REST arcs) | Every plotted value; UN geographic groupings | `get_child_observations` per indicator; `->containedInPlace` per country |
-| UN SDG Global Database API | Official titles, target text, reporting agencies, data-nature flags, uncertainty bounds, current values; independent check of 16 series | `Series/List`, `Goal/List`, `Series/Data` |
+| UN SDG Global Database API | Official titles, target text, reporting agencies, data-nature flags, uncertainty bounds, current values; independent check of 17 series | `Series/List`, `Goal/List`, `Series/Data` |
 | UN SDG metadata repository | Methodology PDF for each indicator | Links resolved from the target listing page, then requested |
 | UNDP Human Development Report Office | Life expectancy check and country link | Composite indices time series (CSV) |
 
