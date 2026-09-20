@@ -24,7 +24,7 @@ export interface Change { from: Obs; to: Obs; abs: number; pct: number | null; v
 export function change(s: Obs[] | undefined, ind: Indicator): Change | undefined {
   const to = latest(s);
   if (!s || !to) return;
-  const from = (ind.baselineYear && nearest(s, ind.baselineYear, 2)) || s.find((o) => to[0] - o[0] >= 5);
+  const from = (ind.baselineYear && nearest(s, ind.baselineYear, 2)) || s.findLast((o) => to[0] - o[0] >= 5);
   if (!from || to[0] - from[0] < 3) return;
   const abs = to[1] - from[1];
   const pct = from[1] !== 0 ? (abs / Math.abs(from[1])) * 100 : null;
