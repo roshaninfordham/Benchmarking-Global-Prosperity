@@ -71,3 +71,11 @@ export function gap(a: number, b: number, ind: Indicator) {
   const abs = a - b;
   return { abs, pct: b !== 0 ? (abs / Math.abs(b)) * 100 : null, ratio: b !== 0 && a > 0 && b > 0 ? a / b : null, favourable: ind.better === "lower" ? abs < 0 : abs > 0 };
 }
+
+const extents = new WeakMap<Indicator, [number, number]>();
+/** 2nd to 98th percentile of every country's latest value, so a few outliers do not squash a scale. */
+export function worldExtent(ds: Dataset, ind: Indicator): [number, number] {
+  let e = extents.get(ind);
+  if (!e) { const v = Object.values(allLatest(ds, ind)).map((o) => o[1]); e = [quantile(v, 0.02), quantile(v, 0.98)]; extents.set(ind, e); }
+  return e;
+}
