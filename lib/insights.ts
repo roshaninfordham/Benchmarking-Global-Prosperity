@@ -14,6 +14,8 @@ export function comparatorValue(ds: Dataset, ind: Indicator, c: Comparator): { v
   return s && { v: s.median, year: s.yearMin, yearMax: s.yearMax };
 }
 
+/** Isolates an English name inside right-to-left text so it does not reorder the sentence around it. */
+const iso = (s: string) => `\u2068${s}\u2069`;
 const MAX_YEAR_GAP = 5;
 
 /** Interquartile range of every country's latest value: the yardstick for "how far apart" across different units. */
@@ -35,7 +37,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   // 1. Largest gaps against the first comparator, only where the observation years are comparable.
   const primary = comps[0];
   if (primary) {
-    const cmp = nameOf(ds, primary, lang);
+    const cmp = iso(nameOf(ds, primary, lang));
     const cands = rows.flatMap(({ ind, s }) => {
       const a = latest(s), b = comparatorValue(ds, ind, primary);
       if (!a || !b || Math.abs(a[0] - b.year) > MAX_YEAR_GAP || a[0] < REFERENCE_YEAR - 10) return [];
@@ -47,7 +49,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
       const rel = times
         ? tpl(F.rel.times, { x: fmt(k.g.ratio!, lang), cmp })
         : tpl(F.rel.diff, { d: `${fmt(Math.abs(k.g.abs), lang)}${k.ind.unit.startsWith("%") ? ` ${L.pts}` : ""}`, dir: k.g.abs > 0 ? L.above : L.below, cmp });
-      return { id: `gap-${k.ind.id}`, tone, indicatorId: k.ind.id, view: "compare", text: tpl(F.gap, { ind: k.ind.short, a: valueText(k.ind, k.a[1], lang), c, rel, b: valueText(k.ind, k.b.v, lang) }), lang: "en" };
+      return { id: `gap-${k.ind.id}`, tone, indicatorId: k.ind.id, view: "compare", text: tpl(F.gap, { ind: iso(k.ind.short), a: valueText(k.ind, k.a[1], lang), c, rel, b: valueText(k.ind, k.b.v, lang) }), lang: lang === "en" ? "en" : undefined };
     };
     const behind = cands.find((k) => !k.g.favourable), ahead = cands.find((k) => k.g.favourable);
     if (behind) out.push(make(behind, "behind"));
@@ -58,7 +60,7 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   const moves = rows.flatMap(({ ind, s }) => { const ch = change(s, ind); return ch && ch.pct !== null && ch.verdict !== "flat" ? [{ ind, ch }] : []; });
   const bestMove = moves.filter((m) => m.ch.verdict === "better").sort((a, b) => Math.abs(b.ch.pct!) - Math.abs(a.ch.pct!))[0];
   const worstMove = moves.filter((m) => m.ch.verdict === "worse").sort((a, b) => Math.abs(b.ch.pct!) - Math.abs(a.ch.pct!))[0];
-  for (const m of [bestMove, worstMove]) if (m) out.push({ id: `chg-${m.ind.id}`, tone: m.ch.verdict, dir: m.ch.abs >= 0 ? "up" : "down", indicatorId: m.ind.id, view: "trend", lang: "en", text: tpl(F.change, { ind: m.ind.short, verb: F.verbs[m.ch.verdict], a: valueText(m.ind, m.ch.from[1], lang), y0: m.ch.from[0], b: valueText(m.ind, m.ch.to[1], lang), y1: m.ch.to[0], pct: fmtPct(m.ch.pct!, lang) }) });
+  for (const m of [bestMove, worstMove]) if (m) out.push({ id: `chg-${m.ind.id}`, tone: m.ch.verdict, dir: m.ch.abs >= 0 ? "up" : "down", indicatorId: m.ind.id, view: "trend", lang: lang === "en" ? "en" : undefined, text: tpl(F.change, { ind: iso(m.ind.short), verb: F.verbs[m.ch.verdict], a: valueText(m.ind, m.ch.from[1], lang), y0: m.ch.from[0], b: valueText(m.ind, m.ch.to[1], lang), y1: m.ch.to[0], pct: fmtPct(m.ch.pct!, lang) }) });
 
   // 3. Data limits: indicators with nothing recent.
   const stale = rows.filter(({ s }) => { const o: Obs | undefined = latest(s); return !o || REFERENCE_YEAR - o[0] > STALE_AFTER; });
