@@ -23,7 +23,8 @@ function Distribution({ ds, ind, lang, series }: { ds: Dataset; ind: Indicator; 
   const shown = series.flatMap((s) => (s.latest ? [s.latest.v] : []));
   const dom: [number, number] = [Math.min(lo, ...shown), Math.max(hi, ...shown)];
   const H = 132, padX = 14, band = { y0: 62, y1: 112 };
-  const x = scaleLinear().domain(dom).range([padX, w - padX]).nice();
+  const x0 = scaleLinear().domain(dom).range([padX, w - padX]).nice();
+  const x = Object.assign((v: number) => Math.max(padX, Math.min(w - padX, x0(v))), { invert: x0.invert }); // values beyond the 2nd to 98th percentile sit on the edge
   const pts = useMemo(() => Object.entries(all).map(([iso, o]) => ({ iso, o, cx: 0, cy: band.y0 + hash(iso) * (band.y1 - band.y0) })), [all, band.y0, band.y1]);
   const q1 = quantile(vals, 0.25), q3 = quantile(vals, 0.75);
   // Stagger labels so neighbouring marks do not collide.
@@ -46,9 +47,9 @@ function Distribution({ ds, ind, lang, series }: { ds: Dataset; ind: Indicator; 
         {pts.map((p) => <circle key={p.iso} cx={x(p.o[1])} cy={p.cy} r="3.2" fill="var(--ink-3)" opacity={tip?.iso === p.iso ? 1 : 0.38} />)}
         {placed.map(({ s, px, row }) => (
           <g key={s.key} style={{ transition: "transform .6s cubic-bezier(.2,.8,.2,1)", transform: `translateX(${px}px)` }}>
-            <line y1={26 + row * 0} y2={band.y1 + 10} stroke={s.color} strokeWidth="2" style={{ filter: "drop-shadow(0 0 4px var(--glow))" }} />
+            <line y1={26} y2={band.y1 + 10} stroke={s.color} strokeWidth="2" style={{ filter: "drop-shadow(0 0 4px var(--glow))" }} />
             <circle cy={band.y0 - 16} r="5" fill={s.color} stroke="var(--surface)" strokeWidth="2" />
-            <text y={14 + row * 0} textAnchor="middle" fontSize="12" fontWeight="600" fill="var(--ink)">{s.label.length > 18 ? s.label.slice(0, 17) + "…" : s.label}</text>
+            <text y={14} textAnchor={px < 70 ? "start" : px > w - 70 ? "end" : "middle"} fontSize="12" fontWeight="600" fill="var(--ink)">{s.label.length > 18 ? s.label.slice(0, 17) + "…" : s.label}</text>
           </g>
         ))}
       </svg>
@@ -78,6 +79,7 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
             return <tr key={s.key}><td>{s.label}</td><td className="num">{s.latest ? fmt(s.latest.v, lang, 2) : L.noData}</td><td className="num">{s.latest ? (s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year) : "—"}</td><td className="num">{g ? `${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 2)}` : "—"}</td></tr>; })}</tbody></table>
       ) : (
         <div className="bars">
+          <div className="bars-cap"><span>{L.gapFor.replace("{c}", subject.label)}</span></div>
           <div className="bars-grid" aria-hidden>
             {ticks.map((tk) => <span key={tk} style={{ insetInlineStart: pct(tk) }}><em className="num">{fmt(tk, lang, 0)}</em></span>)}
             {ind.targetValue !== undefined && <span className="bars-target" style={{ insetInlineStart: pct(ind.targetValue) }}><em>{L.target} {ind.targetValue}</em></span>}
@@ -100,7 +102,7 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
                   ) : <span className="cnone">{L.noData}</span>}
                 </div>
                 <div className="cgap num">
-                  {g && <><ToneTag tone={g.favourable ? "ahead" : "behind"} label={`${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 1)}${g.ratio && g.ratio >= 1.5 && Math.min(subject.latest!.v, s.latest!.v) >= 1 ? ` · ${fmt(g.ratio, lang)}×` : ""}`} />{yrDiff && <span className="yr-warn" title={L.findings.years.replace("{c}", subject.label).replace("{y1}", String(subject.latest!.year)).replace("{cmp}", s.label).replace("{y2}", String(s.latest!.year))}>≠</span>}</>}
+                  {g && <><ToneTag tone={g.favourable ? "ahead" : "behind"} label={`${g.abs > 0 ? "+" : "−"}${fmt(Math.abs(g.abs), lang, 1)}${g.ratio && g.ratio >= 1.5 && Math.min(subject.latest!.v, s.latest!.v) >= 1 ? ` · ${fmt(g.ratio, lang)}×` : ""}`} />{yrDiff && <span className="yr-warn" role="img" aria-label={L.stale} title={L.findings.years.replace("{c}", subject.label).replace("{y1}", String(subject.latest!.year)).replace("{cmp}", s.label).replace("{y2}", String(s.latest!.year))}><ToneTag tone="limit" label="" /></span>}</>}
                 </div>
               </div>
             );
