@@ -8,19 +8,25 @@ export interface Indicator {
   sdg: { goal: number; target: string; indicator: string } | null;
   name: string;
   short: string;
-  definition: string;
   unit: string;
   better: Better;
-  custodian: string;
-  frequency: string;
   baselineYear: number | null;
   targetYear: number | null;
   targetValue?: number;
-  targetNote: string | null;
-  disaggregation: string;
   metaUrl: string;
-  notes: string;
 }
+
+/** Cited metadata from the UN SDG Global Database API (or the UNDP file for non-SDG series). */
+export interface IndicatorMeta {
+  series: string; seriesDescription?: string; release?: string;
+  goal?: string; target?: string; indicator?: string; targetText?: string; indicatorTitle?: string; units?: string;
+  sources: { name: string; n: number }[]; nature: { code: string; label: string; n: number }[];
+  sourceNames?: string[];
+  /** Per country: [nature code, source index, lower bound, upper bound, current year in the source database, current value] */
+  latest?: Record<string, [string, number, string | null, string | null, number, number]>;
+  dataUrl: string;
+}
+export interface Verification { checked: number; identical: number; within1pct: number; absentInApi: number; identicalRate: number; medianRelativeDifference?: number; countriesWithNewerYearInApi?: number; source: string }
 
 export interface Evidence {
   graphName: string;
@@ -39,7 +45,8 @@ export interface Dataset {
   generatedAt: string;
   dimensions: Dimension[];
   indicators: Indicator[];
-  data: Record<string, { obs: Record<string, Obs[]>; evidence: Evidence }>;
+  data: Record<string, { obs: Record<string, Obs[]>; evidence: Evidence; meta?: IndicatorMeta; verification?: Verification }>;
+  apiRelease?: string;
   countries: string[];
   groups: Group[];
 }

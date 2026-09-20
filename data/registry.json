@@ -29,17 +29,11 @@
       },
       "name": "Prevalence of undernourishment",
       "short": "Undernourishment",
-      "definition": "Share of the population whose habitual food consumption is insufficient to provide the dietary energy needed for a normal, active, healthy life.",
       "unit": "% of population",
       "better": "lower",
-      "custodian": "FAO",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 2.1: end hunger by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf",
-      "notes": "Three-year moving averages; not directly comparable with survey-based food insecurity measures."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-01.pdf"
     },
     {
       "id": "food-insecurity",
@@ -52,17 +46,11 @@
       },
       "name": "Prevalence of severe food insecurity in the population",
       "short": "Severe food insecurity",
-      "definition": "Share of the population experiencing severe food insecurity, measured with the Food Insecurity Experience Scale.",
       "unit": "% of population",
       "better": "lower",
-      "custodian": "FAO",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 2.1: ensure access to food for all by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-02.pdf",
-      "notes": "Severe level only; the moderate-or-severe series is a separate variable."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-01-02.pdf"
     },
     {
       "id": "stunting",
@@ -75,17 +63,11 @@
       },
       "name": "Proportion of children moderately or severely stunted, under 5 years old",
       "short": "Child stunting",
-      "definition": "Share of children under 5 whose height for age is more than two standard deviations below the WHO Child Growth Standards median.",
       "unit": "% of children under 5",
       "better": "lower",
-      "custodian": "UNICEF, WHO, World Bank",
-      "frequency": "Annual estimates from periodic surveys",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 2.2: end all forms of malnutrition by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-01.pdf",
-      "notes": "Joint Child Malnutrition Estimates combine many surveys, so year-to-year change is smoothed."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-01.pdf"
     },
     {
       "id": "wasting",
@@ -98,17 +80,11 @@
       },
       "name": "Proportion of children moderately or severely wasted, under 5 years old",
       "short": "Child wasting",
-      "definition": "Share of children under 5 whose weight for height is more than two standard deviations below the WHO Child Growth Standards median.",
       "unit": "% of children under 5",
       "better": "lower",
-      "custodian": "UNICEF, WHO, World Bank",
-      "frequency": "Periodic surveys",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 2.2: end all forms of malnutrition by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-02.pdf",
-      "notes": "Survey-driven, so many countries have only a few observations."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-02-02-02.pdf"
     },
     {
       "id": "poverty",
@@ -121,17 +97,11 @@
       },
       "name": "Proportion of population below the international poverty line",
       "short": "Extreme poverty",
-      "definition": "Share of the population living below the international poverty line, expressed in purchasing-power-adjusted dollars per person per day.",
       "unit": "% of population",
       "better": "lower",
-      "custodian": "World Bank",
-      "frequency": "Periodic surveys",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 1.1: eradicate extreme poverty for all people by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-01-01.pdf",
-      "notes": "Household surveys are irregular, and the poverty line is revised when purchasing-power data are updated."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-01-01.pdf"
     },
     {
       "id": "working-poverty",
@@ -144,17 +114,11 @@
       },
       "name": "Employed population below the international poverty line, 15 years and over",
       "short": "Working poverty",
-      "definition": "Share of employed people aged 15 and over who live in households below the international poverty line.",
       "unit": "% of employed",
       "better": "lower",
-      "custodian": "ILO",
-      "frequency": "Annual estimates",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 1.1: eradicate extreme poverty for all people by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-01-01.pdf",
-      "notes": "Covers a smaller set of countries than the headline poverty series."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-01-01.pdf"
     },
     {
       "id": "youth-neet",
@@ -167,17 +131,11 @@
       },
       "name": "Proportion of youth not in education, employment or training, 15 to 24 years old",
       "short": "Youth not in work or school",
-      "definition": "Share of young people aged 15 to 24 who are neither employed nor in education or training. This series follows the previous ILO definition.",
       "unit": "% of youth 15 to 24",
       "better": "lower",
-      "custodian": "ILO",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 8.6: substantially reduce this share by 2020",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-08-06-01.pdf",
-      "notes": "Previous ILO definition; the current-definition series is reported separately by ILO."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-08-06-01.pdf"
     },
     {
       "id": "youth-unemployment",
@@ -190,17 +148,11 @@
       },
       "name": "Unemployment rate, 15 to 24 years old",
       "short": "Youth unemployment",
-      "definition": "Share of the labour force aged 15 to 24 that is without work but available for and seeking employment.",
       "unit": "% of youth labour force",
       "better": "lower",
-      "custodian": "ILO",
-      "frequency": "Annual",
       "baselineYear": null,
       "targetYear": null,
-      "targetNote": null,
-      "disaggregation": "None in this series",
-      "metaUrl": "https://ilostat.ilo.org/resources/concepts-and-definitions/description-unemployment-rate/",
-      "notes": "ILOSTAT series. Two sources report this variable, so values can differ from the primary series."
+      "metaUrl": "https://ilostat.ilo.org/resources/concepts-and-definitions/description-unemployment-rate/"
     },
     {
       "id": "social-protection",
@@ -213,17 +165,11 @@
       },
       "name": "Proportion of population covered by at least one social protection benefit",
       "short": "Social protection coverage",
-      "definition": "Share of the population receiving at least one social protection cash benefit.",
       "unit": "% of population",
       "better": "higher",
-      "custodian": "ILO",
-      "frequency": "Periodic",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 1.3: substantial coverage of the poor and vulnerable by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-03-01.pdf",
-      "notes": "Series is short (2015 onward), so long-run trends are not available."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-01-03-01.pdf"
     },
     {
       "id": "under-five-mortality",
@@ -236,18 +182,12 @@
       },
       "name": "Under-five mortality rate",
       "short": "Under-five mortality",
-      "definition": "Probability of dying between birth and exactly five years of age, expressed per 1,000 live births.",
       "unit": "deaths per 1,000 live births",
       "better": "lower",
-      "custodian": "UN IGME (UNICEF, WHO, World Bank, UN DESA)",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
       "targetValue": 25,
-      "targetNote": "Target 3.2: at least as low as 25 per 1,000 live births by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-02-01.pdf",
-      "notes": "Modelled series that pools survey and vital registration data."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-02-01.pdf"
     },
     {
       "id": "maternal-mortality",
@@ -260,18 +200,12 @@
       },
       "name": "Maternal mortality ratio",
       "short": "Maternal mortality",
-      "definition": "Number of maternal deaths per 100,000 live births.",
       "unit": "deaths per 100,000 live births",
       "better": "lower",
-      "custodian": "WHO, UNICEF, UNFPA, World Bank, UN DESA",
-      "frequency": "Periodic estimates",
       "baselineYear": 2015,
       "targetYear": 2030,
       "targetValue": 70,
-      "targetNote": "Target 3.1: fewer than 70 per 100,000 live births by 2030",
-      "disaggregation": "Sex = female, as defined in the graph variable",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-01-01.pdf",
-      "notes": "Estimates carry wide uncertainty intervals that this view does not show."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-01-01.pdf"
     },
     {
       "id": "life-expectancy",
@@ -280,17 +214,11 @@
       "sdg": null,
       "name": "Life expectancy at birth",
       "short": "Life expectancy",
-      "definition": "Number of years a newborn would live if prevailing age-specific mortality rates stayed the same throughout life.",
       "unit": "years",
       "better": "higher",
-      "custodian": "UNDP Human Development Report Office",
-      "frequency": "Annual",
       "baselineYear": null,
       "targetYear": null,
-      "targetNote": null,
-      "disaggregation": "None in this series",
-      "metaUrl": "https://hdr.undp.org/data-center/documentation-and-downloads",
-      "notes": "Not an SDG indicator. UNDP HDRO compiles it from UN DESA population estimates."
+      "metaUrl": "https://hdr.undp.org/data-center/documentation-and-downloads"
     },
     {
       "id": "uhc-coverage",
@@ -303,17 +231,11 @@
       },
       "name": "Universal health coverage service coverage index (2025 methodology)",
       "short": "Health service coverage",
-      "definition": "Index from 0 to 100 summarising coverage of essential health services across reproductive, child, infectious disease, noncommunicable disease and service-capacity areas.",
       "unit": "index, 0 to 100",
       "better": "higher",
-      "custodian": "WHO",
-      "frequency": "Periodic estimates",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 3.8: achieve universal health coverage by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-01.pdf",
-      "notes": "Composite index built from tracer indicators; an earlier methodology gives different values."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-08-01.pdf"
     },
     {
       "id": "skilled-birth-attendance",
@@ -326,17 +248,11 @@
       },
       "name": "Proportion of births attended by skilled health personnel",
       "short": "Skilled birth attendance",
-      "definition": "Share of live births attended by a doctor, nurse or midwife trained to manage normal deliveries and complications.",
       "unit": "% of live births",
       "better": "higher",
-      "custodian": "UNICEF, WHO",
-      "frequency": "Periodic surveys",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 3.1: reduce maternal mortality by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-01-02.pdf",
-      "notes": "High-income countries often report near-universal coverage without recent surveys."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-03-01-02.pdf"
     },
     {
       "id": "completion-primary",
@@ -349,17 +265,11 @@
       },
       "name": "School completion rate, primary education",
       "short": "Primary completion",
-      "definition": "Share of children about three to five years older than the intended age for the last grade of primary school who have completed that grade.",
       "unit": "% of completion-age cohort",
       "better": "higher",
-      "custodian": "UNESCO Institute for Statistics",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 4.1: all children complete primary and secondary school by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf",
-      "notes": "Household-survey based; many countries report only every few years."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf"
     },
     {
       "id": "completion-lower-secondary",
@@ -372,17 +282,11 @@
       },
       "name": "School completion rate, lower secondary education",
       "short": "Lower secondary completion",
-      "definition": "Share of young people about three to five years older than the intended age for the last grade of lower secondary school who have completed that grade.",
       "unit": "% of completion-age cohort",
       "better": "higher",
-      "custodian": "UNESCO Institute for Statistics",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 4.1: all children complete primary and secondary school by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf",
-      "notes": "Household-survey based; many countries report only every few years."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf"
     },
     {
       "id": "completion-upper-secondary",
@@ -395,17 +299,11 @@
       },
       "name": "School completion rate, upper secondary education",
       "short": "Upper secondary completion",
-      "definition": "Share of young people about three to five years older than the intended age for the last grade of upper secondary school who have completed that grade.",
       "unit": "% of completion-age cohort",
       "better": "higher",
-      "custodian": "UNESCO Institute for Statistics",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 4.1: all children complete primary and secondary school by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf",
-      "notes": "Household-survey based; many countries report only every few years."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-01-02.pdf"
     },
     {
       "id": "preprimary-participation",
@@ -418,17 +316,11 @@
       },
       "name": "Participation rate in organized learning (one year before the official primary entry age)",
       "short": "Early learning participation",
-      "definition": "Share of children in the year before the official primary entry age who take part in organized learning, including pre-primary or primary education.",
       "unit": "% of children",
       "better": "higher",
-      "custodian": "UNESCO Institute for Statistics",
-      "frequency": "Annual",
       "baselineYear": 2015,
       "targetYear": 2030,
-      "targetNote": "Target 4.2: access to early childhood development and pre-primary education by 2030",
-      "disaggregation": "None in this series",
-      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-02-02.pdf",
-      "notes": "Administrative enrolment data combined with population estimates."
+      "metaUrl": "https://unstats.un.org/sdgs/metadata/files/Metadata-04-02-02.pdf"
     }
   ]
 }
