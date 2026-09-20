@@ -28,6 +28,7 @@ export function MapView({ ds, ind, lang, state, onPick }: { ds: Dataset; ind: In
         <div className="nodata"><i />{L.legendNoData}</div>
       </div>
       <p className="chart-foot">{L.dragGlobe}</p>
+      <p className="map-note">{L.mapNote}</p>
     </div>
   );
 }

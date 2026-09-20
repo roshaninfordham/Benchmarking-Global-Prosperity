@@ -167,3 +167,5 @@
 /* Values the source publishes as a threshold, such as "<2.5" */
 .cbar.cens { opacity: .55; background-image: repeating-linear-gradient(135deg, transparent 0 5px, rgba(255, 255, 255, .4) 5px 7px); }
 .cens-dash { color: var(--ink-3); cursor: help; }
+
+.map-note { max-width: 62ch; margin: 6px auto 0; text-align: center; color: var(--ink-3); font-size: 12.5px; }
