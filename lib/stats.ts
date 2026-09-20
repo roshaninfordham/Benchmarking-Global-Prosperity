@@ -79,3 +79,21 @@ export function worldExtent(ds: Dataset, ind: Indicator): [number, number] {
   if (!e) { const v = Object.values(allLatest(ds, ind)).map((o) => o[1]); e = [quantile(v, 0.02), quantile(v, 0.98)]; extents.set(ind, e); }
   return e;
 }
+
+export interface WorldSummary { median: number; q1: number; q3: number; n: number; medianCountry: { c: string; o: Obs } }
+const worlds = new WeakMap<Indicator, WorldSummary | null>();
+/** Median of every country's latest value since GROUP_WINDOW, plus the real country closest to it. */
+export function worldSummary(ds: Dataset, ind: Indicator): WorldSummary | null {
+  let w = worlds.get(ind);
+  if (w === undefined) {
+    const pts = Object.entries(allLatest(ds, ind)).filter(([, o]) => o[0] >= GROUP_WINDOW);
+    if (pts.length < 5) w = null;
+    else {
+      const vs = pts.map(([, o]) => o[1]), med = median(vs);
+      const [c, o] = pts.reduce((a, b) => (Math.abs(b[1][1] - med) < Math.abs(a[1][1] - med) ? b : a));
+      w = { median: med, q1: quantile(vs, 0.25), q3: quantile(vs, 0.75), n: pts.length, medianCountry: { c, o } };
+    }
+    worlds.set(ind, w);
+  }
+  return w;
+}
