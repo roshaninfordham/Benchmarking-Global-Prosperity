@@ -7,7 +7,7 @@ import { allLatest, gap, quantile, worldExtent } from "@/lib/stats";
 import type { State } from "@/lib/state";
 import { useWidth } from "@/lib/use-size";
 import type { Dataset, Indicator } from "@/lib/types";
-import { valueText } from "@/lib/format";
+import { SERIES, valueText } from "@/lib/format";
 import { ChartHead } from "./chart-head";
 import { ToneTag } from "./tone";
 
@@ -67,6 +67,8 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
   const x = scaleLinear().domain([0, shownMax || 1]).nice(4);
   const pct = (v: number) => `${(x(v) / x(x.domain()[1])) * 100}%`;
   const ticks = x.ticks(4);
+  // Long bars carry their value inside the end, so the label never runs off the plot.
+  const inside = (s: (typeof series)[number]) => !!s.latest && x(Math.max(s.latest.v, s.group?.q3 ?? 0)) / x(x.domain()[1]) > 0.82;
 
   return (
     <div className="compare">
@@ -95,7 +97,9 @@ export function Compare({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator;
                     <>
                       <div className="cbar" style={{ width: pct(s.latest.v), background: s.color, ["--glowc" as string]: s.color }} />
                       {s.group && <div className="cwhisk" style={{ insetInlineStart: pct(s.group.q1), width: `calc(${pct(s.group.q3)} - ${pct(s.group.q1)})`, borderColor: s.color }} title={L.spread} />}
-                      <span className="cval num" style={{ insetInlineStart: `calc(${pct(Math.max(s.latest.v, s.group?.q3 ?? 0))} + 10px)` }}>
+                      <span className={inside(s) ? "cval num in" : "cval num"} style={inside(s)
+                        ? { insetInlineStart: `calc(${pct(s.latest.v)} - 10px)`, color: s.color === SERIES[3] ? "#0c1a2b" : "#fff" }
+                        : { insetInlineStart: `calc(${pct(Math.max(s.latest.v, s.group?.q3 ?? 0))} + 10px)` }}>
                         <b>{fmt(s.latest.v, lang, 2)}</b><em className={yrDiff ? "yr diff" : "yr"}>{s.latest.yearMax && s.latest.yearMax !== s.latest.year ? `${s.latest.year}–${s.latest.yearMax}` : s.latest.year}</em>
                       </span>
                     </>

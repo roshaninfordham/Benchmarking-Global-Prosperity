@@ -81,6 +81,9 @@
 .cbar { height: 24px; border-radius: 0 6px 6px 0; box-shadow: 0 0 18px -4px var(--glowc); transition: width .8s cubic-bezier(.2,.8,.2,1); min-width: 3px; }
 .cwhisk { position: absolute; top: 50%; height: 12px; translate: 0 -50%; border: 2px solid; border-radius: 4px; opacity: .9; background: rgba(255,255,255,.14); }
 .cval { position: absolute; top: 50%; translate: 0 -50%; display: inline-flex; align-items: baseline; gap: 8px; white-space: nowrap; transition: inset-inline-start .8s cubic-bezier(.2,.8,.2,1); }
+.cval.in { translate: -100% -50%; }
+[dir="rtl"] .cval.in { translate: 100% -50%; }
+.cval.in .yr { color: inherit; opacity: .8; }
 .cval b { font-size: 16px; font-weight: 600; }
 .yr { font-style: normal; font-size: 12.5px; color: var(--ink-3); }
 .yr.diff { color: var(--warn); }
