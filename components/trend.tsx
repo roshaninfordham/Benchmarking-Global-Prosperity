@@ -2,6 +2,7 @@
 import { line } from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { useId, useMemo, useState } from "react";
+import { censoredText } from "@/lib/censor";
 import { fmt, t, type Lang } from "@/lib/i18n";
 import { buildSeries, type Series } from "@/lib/series";
 import type { State } from "@/lib/state";
@@ -78,7 +79,7 @@ export function Trend({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator; l
               {[...withObs].reverse().map((s) => (
                 <g key={s.key} style={{ filter: s.isSubject ? "drop-shadow(0 0 6px var(--glow))" : undefined }}>
                   {segments(s.obs, gen).map((g, i) => <path key={i} d={g.d} fill="none" stroke={s.color} strokeWidth={s.isSubject ? 2.6 : 2} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={g.dashed ? "2 6" : undefined} />)}
-                  {s.obs.length <= 30 && s.obs.map((o) => <circle key={o[0]} cx={x(o[0])} cy={y(o[1])} r={s.kind === "group" ? 2.6 : 3.4} fill={s.color} stroke="var(--surface)" strokeWidth="1.5" />)}
+                  {s.obs.length <= 30 && s.obs.map((o) => { const c = s.kind === "country" && censoredText(ds, ind.id, s.key.slice(8), o[0]); return <circle key={o[0]} cx={x(o[0])} cy={y(o[1])} r={s.kind === "group" ? 2.6 : 3.4} fill={c ? "var(--surface)" : s.color} stroke={c ? s.color : "var(--surface)"} strokeWidth={c ? 2 : 1.5} />; })}
                 </g>
               ))}
             </g>
@@ -92,7 +93,7 @@ export function Trend({ ds, ind, lang, state }: { ds: Dataset; ind: Indicator; l
             <div className="tip tip-multi" style={{ left: Math.min(tipX + 14, w - 230), top: 20 }} role="status">
               <b className="num">{hover}</b>
               {series.map((s) => { const o = at(s, hover), b = o ?? before(s, hover);
-                return <div key={s.key} className="tip-row"><i className="lkey" style={{ background: s.color }} /><span className="tip-name">{s.label}</span><span className="num tip-val">{o ? fmt(o[1], lang, 2) : "—"}{!o && b && <em> ({b[0]})</em>}</span></div>; })}
+                return <div key={s.key} className="tip-row"><i className="lkey" style={{ background: s.color }} /><span className="tip-name">{s.label}</span><span className="num tip-val">{o ? (s.kind === "country" && censoredText(ds, ind.id, s.key.slice(8), o[0])) || fmt(o[1], lang, 2) : "—"}{!o && b && <em> ({b[0]})</em>}</span></div>; })}
             </div>
           )}
         </div>
