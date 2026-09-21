@@ -94,7 +94,7 @@ Data is pulled and checked at build time, then explored entirely in the browser.
 - **UN System Data Commons** supplies every plotted value and the UN geographic groupings.
 - **UN SDG Global Database API** supplies official indicator titles, target text, reporting agencies, data-nature flags and uncertainty bounds, and is the independent check for 17 series.
 - **UNDP HDRO** supplies and checks life expectancy.
-- **Natural Earth (India point of view)** supplies the country shapes for the map, so India is drawn with its official boundary.
+- **Natural Earth 1:10m countries** supply the shapes for the map.
 - **Humanitarian Data Exchange is not in the graph.** No observation carries an HDX provenance, so it is out of scope for this version. See [docs/data-sources.md](docs/data-sources.md).
 
 ## Run it

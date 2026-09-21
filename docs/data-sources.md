@@ -8,7 +8,7 @@
 | UN SDG Global Database API | Official titles, target text, reporting agencies, data-nature flags, uncertainty bounds, current values; independent check of 17 series | `Series/List`, `Goal/List`, `Series/Data` |
 | UN SDG metadata repository | Methodology PDF for each indicator | Links resolved from the target listing page, then requested |
 | UNDP Human Development Report Office | Life expectancy check and country link | Composite indices time series (CSV) |
-| Natural Earth 1:10m countries, India point of view | Country shapes for the globe and flat map | `scripts/build-map.mjs` simplifies it to `public/map/world.json` (about 490 KB) |
+| Natural Earth 1:10m countries | Country shapes for the globe and flat map | `scripts/build-map.mjs` simplifies it to `public/map/world.json` |
 
 ## Is HDX in the graph?
 
@@ -37,9 +37,9 @@ Countries are identified by ISO 3166-1 alpha-3 codes, taken from the graph's own
 
 Compared with the M49 region tree published by the SDG API (2026-09-20, restricted to countries in this dataset), the graph uses the same region names and structure. 14 of the 32 groupings that could be paired by name have exactly the same countries (for example Africa, Oceania, Southern Asia, South-Eastern Asia, Western Asia and the landlocked developing countries). The others are subsets with 60% to 98% overlap: the graph omits some territories, and a few countries such as Greece have no sub-region in the responses we could retrieve. Least developed countries are 46 in the graph and 44 in M49, so a country that has graduated may still be listed in one of them.
 
-## Map boundaries
+## Map shapes
 
-The globe draws India's boundary as India depicts it, using Natural Earth's India point of view: all of Jammu and Kashmir and Ladakh, and Arunachal Pradesh. Other countries draw parts of these areas differently, so the map carries a note that the boundaries shown do not imply endorsement or acceptance by the United Nations. Every piece of land is kept. Pieces under about 160 km² (all 11 Lakshadweep islands, the Maldives, most small islands: 2,974 in all, 29 of them Indian) are too small to survive simplification, so each is stored as a point and drawn as a dot. India's border and coastline are kept at full source detail, including the Andaman and Nicobar islands.
+Country shapes come from Natural Earth's 1:10m countries file; the exact variant is set by `SRC` in `scripts/build-map.mjs`. Every country is simplified the same way and every piece of land is kept. Pieces under about 160 km² (2,974 in all, such as the Maldives and Pacific atolls) are too small to survive simplification, so each is stored as a point and drawn as a dot. The map carries a note that the boundaries and names shown do not imply endorsement or acceptance by the United Nations.
 
 ## Things found while building
 
