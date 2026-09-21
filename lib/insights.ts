@@ -6,7 +6,8 @@ import { MIN_BASE_FOR_MULTIPLE, REFERENCE_YEAR, STALE_AFTER, allLatest, change, 
 import type { Comparator, Dataset, Indicator, Obs } from "./types";
 
 export type Tone = "ahead" | "behind" | Verdict | "limit" | "note";
-export interface Finding { id: string; tone: Tone; dir?: "up" | "down"; indicatorId?: string; view?: "compare" | "trend"; text: string; lang?: "en" }
+/** `cmp` is the comparator index for findings that compare the country with a comparator; other findings are about the country alone. */
+export interface Finding { id: string; cmp?: number; tone: Tone; dir?: "up" | "down"; indicatorId?: string; view?: "compare" | "trend"; text: string; lang?: "en" }
 
 /** Value of a comparator for one indicator: a country's latest observation or a group's median. */
 export function comparatorValue(ds: Dataset, ind: Indicator, c: Comparator): { v: number; year: number; yearMax?: number } | undefined {
@@ -35,9 +36,8 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
   const out: Finding[] = [];
   const rows = ds.indicators.map((ind) => ({ ind, s: ds.data[ind.id].obs[subject] }));
 
-  // 1. Largest gaps against the first comparator, only where the observation years are comparable.
-  const primary = comps[0];
-  if (primary) {
+  // 1. Largest gaps against each comparator, only where the observation years are comparable.
+  comps.forEach((primary, ci) => {
     const cmp = iso(nameOf(ds, primary, lang));
     const cands = rows.flatMap(({ ind, s }) => {
       const a = latest(s), b = comparatorValue(ds, ind, primary);
@@ -52,12 +52,12 @@ export function buildFindings(ds: Dataset, lang: Lang, subject: string | null, c
       const rel = times
         ? tpl(F.rel.times, { x: fmt(k.g.ratio!, lang), cmp })
         : tpl(F.rel.diff, { d: `${fmt(Math.abs(k.g.abs), lang)}${k.ind.unit.startsWith("%") ? ` ${L.pts}` : ""}`, dir: k.g.abs > 0 ? L.above : L.below, cmp });
-      return { id: `gap-${k.ind.id}`, tone, indicatorId: k.ind.id, view: "compare", text: tpl(F.gap, { ind: iso(k.ind.short), a: valueText(k.ind, k.a[1], lang), c, rel, b: valueText(k.ind, k.b.v, lang) }), lang: lang === "en" ? "en" : undefined };
+      return { id: `gap-${k.ind.id}-${ci}`, cmp: ci, tone, indicatorId: k.ind.id, view: "compare", text: tpl(F.gap, { ind: iso(k.ind.short), a: valueText(k.ind, k.a[1], lang), c, rel, b: valueText(k.ind, k.b.v, lang) }), lang: lang === "en" ? "en" : undefined };
     };
     const behind = cands.find((k) => !k.g.favourable), ahead = cands.find((k) => k.g.favourable);
     if (behind) out.push(make(behind, "behind"));
     if (ahead) out.push(make(ahead, "ahead"));
-  }
+  });
 
   // 2. Largest movement since the SDG baseline: the biggest improvement and the biggest setback.
   const moves = rows.flatMap(({ ind, s }) => { const ch = change(s, ind); const cens = ch && (censoredText(ds, ind.id, subject, ch.to[0]) || censoredText(ds, ind.id, subject, ch.from[0])); return ch && !cens && ch.pct !== null && ch.verdict !== "flat" ? [{ ind, ch }] : []; });
