@@ -146,3 +146,4 @@ docs/                 architecture, data sources, design, metrics, specification
 
 - [Design decisions](docs/design.md)
 - [Specification](docs/specification.txt)
+- [Demo video: how it is made and redone](demo/README.md)
