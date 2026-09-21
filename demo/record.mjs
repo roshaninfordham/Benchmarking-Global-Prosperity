@@ -9,7 +9,7 @@ const START = `${BASE}/?c=KEN&vs=USA,g:EasternAfrica&i=under-five-mortality&v=ov
 const dur = JSON.parse(readFileSync("audio/durations.json", "utf8"));
 const caps = JSON.parse(readFileSync("captions.json", "utf8"));
 const W = 1440, H = 810, GAP = 0.6;
-const EXTRA = { l8: 1.5 }; // hold on the India globe a little longer
+const EXTRA = { l8: 0.8 }; // hold on the flat map with the new selection
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 rmSync("raw", { recursive: true, force: true }); mkdirSync("raw");
@@ -100,6 +100,10 @@ async function segment(id, actions) {
 await page.goto(START + "&__t=1", { waitUntil: "load" });
 await page.waitForSelector(".who"); await page.evaluate(() => document.fonts.ready);
 marks.first = (Date.now() - t0) / 1000; // the title card is on screen from here
+// A white flash at a known instant lets assemble.py find that instant in the video and line the voice up with it exactly.
+marks.flash = (Date.now() - t0) / 1000;
+await page.evaluate(() => { const f = document.createElement("div"); f.style.cssText = "position:fixed;inset:0;background:#fff;z-index:2147483647"; document.documentElement.appendChild(f); setTimeout(() => f.remove(), 220); });
+await sleep(500);
 
 await segment("l1", async () => {
   await sleep((dur.l1 - 2.6) * 1000);
@@ -150,12 +154,15 @@ await segment("l7", async () => {
 
 await segment("l8", async () => {
   await tab("Map");
-  await scrollTo(".mapview", 88);   // bring the whole globe into frame
+  await scrollTo(".mapview", 88);   // bring the whole map into frame
   const c = await centre(".map-stage canvas");
-  await glide(c.x - 60, c.y, 350); await page.mouse.down(); await glide(c.x + 100, c.y - 20, 700); await page.mouse.up();
-  await pick(".topbar .pick", "ind", "India", 600, 500);   // the globe turns to India
-  await sleep(500);
-  const c2 = await centre(".map-stage canvas"); await glide(c2.x, c2.y, 700);
+  await glide(c.x - 60, c.y, 300); await page.mouse.down(); await glide(c.x + 100, c.y - 20, 650); await page.mouse.up();   // drag the globe
+  await sleep(150);
+  await click('.mapview .seg button:has-text("Flat map")', 600);                                                            // switch to the flat map
+  await sleep(900);
+  const b = await page.locator(".map-stage canvas").first().boundingBox();
+  await glide(b.x + b.width * 0.344, b.y + b.height * 0.704, 900);                                                          // click a country (Argentina)
+  await sleep(200); await page.mouse.down(); await sleep(70); await page.mouse.up();
 });
 
 await segment("l9", async () => {
