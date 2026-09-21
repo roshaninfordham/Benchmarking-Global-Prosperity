@@ -1,0 +1,60 @@
+{
+ "l1": [
+  "                               ",
+  "Compare countries on food, poverty, health and education,",
+  "and check every number against its source."
+ ],
+ "l2": [
+  "Pick a country.",
+  "Kenya's profile opens with 18 indicators from the UN System Data Commons,",
+  "each with its latest value, its year, and its trend since 2015."
+ ],
+ "l3": [
+  "At the top, plain findings.",
+  "On the left, the country on its own:",
+  "what improved, what worsened, and where data is missing.",
+  "On the right, how it compares with the countries or regions you choose."
+ ],
+ "l4": [
+  "Add a comparator.",
+  "A country, a UN region, or a custom group you build yourself."
+ ],
+ "l5": [
+  "The Baseline view sets every indicator against the median country.",
+  "There is no overall score, and no league table."
+ ],
+ "l6": [
+  "Compare shows the gap in bars,",
+  "and where the country sits among all countries."
+ ],
+ "l7": [
+  "Trend shows change over time,",
+  "against the 2015 baseline and the SDG target."
+ ],
+ "l8": [
+  "The map is a globe.",
+  "Drag it, click a country, and India appears with its full boundary,",
+  "including Lakshadweep and the Andaman and Nicobar islands."
+ ],
+ "l9": [
+  "Every value can be checked.",
+  "This table shows the value in the platform, the official current value,",
+  "the reporting agency, and a link to the source."
+ ],
+ "l10": [
+  "Some official values are thresholds, not measurements.",
+  "Undernourishment below 2.5% is shown that way,",
+  "and never used to compute a gap."
+ ],
+ "l11": [
+  "We compared all 48,089 observations with the official publisher.",
+  "94% are identical, and every difference is shown."
+ ],
+ "l12": [
+  "It works in the six UN languages, including Arabic,",
+  "in light and dark."
+ ],
+ "l13": [
+  "                                                                                "
+ ]
+}

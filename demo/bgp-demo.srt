@@ -1,0 +1,119 @@
+1
+00:00:02,600 --> 00:00:06,493
+Compare countries on food, poverty, health and education,
+
+2
+00:00:06,493 --> 00:00:09,362
+and check every number against its source.
+
+3
+00:00:09,964 --> 00:00:11,091
+Pick a country.
+
+4
+00:00:11,091 --> 00:00:16,579
+Kenya's profile opens with 18 indicators from the UN System Data Commons,
+
+5
+00:00:16,579 --> 00:00:21,314
+each with its latest value, its year, and its trend since 2015.
+
+6
+00:00:21,915 --> 00:00:23,542
+At the top, plain findings.
+
+7
+00:00:23,542 --> 00:00:25,712
+On the left, the country on its own:
+
+8
+00:00:25,712 --> 00:00:29,086
+what improved, what worsened, and where data is missing.
+
+9
+00:00:29,086 --> 00:00:33,365
+On the right, how it compares with the countries or regions you choose.
+
+10
+00:00:33,966 --> 00:00:35,147
+Add a comparator.
+
+11
+00:00:35,147 --> 00:00:39,386
+A country, a UN region, or a custom group you build yourself.
+
+12
+00:00:39,988 --> 00:00:44,369
+The Baseline view sets every indicator against the median country.
+
+13
+00:00:44,369 --> 00:00:47,488
+There is no overall score, and no league table.
+
+14
+00:00:48,090 --> 00:00:50,026
+Compare shows the gap in bars,
+
+15
+00:00:50,026 --> 00:00:53,060
+and where the country sits among all countries.
+
+16
+00:00:53,662 --> 00:00:56,072
+Trend shows change over time,
+
+17
+00:00:56,072 --> 00:00:59,812
+against the 2015 baseline and the SDG target.
+
+18
+00:01:00,414 --> 00:01:01,658
+The map is a globe.
+
+19
+00:01:01,658 --> 00:01:06,046
+Drag it, click a country, and India appears with its full boundary,
+
+20
+00:01:06,046 --> 00:01:09,844
+including Lakshadweep and the Andaman and Nicobar islands.
+
+21
+00:01:11,946 --> 00:01:13,663
+Every value can be checked.
+
+22
+00:01:13,663 --> 00:01:18,177
+This table shows the value in the platform, the official current value,
+
+23
+00:01:18,177 --> 00:01:21,166
+the reporting agency, and a link to the source.
+
+24
+00:01:21,768 --> 00:01:25,716
+Some official values are thresholds, not measurements.
+
+25
+00:01:25,716 --> 00:01:29,079
+Undernourishment below 2.5% is shown that way,
+
+26
+00:01:29,079 --> 00:01:31,418
+and never used to compute a gap.
+
+27
+00:01:32,020 --> 00:01:37,015
+We compared all 48,089 observations with the official publisher.
+
+28
+00:01:37,015 --> 00:01:40,840
+94% are identical, and every difference is shown.
+
+29
+00:01:41,442 --> 00:01:44,931
+It works in the six UN languages, including Arabic,
+
+30
+00:01:44,931 --> 00:01:46,162
+in light and dark.
