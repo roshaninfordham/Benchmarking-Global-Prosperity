@@ -155,7 +155,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     if (!ll || (!P.current.flat && Math.hypot(x - W / 2, y - H / 2) > Math.min(W, H) / 2 - PAD)) return;
     const area = feats.current.find((f) => geoContains(f, ll));
     if (area) return area;
-    // Not inside any shape: is the pointer on a small-island dot (Lakshadweep, the Maldives...)?
+    // Not inside any shape: is the pointer on a small-island dot (the Maldives, Pacific atolls...)?
     let best: CountryFeature | undefined, bd = 7;
     for (const f of islands.current) for (const c of (f.geometry as unknown as { coordinates: [number, number][] }).coordinates) {
       const q = proj(c); if (!q) continue;

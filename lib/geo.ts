@@ -3,7 +3,7 @@ import type { Feature, Geometry } from "geojson";
 import type { Topology } from "topojson-specification";
 
 export type CountryFeature = Feature<Geometry, { iso3: string; name: string }> & { iso3?: string };
-export interface WorldShapes { countries: CountryFeature[]; /** Pieces too small to draw as areas (Lakshadweep, the Maldives...), as points. */ islands: CountryFeature[] }
+export interface WorldShapes { countries: CountryFeature[]; /** Pieces too small to draw as areas (the Maldives, Pacific atolls...), as points. */ islands: CountryFeature[] }
 
 let pending: Promise<WorldShapes> | undefined;
 
