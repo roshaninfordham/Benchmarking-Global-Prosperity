@@ -29,7 +29,7 @@ export function Topbar({ lang, country, options, onCountry, onLang }: { lang: La
         </div>
         <div className="top-spacer" />
         <a className="dc-link" href={DATA_COMMONS_URL} target="_blank" rel="noreferrer noopener">
-          <Image src="/brand/un-emblem.svg" alt="" width={30} height={26} unoptimized />
+          <Image src="/brand/un-logo.png" alt="" width={36} height={30} />
           <span className="dc-text"><small>{L.dataFrom}</small><b lang="en">UN System Data Commons</b></span>
           <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 3H3v10h10v-3M9 3h4v4M13 3 7.5 8.5" /></svg>
         </a>
