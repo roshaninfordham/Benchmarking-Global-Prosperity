@@ -31,6 +31,12 @@ All other series match exactly. See `data/verification.json` for every count.
 
 Some official values are thresholds, not measurements. FAO reports undernourishment for many high-income countries as `<2.5`. The graph stores the bare number `2.5`, which reads as a measurement. The app reads the threshold from the SDG database, shows it as `<2.5`, and never builds a gap, ratio or change from it. 1,159 observations across undernourishment and severe food insecurity are thresholds; 86 more are missing at source.
 
+## Country and group codes
+
+Countries are identified by ISO 3166-1 alpha-3 codes, taken from the graph's own place identifiers (`country/KEN`). For countries the ISO numeric code is the same as the UN M49 code (Kenya is 404), and it is used to build the links to the SDG database. Groupings (UN sub-regions, continents, LDC, LLDC, SIDS, OECD, EU) come from the graph's `containedInPlace` hierarchy, not from a separate M49 file.
+
+Compared with the M49 region tree published by the SDG API (2026-09-20, restricted to countries in this dataset), the graph uses the same region names and structure. 14 of the 32 groupings that could be paired by name have exactly the same countries (for example Africa, Oceania, Southern Asia, South-Eastern Asia, Western Asia and the landlocked developing countries). The others are subsets with 60% to 98% overlap: the graph omits some territories, and a few countries such as Greece have no sub-region in the responses we could retrieve. Least developed countries are 46 in the graph and 44 in M49, so a country that has graduated may still be listed in one of them.
+
 ## Map boundaries
 
 The globe draws India's boundary as India depicts it, using Natural Earth's India point of view: all of Jammu and Kashmir and Ladakh, and Arunachal Pradesh. Other countries draw parts of these areas differently, so the map carries a note that the boundaries shown do not imply endorsement or acceptance by the United Nations. Every piece of land is kept. Pieces under about 160 km² (all 11 Lakshadweep islands, the Maldives, most small islands: 2,974 in all, 29 of them Indian) are too small to survive simplification, so each is stored as a point and drawn as a dot. India's border and coastline are kept at full source detail, including the Andaman and Nicobar islands.
