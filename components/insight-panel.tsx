@@ -11,6 +11,17 @@ import { Globe } from "./globe";
 import { GroupBuilder } from "./group-builder";
 import { ToneTag } from "./tone";
 
+function FindingRow({ f, i, L, onTrace, color }: { f: Finding; i: number; L: ReturnType<typeof t>; onTrace: (f: Finding) => void; color?: string }) {
+  return (
+    <li style={{ animationDelay: `${i * 70}ms` }}>
+      <button className="finding" data-tone={f.tone} disabled={!f.indicatorId} onClick={() => onTrace(f)} title={f.indicatorId ? L.jump : undefined}>
+        <span className="finding-tag">{color && <i className="ckey" style={{ background: color }} aria-hidden />}<ToneTag tone={f.tone} dir={f.dir} label={TONE_LABEL(L, f)} /></span>
+        <span className="finding-text" lang={f.lang}>{f.text}</span>
+      </button>
+    </li>
+  );
+}
+
 const TONE_LABEL = (L: ReturnType<typeof t>, f: Finding) =>
   ({ ahead: L.ahead, behind: L.behind, better: L.better, worse: L.worse, flat: L.flat, limit: L.limits, note: L.note })[f.tone];
 
@@ -26,6 +37,8 @@ export function InsightPanel({ ds, lang, ind, country, comps, findings, options,
     for (const i of ds.indicators) { const o = latest(ds.data[i.id].obs[country]); if (o) { withData++; if (REFERENCE_YEAR - o[0] > STALE_AFTER) stale++; } }
     return { withData, stale, missing: ds.indicators.length - withData, total: ds.indicators.length };
   }, [ds, country]);
+  const own = findings.filter((f) => f.cmp === undefined);
+  const compared = findings.filter((f) => f.cmp !== undefined);
   const addable = options.filter((o) => !(o.kind === "country" && (o.id === country || comps.some((c) => c.kind === "country" && c.id === o.id))) && !(o.kind === "group" && comps.some((c) => c.kind === "group" && c.id === o.id)));
 
   return (
@@ -58,17 +71,22 @@ export function InsightPanel({ ds, lang, ind, country, comps, findings, options,
         </div>
         <div className="insight-globe"><Globe ds={ds} ind={ind} lang={lang} subject={country} comps={comps} onPick={onPickCountry} /></div>
       </div>
-      <ul className="findings">
-        {findings.map((f, i) => (
-          <li key={f.id} style={{ animationDelay: `${i * 70}ms` }}>
-            <button className="finding" data-tone={f.tone} disabled={!f.indicatorId} onClick={() => onTrace(f)} title={f.indicatorId ? L.jump : undefined}>
-              <ToneTag tone={f.tone} dir={f.dir} label={TONE_LABEL(L, f)} />
-              <span className="finding-text" lang={f.lang}>{f.text}</span>
-            </button>
-          </li>
-        ))}
-        {!findings.length && <li className="finding-empty">{L.findings.none}</li>}
-      </ul>
+      <div className="blocks">
+        <div className="block" aria-labelledby="h-key">
+          <h3 id="h-key" className="block-title">{L.keyIndicators}</h3>
+          <ul className="findings">
+            {own.map((f, i) => <FindingRow key={f.id} f={f} i={i} L={L} onTrace={onTrace} />)}
+            {!own.length && <li className="finding-empty">{L.findings.none}</li>}
+          </ul>
+        </div>
+        <div className="block" aria-labelledby="h-cmp">
+          <h3 id="h-cmp" className="block-title">{L.comparatorAnalysis}</h3>
+          <ul className="findings">
+            {compared.map((f, i) => <FindingRow key={f.id} f={f} i={i} L={L} onTrace={onTrace} color={SERIES[(f.cmp ?? 0) + 1]} />)}
+            {!compared.length && <li className="finding-empty">{comps.length ? L.noData : L.addCompHint}</li>}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 }
