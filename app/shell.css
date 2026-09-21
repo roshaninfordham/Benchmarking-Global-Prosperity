@@ -54,7 +54,7 @@
 .page { max-width: 1360px; margin: 0 auto; padding: 28px 32px 96px; display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 20px; }
 .rail { position: relative; }
 .rail svg { position: sticky; top: 90px; height: calc(100vh - 120px); width: 28px; }
-.stack { display: grid; gap: 40px; min-width: 0; }
+.stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; min-width: 0; grid-column: 2; }
 .area-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
 .area-title { font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; }
 .area-sub { color: var(--ink-3); font-size: 13px; }
@@ -62,12 +62,17 @@
 
 @media (max-width: 1180px) { .dc-text small { display: none; } }
 @media (max-width: 900px) {
-  .topbar-in { padding: 0 16px; gap: 10px; height: 68px; }
+  .topbar-in { padding: 10px 16px; gap: 8px; height: auto; flex-wrap: wrap; }
+  .brand { flex: 1 0 100%; }
+  .top-spacer { display: none; }
+  .pick .lbl { display: none; }
+  .top-actions { margin-inline-start: auto; }
   .brand-name { font-size: 17px; }
   .brand-tag { display: none; }
   .dc-text { display: none; }
   .dc-link { min-height: 44px; padding: 0 10px; }
   .page { grid-template-columns: minmax(0, 1fr); padding: 20px 16px 72px; }
+  .stack { grid-column: 1; }
   .rail { display: none; }
 }
 
