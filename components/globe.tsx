@@ -59,6 +59,7 @@ export function Globe({ ds, ind, lang, subject, comps, flat = false, interactive
     const proj = flat ? geoNaturalEarth1().fitExtent([[8, 8], [W - 8, H - 8]], { type: "Sphere" }) : geoOrthographic().rotate(rot.current).scale(Math.min(W, H) / 2 - PAD).translate([W / 2, H / 2]).clipAngle(90);
     const path = geoPath(proj, ctx);
     const r = Math.min(W, H) / 2 - PAD;
+    if (r < 4) return; // canvas not laid out yet
 
     if (!flat) { // atmosphere
       const g = ctx.createRadialGradient(W / 2, H / 2, r * 0.96, W / 2, H / 2, r * 1.18);
