@@ -46,3 +46,6 @@ next-env.d.ts
 # local screenshots and browser tooling
 /shot-*.png
 /.playwright-mcp/
+
+# rendered demo video
+/demo/*.mp4
