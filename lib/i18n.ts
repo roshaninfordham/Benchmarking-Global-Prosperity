@@ -70,7 +70,8 @@ export const dict = {
       change: "{ind} {verb} from {a} in {y0} to {b} in {y1} ({pct}).",
       verbs: { better: "improved", worse: "worsened", flat: "held steady" },
       noRecent: "{c} has no observation since {y} for {n} of {m} indicators.", staleList: "{ind}: latest observation is from {y}.", none: "Choose a country to see findings.",
-      natureNote: "{ind}: the latest value for {c} is flagged “{label}” by {src}.", newer: "{ind}: the SDG database now reports {a} for {c} in {y}. This view uses {b} from {y0}.",
+      natureNote: "{ind}: the latest value for {c} is flagged “{label}” (source: {src}).",
+      newer: "{ind}: the SDG database now reports {a} for {c} in {y}. This view uses {b} from {y0}.",
       years: "Observation years differ: {c} {y1}, {cmp} {y2}." } },
   fr: {
     brand: "Benchmarking Global Prosperity", tag: "Des données à l’analyse, aux preuves et au progrès",
@@ -107,7 +108,8 @@ export const dict = {
       change: "{ind} : {verb}, de {a} en {y0} à {b} en {y1} ({pct}).",
       verbs: { better: "amélioration", worse: "dégradation", flat: "stable" },
       noRecent: "{c} : aucune observation depuis {y} pour {n} indicateur(s) sur {m}.", staleList: "{ind} : dernière observation en {y}.", none: "Choisissez un pays pour voir les constats.",
-      natureNote: "{ind} : la dernière valeur de {c} est qualifiée « {label} » par {src}.", newer: "{ind} : la base ODD indique désormais {a} pour {c} en {y}. Cette vue utilise {b} de {y0}.",
+      natureNote: "{ind} : la dernière valeur de {c} est qualifiée « {label} » (source : {src}).",
+      newer: "{ind} : la base ODD indique désormais {a} pour {c} en {y}. Cette vue utilise {b} de {y0}.",
       years: "Années d’observation différentes : {c} {y1}, {cmp} {y2}." } },
   es: {
     brand: "Benchmarking Global Prosperity", tag: "De los datos al análisis, la evidencia y el progreso",
@@ -144,7 +146,8 @@ export const dict = {
       change: "{ind}: {verb}, de {a} en {y0} a {b} en {y1} ({pct}).",
       verbs: { better: "mejora", worse: "empeora", flat: "estable" },
       noRecent: "{c}: sin observaciones desde {y} en {n} de {m} indicadores.", staleList: "{ind}: la última observación es de {y}.", none: "Elija un país para ver los hallazgos.",
-      natureNote: "{ind}: el último valor de {c} está marcado como «{label}» por {src}.", newer: "{ind}: la base de datos ODS indica ahora {a} para {c} en {y}. Esta vista usa {b} de {y0}.",
+      natureNote: "{ind}: el último valor de {c} está marcado como «{label}» (fuente: {src}).",
+      newer: "{ind}: la base de datos ODS indica ahora {a} para {c} en {y}. Esta vista usa {b} de {y0}.",
       years: "Los años de observación difieren: {c} {y1}, {cmp} {y2}." } },
   ru: {
     brand: "Benchmarking Global Prosperity", tag: "От данных к выводам, доказательствам и прогрессу",
@@ -181,7 +184,8 @@ export const dict = {
       change: "{ind}: {verb}, с {a} в {y0} г. до {b} в {y1} г. ({pct}).",
       verbs: { better: "улучшение", worse: "ухудшение", flat: "без изменений" },
       noRecent: "{c}: нет наблюдений с {y} г. по показателям — {n} из {m}.", staleList: "{ind}: последнее наблюдение за {y} г.", none: "Выберите страну, чтобы увидеть выводы.",
-      natureNote: "{ind}: последнее значение для {c} помечено как «{label}» ({src}).", newer: "{ind}: база ЦУР теперь указывает {a} для {c} за {y} г. Здесь используется {b} за {y0} г.",
+      natureNote: "{ind}: последнее значение для {c} помечено как «{label}» (источник: {src}).",
+      newer: "{ind}: база ЦУР теперь указывает {a} для {c} за {y} г. Здесь используется {b} за {y0} г.",
       years: "Годы наблюдений различаются: {c} {y1}, {cmp} {y2}." } },
   zh: {
     brand: "全球繁荣基准", tag: "从数据到洞察、证据与进展",
@@ -218,7 +222,8 @@ export const dict = {
       change: "{ind}：{verb}，由{y0}年的{a}变为{y1}年的{b}（{pct}）。",
       verbs: { better: "改善", worse: "恶化", flat: "保持稳定" },
       noRecent: "{c}的{m}项指标中有{n}项自{y}年起没有观测值。", staleList: "{ind}：最新观测值来自{y}年。", none: "请选择国家以查看发现。",
-      natureNote: "{ind}：{c}的最新数值被{src}标注为“{label}”。", newer: "{ind}：可持续发展目标数据库现给出{c}在{y}年的数值为{a}；本视图使用的是{y0}年的{b}。",
+      natureNote: "{ind}：{c}的最新数值被标注为“{label}”（来源：{src}）。",
+      newer: "{ind}：可持续发展目标数据库现给出{c}在{y}年的数值为{a}；本视图使用的是{y0}年的{b}。",
       years: "观测年份不同：{c}为{y1}年，{cmp}为{y2}年。" } },
   ar: {
     brand: "قياس الازدهار العالمي", tag: "من البيانات إلى الرؤى والأدلة والتقدم",
@@ -255,7 +260,8 @@ export const dict = {
       change: "{ind}: {verb}، من {a} في {y0} إلى {b} في {y1} ({pct}).",
       verbs: { better: "تحسّن", worse: "تراجع", flat: "ثابت" },
       noRecent: "لا توجد ملاحظات منذ {y} لـ {n} من {m} مؤشرًا في {c}.", staleList: "{ind}: أحدث ملاحظة تعود إلى {y}.", none: "اختر بلدًا لعرض النتائج.",
-      natureNote: "{ind}: أحدث قيمة لـ {c} موسومة «{label}» من {src}.", newer: "{ind}: تُبلغ قاعدة بيانات الأهداف الآن عن {a} لـ {c} في {y}. يستخدم هذا العرض {b} من {y0}.",
+      natureNote: "{ind}: أحدث قيمة لـ {c} موسومة «{label}» (المصدر: {src}).",
+      newer: "{ind}: تُبلغ قاعدة بيانات الأهداف الآن عن {a} لـ {c} في {y}. يستخدم هذا العرض {b} من {y0}.",
       years: "سنوات الملاحظة مختلفة: {c} {y1}، {cmp} {y2}." } },
 } as const;
 
